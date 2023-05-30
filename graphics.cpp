@@ -44,28 +44,21 @@ void loadGame(GameState *gameState)
     const char *font_name = "fonts\\ka1.ttf";
     loadImages(gameState);
 
-    gameState->plyr.set_x(210-PLAYER_WIDTH);    
-    gameState->plyr.set_y(240-PLAYER_HEIGHT);
-    gameState->plyr.set_dx(0);
-    gameState->plyr.set_dy(0);
-    gameState->plyr.reset_onBlock();
-    gameState->plyr.set_animFrame(0);
-    gameState->plyr.set_facingLeft(true);
-    gameState->plyr.set_slowingDown(false);
 
     gameState->set_time(0);
     gameState->set_scrollX(0);
 
 
     // initialize blocks
+
     typename std::vector<Block>::pointer ptr, end = gameState->blocks.data() + 100;
     uint8_t i = 0;
     for (ptr = gameState->blocks.data(); ptr < end; ++ptr)
     {
-        ptr->w = 60;
-        ptr->h = 20;
-        ptr->x = i*60;
-        ptr->y = 400;
+        ptr->set_w(60);
+        ptr->set_h(20);
+        ptr->set_x(i*60);
+        ptr->set_y(400);
         ++i;
     }
 }
@@ -89,7 +82,7 @@ void doRender(SDL_Renderer *renderer, GameState *gameState)
     uint8_t i = 0;
     for (ptr = gameState->blocks.data(); ptr < end; ++ptr)
     {
-        SDL_Rect blockRect = { static_cast<int>(gameState->get_scrollX() + ptr->x), ptr->y, ptr->w, ptr->h };
+        SDL_Rect blockRect = { static_cast<int>(gameState->get_scrollX() + ptr->get_x()), ptr->get_y(), ptr->get_w(), ptr->get_h() };
         SDL_RenderCopy(renderer, gameState->get_block(), NULL, &blockRect);
         ++i;
     }

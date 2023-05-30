@@ -17,10 +17,22 @@
 
 // Handles each block
 // within the map.
-typedef struct
+class Block
 {
-   int x, y, w, h;
-} Block;
+   private:
+      int x, y, w, h;
+   public:
+      inline int get_x() { return x; } const
+      inline void set_x(int val) { x = val; }
+      inline int get_y() { return y; } const
+      inline void set_y(int val) { y = val; }
+
+      inline int get_w() { return w; } const
+      inline void set_w(int val) { w = val; }
+      inline int get_h() { return h; } const
+      inline void set_h(int val) { h = val; }
+};
+
 
 
 class GameState
@@ -32,12 +44,11 @@ class GameState
       SDL_Renderer *renderer;
       // Images
       SDL_Texture *block;
-
       // Fonts
-
-   public:
       TTF_Font *font;
 
+      std::vector<std::vector<int> > tilemap;
+   public:
       // Players
       Player plyr;
       // Platforms

@@ -14,6 +14,8 @@ class Player
       int animFrame;
       bool slowingDown, facingLeft;
    public:
+      Player();
+      Player(int, int);
       
       inline int get_x() { return x; } const
       inline void set_x(int val) { x = val; }
@@ -53,5 +55,36 @@ class Player
       inline void set_slowingDown(bool s) { slowingDown = s; }
       
 };
+
+// Defaults the character's position
+// x = 210
+// y = 240 
+Player::Player() 
+{
+   this->set_x(210-PLAYER_WIDTH);
+   this->set_y(240-PLAYER_HEIGHT);
+   this->set_dx(0);
+   this->set_dy(0);
+
+   this->reset_onBlock();
+   this->set_animFrame(0);
+   this->set_facingLeft(true);
+   this->set_slowingDown(false);
+}
+
+// Sets the character's posiiton
+// to the specified x and y values.
+Player::Player(int x_pos, int y_pos) 
+{
+   this->set_x(x_pos-PLAYER_WIDTH);
+   this->set_y(y_pos-PLAYER_HEIGHT);
+   this->set_dx(0);
+   this->set_dy(0);
+
+   this->reset_onBlock();
+   this->set_animFrame(0);
+   this->set_facingLeft(true);
+   this->set_slowingDown(false);
+}
 
 #endif
