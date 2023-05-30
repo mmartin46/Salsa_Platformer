@@ -9,8 +9,6 @@ class Player
       float x, y;
       float dx, dy;
       int onBlock;
-      short life;
-      char *name;
       int animFrame;
       bool slowingDown, facingLeft;
    public:

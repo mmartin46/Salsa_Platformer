@@ -44,13 +44,7 @@ void loadGame(GameState *gameState)
     const char *font_name = "fonts\\ka1.ttf";
     loadImages(gameState);
 
-
-    gameState->set_time(0);
-    gameState->set_scrollX(0);
-
-
     // initialize blocks
-
     typename std::vector<Block>::pointer ptr, end = gameState->blocks.data() + 100;
     uint8_t i = 0;
     for (ptr = gameState->blocks.data(); ptr < end; ++ptr)

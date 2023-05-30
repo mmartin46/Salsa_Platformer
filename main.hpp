@@ -34,7 +34,6 @@ class Block
 };
 
 
-
 class GameState
 {
    private:
@@ -56,6 +55,9 @@ class GameState
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
 
+
+      GameState();
+
       // Block
       inline SDL_Texture* get_block() { return block; }
       inline void set_block(SDL_Texture* b) { block = b; }
@@ -76,6 +78,12 @@ class GameState
       inline float get_scrollX() { return scrollX; } const
       inline void set_scrollX(float x) { scrollX = x; }
 };
+
+GameState::GameState()
+{
+   this->set_time(0);
+   this->set_scrollX(0);
+}
 
 
 #endif
