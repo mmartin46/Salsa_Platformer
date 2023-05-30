@@ -6,7 +6,7 @@ void loadGame(GameState *gameState)
     
     // Load images and create rending textures from them
     // Loading the image's first frame.
-    surface = IMG_Load("plyr_ita.png");
+    surface = IMG_Load("img\\plyr_ita.png");
     if (surface == NULL)
     {
         printf("Cannot find plyr_ita.png!\n\n");
@@ -17,7 +17,7 @@ void loadGame(GameState *gameState)
     SDL_FreeSurface(surface);
 
     // Loading the image's second frame.
-    surface = IMG_Load("plyr_itb.png");
+    surface = IMG_Load("img\\plyr_itb.png");
     if (surface == NULL)
     {
         printf("Cannot find plyr_itb.png!\n\n");
@@ -27,7 +27,7 @@ void loadGame(GameState *gameState)
     gameState->plyrFrames[1] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
     SDL_FreeSurface(surface);
 
-    surface = IMG_Load("block.png");
+    surface = IMG_Load("img\\block.png");
     if (surface == NULL)
     {
         printf("Cannot find block.png!\n\n");
