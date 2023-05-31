@@ -52,15 +52,7 @@ void loadGame(GameState *gameState)
     gameState->set_scrollX(0);
 
 
-    // init blocks
-    // for (int i = 0; i < 100; ++i)
-    // {
-    //     gameState->blocks.at(i).w = 60;           
-    //     gameState->blocks.at(i).h = 20;            
-    //     gameState->blocks.at(i).x = i*60;         
-    //     gameState->blocks.at(i).y = 400;                
-    // }
-
+    // initialize blocks
     typename std::vector<Block>::pointer ptr, end = gameState->blocks.data() + 100;
     uint8_t i = 0;
     for (ptr = gameState->blocks.data(); ptr < end; ++ptr)
@@ -87,7 +79,7 @@ void doRender(SDL_Renderer *renderer, GameState *gameState)
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
 
-    // 
+    // Intialize the rectangle for the blocks.
     typename std::vector<Block>::pointer ptr, end = gameState->blocks.data() + 100;
     uint8_t i = 0;
     for (ptr = gameState->blocks.data(); ptr < end; ++ptr)
