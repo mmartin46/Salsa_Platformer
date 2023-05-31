@@ -35,7 +35,10 @@ int main(int argc, char *argv[] )
     while (!done)
     {
 
+        // Displays the x and y position of the player
         std::cout << gameState.plyr.get_x() << " " << gameState.plyr.get_y() << std::endl;
+
+        
         // Check for events
         done = processEvents(window, &gameState);
 
