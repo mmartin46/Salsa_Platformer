@@ -45,8 +45,8 @@ void loadGame(GameState *gameState)
     gameState->plyr.set_dy(0);
     gameState->plyr.reset_onBlock();
     gameState->plyr.set_animFrame(0);
-    gameState->plyr.set_facingLeft(1);
-    gameState->plyr.slowingDown = 0;
+    gameState->plyr.set_facingLeft(true);
+    gameState->plyr.set_slowingDown(false);
 
     gameState->set_time(0);
     gameState->set_scrollX(0);

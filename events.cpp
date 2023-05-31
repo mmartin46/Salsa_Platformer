@@ -58,8 +58,8 @@ int processEvents(SDL_Window *window, GameState *gameState)
        {
            gameState->plyr.move_left_dx(); 
        }
-       gameState->plyr.set_facingLeft(1);
-       gameState->plyr.slowingDown = 0;
+       gameState->plyr.set_facingLeft(true);
+       gameState->plyr.set_slowingDown(false);
     }
     else if (state[SDL_SCANCODE_RIGHT])
     {
@@ -68,15 +68,15 @@ int processEvents(SDL_Window *window, GameState *gameState)
        {
            gameState->plyr.move_right_dx();
        }
-       gameState->plyr.set_facingLeft(0);
-       gameState->plyr.slowingDown = 0;
+       gameState->plyr.set_facingLeft(false);
+       gameState->plyr.set_slowingDown(false);
     }
     else
     {
         // Slows down to 0.
         gameState->plyr.set_animFrame(0);
         gameState->plyr.slow_movement();
-        gameState->plyr.slowingDown = 1;
+        gameState->plyr.set_slowingDown(true);
         if (SDL_fabsf(gameState->plyr.get_dx()) < 0.1f)
         {
             gameState->plyr.apply_static_movement();

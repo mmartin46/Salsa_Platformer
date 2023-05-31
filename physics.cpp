@@ -16,7 +16,7 @@ void process(GameState *gameState)
     plyr->set_x(plyr->get_x() + plyr->get_dx());
     plyr->set_y(plyr->get_y() + plyr->get_dy());
 
-    if (plyr->get_dx() != 0 && plyr->get_onBlock() && !plyr->slowingDown)
+    if (plyr->get_dx() != 0 && plyr->get_onBlock() && (plyr->get_slowingDown() == false) )
     {
         if (gameState->get_time() % 8 == 0)
         {
