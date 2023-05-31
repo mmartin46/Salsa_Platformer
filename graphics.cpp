@@ -53,12 +53,23 @@ void loadGame(GameState *gameState)
 
 
     // init blocks
-    for (int i = 0; i < 100; ++i)
+    // for (int i = 0; i < 100; ++i)
+    // {
+    //     gameState->blocks.at(i).w = 60;           
+    //     gameState->blocks.at(i).h = 20;            
+    //     gameState->blocks.at(i).x = i*60;         
+    //     gameState->blocks.at(i).y = 400;                
+    // }
+
+    typename std::vector<Block>::pointer ptr, end = gameState->blocks.data() + 100;
+    uint8_t i = 0;
+    for (ptr = gameState->blocks.data(); ptr < end; ++ptr)
     {
-        gameState->blocks.at(i).w = 60;           
-        gameState->blocks.at(i).h = 20;            
-        gameState->blocks.at(i).x = i*60;         
-        gameState->blocks.at(i).y = 400;                
+        ptr->w = 60;
+        ptr->h = 20;
+        ptr->x = i*60;
+        ptr->y = 400;
+        ++i;
     }
 }
 
@@ -75,10 +86,15 @@ void doRender(SDL_Renderer *renderer, GameState *gameState)
     // set the drawing color to white
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-    for (int i = 0; i < 100; ++i)
+
+    // 
+    typename std::vector<Block>::pointer ptr, end = gameState->blocks.data() + 100;
+    uint8_t i = 0;
+    for (ptr = gameState->blocks.data(); ptr < end; ++ptr)
     {
-        SDL_Rect ledgeRect = { static_cast<int>(gameState->get_scrollX() + gameState->blocks[i].x), gameState->blocks[i].y, gameState->blocks[i].w, gameState->blocks[i].h };
-        SDL_RenderCopy(renderer, gameState->block, NULL, &ledgeRect);
+        SDL_Rect blockRect = { static_cast<int>(gameState->get_scrollX() + ptr->x), ptr->y, ptr->w, ptr->h };
+        SDL_RenderCopy(renderer, gameState->block, NULL, &blockRect);
+        ++i;
     }
 
     // draw a rectangle at plyr's position
