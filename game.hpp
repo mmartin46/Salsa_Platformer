@@ -81,6 +81,9 @@ class GameState
       void process();
       void collisionDetect();
       int processEvents(SDL_Window*);
+      void loadImages();
+      void loadGame();
+      void doRender(SDL_Renderer*);
 };
 
 
@@ -275,6 +278,95 @@ int GameState::processEvents(SDL_Window *window)
         }
     }
     return done;
+}
+
+
+// Load images and create rending textures from the images
+void GameState::loadImages()
+{
+    SDL_Surface *surface = NULL;
+    
+    surface = IMG_Load("img\\plyr_ita.png");
+    if (surface == NULL)
+    {
+        printf("Cannot find plyr_ita.png!\n\n");
+        SDL_Quit();
+        exit(1);
+    }
+    this->plyrFrames[0] = SDL_CreateTextureFromSurface(this->get_renderer(), surface);
+    SDL_FreeSurface(surface);
+
+    // Loading the image's second frame.
+    surface = IMG_Load("img\\plyr_itb.png");
+    if (surface == NULL)
+    {
+        printf("Cannot find plyr_itb.png!\n\n");
+        SDL_Quit();
+        exit(1);
+    }
+    this->plyrFrames[1] = SDL_CreateTextureFromSurface(this->get_renderer(), surface);
+    SDL_FreeSurface(surface);
+
+    surface = IMG_Load("img\\block.png");
+    if (surface == NULL)
+    {
+        printf("Cannot find block.png!\n\n");
+        SDL_Quit();
+        exit(1);
+    }
+    this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);
+
+}
+
+void GameState::loadGame()
+{
+    const char *font_name = "fonts\\ka1.ttf";
+    loadImages();
+
+    // initialize blocks
+    typename std::vector<Block>::pointer ptr, end = this->blocks.data() + 100;
+    uint8_t i = 0;
+    for (ptr = this->blocks.data(); ptr < end; ++ptr)
+    {
+        ptr->set_w(60);
+        ptr->set_h(20);
+        ptr->set_x(i*60);
+        ptr->set_y(400);
+        ++i;
+    }
+}
+
+
+
+void GameState::doRender(SDL_Renderer *renderer)
+{
+    // set the drawing color to blue
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+
+    // clear the screen (to blue)
+    SDL_RenderClear(renderer);
+
+    // set the drawing color to white
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+
+    // Intialize the rectangle for the blocks.
+    typename std::vector<Block>::pointer ptr, end = this->blocks.data() + 100;
+    uint8_t i = 0;
+    for (ptr = this->blocks.data(); ptr < end; ++ptr)
+    {
+        SDL_Rect blockRect = { static_cast<int>(this->get_scrollX() + ptr->get_x()), ptr->get_y(), ptr->get_w(), ptr->get_h() };
+        SDL_RenderCopy(renderer, this->get_block(), NULL, &blockRect);
+        ++i;
+    }
+
+    // draw a rectangle at plyr's position
+    SDL_Rect rect = {  static_cast<int>(this->get_scrollX() + this->plyr.get_x()), static_cast<int>(this->plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
+    SDL_RenderCopyEx(renderer, this->plyrFrames[this->plyr.get_animFrame()], NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->plyr.get_facingLeft() == 0));
+
+
+    SDL_RenderPresent(renderer);    
 }
 
 

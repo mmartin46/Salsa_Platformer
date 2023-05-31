@@ -31,7 +31,7 @@ int main(int argc, char *argv[] )
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     gameState.set_renderer(renderer);
 
-    loadGame(&gameState);
+    gameState.loadGame();
 
     // The window is open: ener program loop (see SDL_PollEvent)
     int done = 0;
@@ -52,7 +52,7 @@ int main(int argc, char *argv[] )
         gameState.collisionDetect();
 
         // Render display
-        doRender(renderer, &gameState);
+        gameState.doRender(renderer);
 
         // don't burn up the CPU
         // SDL_Delay(100);
