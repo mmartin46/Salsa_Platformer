@@ -54,63 +54,62 @@ void GameState::collisionDetect()
     // Check for collision with any blocks (brick blocks)
     for (int i = 0; i < MAP_ROWS; i++)
     {
-      for (int j = 0; j < MAP_COLUMNS; j++)
-      {
-        float pw = PLAYER_WIDTH, ph = PLAYER_HEIGHT;
-        float px = this->plyr.get_x(), py = this->plyr.get_y();
-        float bx = this->tile[i][j].get_x(), by = this->tile[i][j].get_y(), bw = this->tile[i][j].get_w(), bh = this->tile[i][j].get_h();
-    
-        if (px+pw/2 > bx && px+pw/2 < bx+bw)
+        for (int j = 0; j < MAP_COLUMNS; j++)
         {
-            // Head Bump
-            if (py < by+bh && py>by && this->plyr.get_dy() < 0)
+            float pw = PLAYER_WIDTH, ph = PLAYER_HEIGHT;
+            float px = this->plyr.get_x(), py = this->plyr.get_y();
+            float bx = this->tile[i][j].get_x(), by = this->tile[i][j].get_y(), bw = this->tile[i][j].get_w(), bh = this->tile[i][j].get_h();
+        
+            if (px+pw/2 > bx && px+pw/2 < bx+bw)
             {
-                // correct y
-                this->plyr.set_y(by+bh);
-                py = by+bh;
+                // Head Bump
+                if (py < by+bh && py>by && this->plyr.get_dy() < 0)
+                {
+                    // correct y
+                    this->plyr.set_y(by+bh);
+                    py = by+bh;
 
-                // bumped our head, stop any jump velocity
-                this->plyr.set_dy(0);
-                this->plyr.set_onBlock();
+                    // bumped our head, stop any jump velocity
+                    this->plyr.set_dy(0);
+                    this->plyr.set_onBlock();
+                }
+            }
+            if (px+pw > bx && px<bx+bw)
+            {
+                // Head bump
+                if (py+ph > by && py < by && this->plyr.get_dy() > 0)
+                {
+                    // correct y
+                    this->plyr.set_y(by-ph);
+                    py = by-ph;
+
+                    //landed on this ledge, stop any jump velocity
+                    this->plyr.set_dy(0);
+                    this->plyr.set_onBlock();
+                }
+            }
+            if (py+ph > by && py<by+bh)
+            {
+                // Rubbing against right edge
+                if (px < bx+bw && px+pw > bx+bw && this->plyr.get_dx() < 0)
+                {
+                    // correct x
+                    this->plyr.set_x(bx+bw);
+                    px = bx+bw;
+
+                    this->plyr.set_dx(0);
+                }
+                // Rubbing against left edge
+                else if (px+pw > bx && px < bx && this->plyr.get_dx() > 0)
+                {
+                    // correct x
+                    this->plyr.set_x(bx-pw);
+                    px = bx-pw;
+
+                    this->plyr.set_dx(0);
+                }
             }
         }
-        if (px+pw > bx && px<bx+bw)
-        {
-            // Head bump
-            if (py+ph > by && py < by && this->plyr.get_dy() > 0)
-            {
-                // correct y
-                this->plyr.set_y(by-ph);
-                py = by-ph;
-
-                //landed on this ledge, stop any jump velocity
-                this->plyr.set_dy(0);
-                this->plyr.set_onBlock();
-            }
-        }
-        if (py+ph > by && py<by+bh)
-        {
-            // Rubbing against right edge
-            if (px < bx+bw && px+pw > bx+bw && this->plyr.get_dx() < 0)
-            {
-                // correct x
-                this->plyr.set_x(bx+bw);
-                px = bx+bw;
-
-                this->plyr.set_dx(0);
-            }
-            // Rubbing against left edge
-            else if (px+pw > bx && px < bx && this->plyr.get_dx() > 0)
-            {
-                // correct x
-                this->plyr.set_x(bx-pw);
-                px = bx-pw;
-
-                this->plyr.set_dx(0);
-                std::cout << "LEFT EDGE\n";
-            }
-        }
-      }
     }
 }
 
