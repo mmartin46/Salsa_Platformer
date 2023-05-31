@@ -1,12 +1,11 @@
 #include "main.hpp"
 #include "player.hpp"
 
-void loadGame(GameState *gameState)
+// Load images and create rending textures from the images
+void loadImages(GameState *gameState)
 {
     SDL_Surface *surface = NULL;
     
-    // Load images and create rending textures from them
-    // Loading the image's first frame.
     surface = IMG_Load("img\\plyr_ita.png");
     if (surface == NULL)
     {
@@ -38,7 +37,12 @@ void loadGame(GameState *gameState)
     gameState->set_block(SDL_CreateTextureFromSurface(gameState->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
+}
 
+void loadGame(GameState *gameState)
+{
+    const char *font_name = "fonts\\ka1.ttf";
+    loadImages(gameState);
 
     gameState->plyr.set_x(210-PLAYER_WIDTH);    
     gameState->plyr.set_y(240-PLAYER_HEIGHT);

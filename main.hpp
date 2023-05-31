@@ -4,12 +4,13 @@
 
 #include "src\include\SDL2\SDL.h"
 #include "src\include\SDL2\SDL_image.h"
-//#include "src\include\SDL2\SDL_mixer.h"
+#include "src\include\SDL2\SDL_mixer.h"
+#include "src\include\SDL2\SDL_ttf.h"
+
 #include <time.h>
 #include <iostream>
 #include <vector>
-#include "src\include\SDL2\SDL.h"
-#include "src\include\SDL2\SDL_image.h"
+#include <string>
 #include "constants.hpp"
 #include "player.hpp"
 
@@ -32,8 +33,10 @@ class GameState
       // Images
       SDL_Texture *block;
 
+      // Fonts
 
    public:
+      TTF_Font *font;
 
       // Players
       Player plyr;
@@ -54,6 +57,10 @@ class GameState
       inline int get_time() { return time; } const
       inline void set_time(int t) { time = t; }
       
+      // Font
+      inline TTF_Font* get_font() { return font; } const
+      inline void set_font(TTF_Font *f) { font = f; }
+
       // Scrolling
       inline float get_scrollX() { return scrollX; } const
       inline void set_scrollX(float x) { scrollX = x; }

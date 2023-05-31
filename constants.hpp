@@ -1,13 +1,17 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-
+/***********************/
+/*   GAME CONSTANTS    */
+/***********************/
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
 
 #define NUM_BLOCKS 100
 #define BLOCK_HEIGHT 20
 #define BLOCK_WIDTH 60
+
+#define FONT_SIZE 48
 
 #define GRAVITY 0.5f
 #define PLAYER_WIDTH 20 // The player width
