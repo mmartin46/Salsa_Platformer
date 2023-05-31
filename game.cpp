@@ -105,6 +105,7 @@ void GameState::collisionDetect()
                 px = bx-pw;
 
                 this->plyr.set_dx(0);
+                std::cout << "LEFT EDGE\n";
             }
         }
       }
@@ -291,8 +292,8 @@ void GameState::doRender(SDL_Renderer *renderer)
     {
         for (y = 0; y < MAP_COLUMNS; ++y)
         {
-            tile[x][y].set_x(x*BLOCK_HEIGHT);
-            tile[x][y].set_y(y*BLOCK_WIDTH);
+            tile[x][y].set_x(x*BLOCK_WIDTH);
+            tile[x][y].set_y(y*BLOCK_HEIGHT);
             tile[x][y].set_w(BLOCK_WIDTH);
             tile[x][y].set_h(BLOCK_HEIGHT);
 
