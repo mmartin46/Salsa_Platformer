@@ -34,7 +34,7 @@ void loadGame(GameState *gameState)
         SDL_Quit();
         exit(1);
     }
-    gameState->block = SDL_CreateTextureFromSurface(gameState->get_renderer(), surface);
+    gameState->set_block(SDL_CreateTextureFromSurface(gameState->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
 
@@ -85,7 +85,7 @@ void doRender(SDL_Renderer *renderer, GameState *gameState)
     for (ptr = gameState->blocks.data(); ptr < end; ++ptr)
     {
         SDL_Rect blockRect = { static_cast<int>(gameState->get_scrollX() + ptr->x), ptr->y, ptr->w, ptr->h };
-        SDL_RenderCopy(renderer, gameState->block, NULL, &blockRect);
+        SDL_RenderCopy(renderer, gameState->get_block(), NULL, &blockRect);
         ++i;
     }
 

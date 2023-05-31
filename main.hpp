@@ -95,17 +95,22 @@ class GameState
       float scrollX;
       // Renderer
       SDL_Renderer *renderer;
+      // Images
+      SDL_Texture *block;
+
+
    public:
 
       // Players
       Player plyr;
-
       // Platforms
       std::vector<Block> blocks = std::vector<Block>(NUM_BLOCKS);
-
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
-      SDL_Texture *block;
+
+      // Block
+      inline SDL_Texture* get_block() { return block; }
+      inline void set_block(SDL_Texture* b) { block = b; }
 
       // Renderer
       inline SDL_Renderer* get_renderer() { return renderer; } const

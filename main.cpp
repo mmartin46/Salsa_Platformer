@@ -52,7 +52,7 @@ int main(int argc, char *argv[] )
     // Shutdown game and upload all memory
     SDL_DestroyTexture(gameState.plyrFrames[0]);
     SDL_DestroyTexture(gameState.plyrFrames[1]);
-    SDL_DestroyTexture(gameState.block);
+    SDL_DestroyTexture(gameState.get_block());
 
 
     // Close and destroy the window
