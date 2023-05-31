@@ -48,7 +48,7 @@ void GameState::process()
     }
 }
 
-
+// DEBUG: Collision detect works properly
 void GameState::collisionDetect()
 {
     // Check for collision with any blocks (brick blocks)
