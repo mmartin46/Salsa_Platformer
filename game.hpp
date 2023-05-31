@@ -32,6 +32,8 @@ class Block
       inline void set_w(int val) { w = val; }
       inline int get_h() { return h; } const
       inline void set_h(int val) { h = val; }
+
+      friend class GameState;
 };
 
 

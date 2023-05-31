@@ -52,6 +52,7 @@ class Player
       inline bool get_slowingDown() { return slowingDown; } const
       inline void set_slowingDown(bool s) { slowingDown = s; }
       
+      friend class GameState;
 };
 
 // Defaults the character's position

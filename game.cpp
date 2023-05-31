@@ -32,7 +32,7 @@ void GameState::process()
             }
         }
     }
-
+    
     plyr->apply_gravity();
 
     this->set_scrollX(-this->plyr.get_x() + 620);
