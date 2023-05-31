@@ -4,6 +4,9 @@
 /***********************/
 /*   GAME CONSTANTS    */
 /***********************/
+#define MAP_ROWS 160
+#define MAP_COLUMNS 120
+
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
 

@@ -1,5 +1,5 @@
 #include "game.hpp"
-#include "graphics.cpp"
+#include "game.cpp"
 #include "player.hpp"
 
 // Are two rectangles colliding.
