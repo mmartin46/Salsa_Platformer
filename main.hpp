@@ -45,7 +45,7 @@ class Player
       int onBlock;
       short life;
       char *name;
-
+      int animFrame, facingLeft;
    public:
       
       inline int get_x() { return x; } const
@@ -78,11 +78,13 @@ class Player
 
 
 
-      int animFrame, facingLeft, slowingDown;
+      int slowingDown;
 
-      inline int get_animFrame() { return animFrame; } 
+      inline int get_animFrame() { return animFrame; } const
       inline void set_animFrame(int af) { animFrame = af; }
-
+      inline int get_facingLeft() { return facingLeft; } const
+      inline void set_facingLeft(int v) { facingLeft = v; }
+      
 };
 
 class GameState

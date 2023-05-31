@@ -20,13 +20,13 @@ void process(GameState *gameState)
     {
         if (gameState->get_time() % 8 == 0)
         {
-            if (plyr->animFrame == 0)
+            if (plyr->get_animFrame() == 0)
             {
-                plyr->animFrame = 1;
+                plyr->set_animFrame(1);
             }
             else
             {
-                plyr->animFrame = 0;
+                plyr->set_animFrame(0);
             }
         }
     }

@@ -44,8 +44,8 @@ void loadGame(GameState *gameState)
     gameState->plyr.set_dx(0);
     gameState->plyr.set_dy(0);
     gameState->plyr.reset_onBlock();
-    gameState->plyr.animFrame = 0;
-    gameState->plyr.facingLeft = 1;
+    gameState->plyr.set_animFrame(0);
+    gameState->plyr.set_facingLeft(1);
     gameState->plyr.slowingDown = 0;
 
     gameState->set_time(0);
@@ -91,7 +91,7 @@ void doRender(SDL_Renderer *renderer, GameState *gameState)
 
     // draw a rectangle at plyr's position
     SDL_Rect rect = {  static_cast<int>(gameState->get_scrollX() + gameState->plyr.get_x()), static_cast<int>(gameState->plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
-    SDL_RenderCopyEx(renderer, gameState->plyrFrames[gameState->plyr.animFrame], NULL, &rect, 0, NULL, (SDL_RendererFlip)(gameState->plyr.facingLeft == 0));
+    SDL_RenderCopyEx(renderer, gameState->plyrFrames[gameState->plyr.get_animFrame()], NULL, &rect, 0, NULL, (SDL_RendererFlip)(gameState->plyr.get_facingLeft() == 0));
 
 
     SDL_RenderPresent(renderer);    
