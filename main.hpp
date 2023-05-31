@@ -84,8 +84,10 @@ class GameState
 {
    private:
       int time;
-   public:
       float scrollX;
+      // Renderer
+      SDL_Renderer *renderer;
+   public:
 
       // Players
       Player plyr;
@@ -94,15 +96,18 @@ class GameState
       std::vector<Block> blocks = std::vector<Block>(NUM_BLOCKS);
 
       // Images
-      SDL_Texture *plyrFrames[2];
+      std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
       SDL_Texture *block;
-      // Renderer
-      SDL_Renderer *renderer;
+
+
+      inline SDL_Renderer* get_renderer() { return renderer; } const
+      inline void set_renderer(SDL_Renderer *r) { renderer = r; }
 
       inline int get_time() { return time; } const
       inline void set_time(int t) { time = t; }
+      inline float get_scrollX() { return scrollX; } const
+      inline void set_scrollX(float x) { scrollX = x; }
 
-      friend void process(GameState *gameState);
 };
 
 

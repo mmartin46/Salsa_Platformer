@@ -13,7 +13,7 @@ void loadGame(GameState *gameState)
         SDL_Quit();
         exit(1);
     }
-    gameState->plyrFrames[0] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
+    gameState->plyrFrames[0] = SDL_CreateTextureFromSurface(gameState->get_renderer(), surface);
     SDL_FreeSurface(surface);
 
     // Loading the image's second frame.
@@ -24,7 +24,7 @@ void loadGame(GameState *gameState)
         SDL_Quit();
         exit(1);
     }
-    gameState->plyrFrames[1] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
+    gameState->plyrFrames[1] = SDL_CreateTextureFromSurface(gameState->get_renderer(), surface);
     SDL_FreeSurface(surface);
 
     surface = IMG_Load("img\\block.png");
@@ -34,7 +34,7 @@ void loadGame(GameState *gameState)
         SDL_Quit();
         exit(1);
     }
-    gameState->block = SDL_CreateTextureFromSurface(gameState->renderer, surface);
+    gameState->block = SDL_CreateTextureFromSurface(gameState->get_renderer(), surface);
     SDL_FreeSurface(surface);
 
 
@@ -49,7 +49,7 @@ void loadGame(GameState *gameState)
     gameState->plyr.slowingDown = 0;
 
     gameState->set_time(0);
-    gameState->scrollX = 0;
+    gameState->set_scrollX(0);
 
 
     // init blocks
@@ -77,12 +77,12 @@ void doRender(SDL_Renderer *renderer, GameState *gameState)
 
     for (int i = 0; i < 100; ++i)
     {
-        SDL_Rect ledgeRect = { (int) (gameState->scrollX + gameState->blocks[i].x), gameState->blocks[i].y, gameState->blocks[i].w, gameState->blocks[i].h };
+        SDL_Rect ledgeRect = { (int) (gameState->get_scrollX() + gameState->blocks[i].x), gameState->blocks[i].y, gameState->blocks[i].w, gameState->blocks[i].h };
         SDL_RenderCopy(renderer, gameState->block, NULL, &ledgeRect);
     }
 
     // draw a rectangle at plyr's position
-    SDL_Rect rect = { (int) (gameState->scrollX + gameState->plyr.get_x()), (int)gameState->plyr.get_y(), PLAYER_WIDTH, PLAYER_HEIGHT };
+    SDL_Rect rect = { (int) (gameState->get_scrollX() + gameState->plyr.get_x()), (int)gameState->plyr.get_y(), PLAYER_WIDTH, PLAYER_HEIGHT };
     SDL_RenderCopyEx(renderer, gameState->plyrFrames[gameState->plyr.animFrame], NULL, &rect, 0, NULL, (SDL_RendererFlip)(gameState->plyr.facingLeft == 0));
 
 

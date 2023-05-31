@@ -33,15 +33,15 @@ void process(GameState *gameState)
 
     plyr->apply_gravity();
 
-    gameState->scrollX = -gameState->plyr.get_x() + 320;
+    gameState->set_scrollX(-gameState->plyr.get_x() + 320);
     
-    if (gameState->scrollX > 0)
+    if (gameState->get_scrollX() > 0)
     {
-        gameState->scrollX = 0;
+        gameState->set_scrollX(0);
     }
-    if (gameState->scrollX < -38000+320)
+    if (gameState->get_scrollX() < -38000+320)
     {
-        gameState->scrollX = -38000+320;
+        gameState->set_scrollX(-38000+320);
     }
 }
 

@@ -23,7 +23,7 @@ int main(int argc, char *argv[] )
                             0                           // flags
                             );
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    gameState.renderer = renderer;
+    gameState.set_renderer(renderer);
 
     loadGame(&gameState);
 
