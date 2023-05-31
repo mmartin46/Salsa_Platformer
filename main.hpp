@@ -5,15 +5,12 @@
 #include "src\include\SDL2\SDL.h"
 #include "src\include\SDL2\SDL_image.h"
 //#include "src\include\SDL2\SDL_mixer.h"
-#include <stdio.h>
 #include <time.h>
 #include <iostream>
 #include <vector>
 #include "src\include\SDL2\SDL.h"
 #include "src\include\SDL2\SDL_image.h"
-#include <stdio.h>
 #include <iostream>
-#include <time.h>
 #include "constants.hpp"
 #include "player.hpp"
 
