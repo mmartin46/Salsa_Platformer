@@ -260,12 +260,12 @@ void GameState::init_blocks()
     {
         for (y = 0; y < MAP_COLUMNS; ++y)
         {
-            tile[x][y].set_x(x*BLOCK_HEIGHT);
-            tile[x][y].set_y(y*BLOCK_WIDTH);
+            tile[x][y].set_x(x*BLOCK_WIDTH);
+            tile[x][y].set_y(y*BLOCK_HEIGHT);
             tile[x][y].set_w(BLOCK_WIDTH);
             tile[x][y].set_h(BLOCK_HEIGHT);
 
-            std::cout << tilemap[x][y];
+            //std::cout << tilemap[x][y];
         }
     }
 }
