@@ -1,4 +1,4 @@
-#include "main.hpp"
+#include "game.hpp"
 #include "player.hpp"
 
 // Load images and create rending textures from the images
