@@ -29,7 +29,8 @@
 #define PLAYER_SPEED 0.5f   // The player walking speed
 #define PLAYER_JUMP_HEIGHT -8 // The player jump height
 
-
+// Handles each block
+// within the map.
 typedef struct
 {
    int x, y, w, h;
@@ -78,6 +79,10 @@ class Player
 
 
       int animFrame, facingLeft, slowingDown;
+
+      inline int get_animFrame() { return animFrame; } 
+      inline void set_animFrame(int af) { animFrame = af; }
+
 };
 
 class GameState
@@ -99,15 +104,17 @@ class GameState
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
       SDL_Texture *block;
 
-
+      // Renderer
       inline SDL_Renderer* get_renderer() { return renderer; } const
       inline void set_renderer(SDL_Renderer *r) { renderer = r; }
 
+      // Time
       inline int get_time() { return time; } const
       inline void set_time(int t) { time = t; }
+      
+      // Scrolling
       inline float get_scrollX() { return scrollX; } const
       inline void set_scrollX(float x) { scrollX = x; }
-
 };
 
 

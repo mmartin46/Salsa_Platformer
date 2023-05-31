@@ -77,12 +77,12 @@ void doRender(SDL_Renderer *renderer, GameState *gameState)
 
     for (int i = 0; i < 100; ++i)
     {
-        SDL_Rect ledgeRect = { (int) (gameState->get_scrollX() + gameState->blocks[i].x), gameState->blocks[i].y, gameState->blocks[i].w, gameState->blocks[i].h };
+        SDL_Rect ledgeRect = { static_cast<int>(gameState->get_scrollX() + gameState->blocks[i].x), gameState->blocks[i].y, gameState->blocks[i].w, gameState->blocks[i].h };
         SDL_RenderCopy(renderer, gameState->block, NULL, &ledgeRect);
     }
 
     // draw a rectangle at plyr's position
-    SDL_Rect rect = { (int) (gameState->get_scrollX() + gameState->plyr.get_x()), (int)gameState->plyr.get_y(), PLAYER_WIDTH, PLAYER_HEIGHT };
+    SDL_Rect rect = {  static_cast<int>(gameState->get_scrollX() + gameState->plyr.get_x()), static_cast<int>(gameState->plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
     SDL_RenderCopyEx(renderer, gameState->plyrFrames[gameState->plyr.animFrame], NULL, &rect, 0, NULL, (SDL_RendererFlip)(gameState->plyr.facingLeft == 0));
 
 
