@@ -2,6 +2,9 @@
 #ifndef GAME_H
 #define GAME_H
 
+#define MAP_ROWS 160
+#define MAP_COLUMNS 120
+
 #include "src\include\SDL2\SDL.h"
 #include "src\include\SDL2\SDL_image.h"
 #include "src\include\SDL2\SDL_mixer.h"
@@ -46,7 +49,9 @@ class GameState
       // Fonts
       TTF_Font *font;
 
-      std::vector<std::vector<int> > tilemap;
+      int tilemap[MAP_ROWS][MAP_COLUMNS];
+      Block tile[MAP_ROWS][MAP_COLUMNS];
+
    public:
       // Players
       Player plyr;
@@ -78,12 +83,14 @@ class GameState
       inline float get_scrollX() { return scrollX; } const
       inline void set_scrollX(float x) { scrollX = x; }
 
+      void init_blocks();
       void process();
       void collisionDetect();
       int processEvents(SDL_Window*);
       void loadImages();
       void loadGame();
       void doRender(SDL_Renderer*);
+      
 };
 
 
@@ -92,6 +99,7 @@ GameState::GameState()
 {
    this->set_time(0);
    this->set_scrollX(0);
+   this->init_blocks();
 }
 
 void GameState::process()
@@ -137,11 +145,13 @@ void GameState::process()
 void GameState::collisionDetect()
 {
     // Check for collision with any blocks (brick blocks)
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < MAP_ROWS; i++)
     {
+      for (int j = 0; j < MAP_COLUMNS; j++)
+      {
         float pw = PLAYER_WIDTH, ph = PLAYER_HEIGHT;
         float px = this->plyr.get_x(), py = this->plyr.get_y();
-        float bx = this->blocks.at(i).get_x(), by = this->blocks.at(i).get_y(), bw = this->blocks.at(i).get_w(), bh = this->blocks.at(i).get_h();
+        float bx = this->tile[i][j].get_x(), by = this->tile[i][j].get_y(), bw = this->tile[i][j].get_w(), bh = this->tile[i][j].get_h();
     
         if (px+pw/2 > bx && px+pw/2 < bx+bw)
         {
@@ -192,6 +202,7 @@ void GameState::collisionDetect()
                 this->plyr.set_dx(0);
             }
         }
+      }
     }
 }
 
@@ -337,7 +348,18 @@ void GameState::loadGame()
     }
 }
 
+void GameState::init_blocks()
+{
+    int x, y;
 
+    for (x = 0; x < MAP_ROWS; ++x)
+    {
+        for (y = 0; y < MAP_COLUMNS; ++y)
+        {
+            tilemap[x][y] = rand() % 2;
+        }
+    }
+}
 
 void GameState::doRender(SDL_Renderer *renderer)
 {
@@ -351,14 +373,41 @@ void GameState::doRender(SDL_Renderer *renderer)
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
 
-    // Intialize the rectangle for the blocks.
-    typename std::vector<Block>::pointer ptr, end = this->blocks.data() + 100;
-    uint8_t i = 0;
-    for (ptr = this->blocks.data(); ptr < end; ++ptr)
+    SDL_Surface *tile_map_surface = SDL_LoadBMP("img\\tiled_out.bmp");
+    // Surfaces are stored on our CPU memory, and textures are
+    // created and upload to GPU memory. (performance)
+    SDL_Texture *tile_texture = SDL_CreateTextureFromSurface(this->get_renderer(), tile_map_surface);
+
+    SDL_FreeSurface(tile_map_surface);
+
+
+    int x, y; 
+    for (x = 0; x < MAP_ROWS; ++x)
     {
-        SDL_Rect blockRect = { static_cast<int>(this->get_scrollX() + ptr->get_x()), ptr->get_y(), ptr->get_w(), ptr->get_h() };
-        SDL_RenderCopy(renderer, this->get_block(), NULL, &blockRect);
-        ++i;
+        for (y = 0; y < MAP_COLUMNS; ++y)
+        {
+            tile[x][y].set_x(x*BLOCK_HEIGHT);
+            tile[x][y].set_y(y*BLOCK_WIDTH);
+            tile[x][y].set_w(BLOCK_WIDTH);
+            tile[x][y].set_h(BLOCK_HEIGHT);
+
+            //std::cout << tilemap[x][y];
+        }
+    }
+
+    for (x = 0; x < MAP_ROWS; ++x)
+    {
+        for (y = 0; y < MAP_COLUMNS; ++y)
+        {
+            SDL_Rect blockRect = { static_cast<int>(this->get_scrollX() + tile[x][y].get_x()), tile[x][y].get_y(), tile[x][y].get_w(), tile[x][y].get_h() };
+
+            switch (tilemap[x][y])
+            {
+                case 1:
+                    SDL_RenderCopy(this->get_renderer(), this->get_block(), NULL , &blockRect);
+                    break;
+            }
+        }
     }
 
     // draw a rectangle at plyr's position
