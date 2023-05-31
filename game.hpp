@@ -81,6 +81,7 @@ class GameState
       inline float get_scrollX() { return scrollX; } const
       inline void set_scrollX(float x) { scrollX = x; }
 
+      // Functions
       void init_blocks();
       void process();
       void collisionDetect();
