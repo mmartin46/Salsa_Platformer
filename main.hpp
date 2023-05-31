@@ -60,7 +60,7 @@ class Player
       inline void set_dy(int val) { dy = val; }
 
 
-      // Player Phsyics 
+      // Player Physics 
 
       inline void apply_gravity() { dy += GRAVITY; } // Accumulates the gravity constant to the player.
 
