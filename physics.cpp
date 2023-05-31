@@ -1,4 +1,6 @@
 #include "main.hpp"
+#include "player.hpp"
+
 
 // Are two rectangles colliding.
 int collide2d(float x1, float y1, float x2, float y2, float ht1, float wt1, float wt2, float ht2)

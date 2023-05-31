@@ -1,4 +1,5 @@
 #include "main.hpp"
+#include "player.hpp"
 
 void loadGame(GameState *gameState)
 {

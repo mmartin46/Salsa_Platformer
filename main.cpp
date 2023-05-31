@@ -2,6 +2,7 @@
 #include "graphics.cpp"
 #include "physics.cpp"
 #include "events.cpp"
+#include "player.hpp"
 
 int main(int argc, char *argv[] )
 {
@@ -38,7 +39,7 @@ int main(int argc, char *argv[] )
         // Displays the x and y position of the player
         std::cout << gameState.plyr.get_x() << " " << gameState.plyr.get_y() << std::endl;
 
-        
+
         // Check for events
         done = processEvents(window, &gameState);
 

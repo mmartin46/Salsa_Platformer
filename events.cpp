@@ -1,4 +1,5 @@
 #include "main.hpp"
+#include "player.hpp"
 
 
 int processEvents(SDL_Window *window, GameState *gameState)
