@@ -10,7 +10,6 @@
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
 
-#define NUM_BLOCKS 100
 #define BLOCK_HEIGHT 20
 #define BLOCK_WIDTH 60
 
