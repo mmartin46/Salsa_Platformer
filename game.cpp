@@ -4,6 +4,7 @@ GameState::GameState()
 {
    this->set_time(0);
    this->set_scrollX(0);
+   this->set_scrollY(0);
    this->init_blocks();
 }
 
@@ -35,7 +36,8 @@ void GameState::process()
     plyr->apply_gravity();
 
     this->set_scrollX(-this->plyr.get_x() + 320);
-    
+    this->set_scrollY(-this->plyr.get_y() + 320);
+
     if (this->get_scrollX() > 0)
     {
         this->set_scrollX(0);
@@ -240,18 +242,6 @@ void GameState::loadGame()
 {
     const char *font_name = "fonts\\ka1.ttf";
     loadImages();
-
-    // initialize blocks
-    typename std::vector<Block>::pointer ptr, end = this->blocks.data() + 100;
-    uint8_t i = 0;
-    for (ptr = this->blocks.data(); ptr < end; ++ptr)
-    {
-        ptr->set_w(60);
-        ptr->set_h(20);
-        ptr->set_x(i*60);
-        ptr->set_y(400);
-        ++i;
-    }
 }
 
 void GameState::init_blocks()
@@ -262,7 +252,7 @@ void GameState::init_blocks()
     {
         for (y = 0; y < MAP_COLUMNS; ++y)
         {
-            tilemap[x][y] = rand() % 2;
+            tilemap[x][y] = world_map::map[x][y];
         }
     }
 }
@@ -278,22 +268,14 @@ void GameState::doRender(SDL_Renderer *renderer)
     // set the drawing color to white
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-
-    SDL_Surface *tile_map_surface = SDL_LoadBMP("img\\tiled_out.bmp");
-    // Surfaces are stored on our CPU memory, and textures are
-    // created and upload to GPU memory. (performance)
-    SDL_Texture *tile_texture = SDL_CreateTextureFromSurface(this->get_renderer(), tile_map_surface);
-
-    SDL_FreeSurface(tile_map_surface);
-
-
+    // Intialize the map
     int x, y; 
     for (x = 0; x < MAP_ROWS; ++x)
     {
         for (y = 0; y < MAP_COLUMNS; ++y)
         {
-            tile[x][y].set_x(x*BLOCK_WIDTH);
-            tile[x][y].set_y(y*BLOCK_HEIGHT);
+            tile[x][y].set_x(x*BLOCK_HEIGHT);
+            tile[x][y].set_y(y*BLOCK_WIDTH);
             tile[x][y].set_w(BLOCK_WIDTH);
             tile[x][y].set_h(BLOCK_HEIGHT);
 
@@ -305,11 +287,11 @@ void GameState::doRender(SDL_Renderer *renderer)
     {
         for (y = 0; y < MAP_COLUMNS; ++y)
         {
-            SDL_Rect blockRect = { static_cast<int>(this->get_scrollX() + tile[x][y].get_x()), tile[x][y].get_y(), tile[x][y].get_w(), tile[x][y].get_h() };
+            SDL_Rect blockRect = { static_cast<int>(this->get_scrollX() + tile[x][y].get_x()), static_cast<int>(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
 
             switch (tilemap[x][y])
             {
-                case 1:
+                case 0:
                     SDL_RenderCopy(this->get_renderer(), this->get_block(), NULL , &blockRect);
                     break;
             }
@@ -317,7 +299,7 @@ void GameState::doRender(SDL_Renderer *renderer)
     }
 
     // draw a rectangle at plyr's position
-    SDL_Rect rect = {  static_cast<int>(this->get_scrollX() + this->plyr.get_x()), static_cast<int>(this->plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
+    SDL_Rect rect = {  static_cast<int>(this->get_scrollX() + this->plyr.get_x()), static_cast<int>(this->get_scrollY() + this->plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
     SDL_RenderCopyEx(renderer, this->plyrFrames[this->plyr.get_animFrame()], NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->plyr.get_facingLeft() == 0));
 
 
