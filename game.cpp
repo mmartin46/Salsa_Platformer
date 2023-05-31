@@ -35,7 +35,7 @@ void GameState::process()
 
     plyr->apply_gravity();
 
-    this->set_scrollX(-this->plyr.get_x() + 320);
+    this->set_scrollX(-this->plyr.get_x() + 620);
     this->set_scrollY(-this->plyr.get_y() + 320);
 
     if (this->get_scrollX() > 0)
@@ -255,6 +255,20 @@ void GameState::init_blocks()
             tilemap[x][y] = world_map::map[x][y];
         }
     }
+
+    // Intialize the map
+    for (x = 0; x < MAP_ROWS; ++x)
+    {
+        for (y = 0; y < MAP_COLUMNS; ++y)
+        {
+            tile[x][y].set_x(x*BLOCK_HEIGHT);
+            tile[x][y].set_y(y*BLOCK_WIDTH);
+            tile[x][y].set_w(BLOCK_WIDTH);
+            tile[x][y].set_h(BLOCK_HEIGHT);
+
+            std::cout << tilemap[x][y];
+        }
+    }
 }
 
 void GameState::doRender(SDL_Renderer *renderer)
@@ -268,21 +282,7 @@ void GameState::doRender(SDL_Renderer *renderer)
     // set the drawing color to white
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-    // Intialize the map
-    int x, y; 
-    for (x = 0; x < MAP_ROWS; ++x)
-    {
-        for (y = 0; y < MAP_COLUMNS; ++y)
-        {
-            tile[x][y].set_x(x*BLOCK_HEIGHT);
-            tile[x][y].set_y(y*BLOCK_WIDTH);
-            tile[x][y].set_w(BLOCK_WIDTH);
-            tile[x][y].set_h(BLOCK_HEIGHT);
-
-            //std::cout << tilemap[x][y];
-        }
-    }
-
+    int x, y;
     for (x = 0; x < MAP_ROWS; ++x)
     {
         for (y = 0; y < MAP_COLUMNS; ++y)
