@@ -8,6 +8,113 @@ GameState::GameState()
    this->init_blocks();
 }
 
+
+// Load images and create rending textures from the images
+void GameState::loadImages()
+{
+    SDL_Surface *surface = NULL;
+    
+    surface = IMG_Load("img\\plyr_ita.png");
+    if (surface == NULL)
+    {
+        printf("Cannot find plyr_ita.png!\n\n");
+        SDL_Quit();
+        exit(1);
+    }
+    this->plyrFrames[0] = SDL_CreateTextureFromSurface(this->get_renderer(), surface);
+    SDL_FreeSurface(surface);
+
+    // Loading the image's second frame.
+    surface = IMG_Load("img\\plyr_itb.png");
+    if (surface == NULL)
+    {
+        printf("Cannot find plyr_itb.png!\n\n");
+        SDL_Quit();
+        exit(1);
+    }
+    this->plyrFrames[1] = SDL_CreateTextureFromSurface(this->get_renderer(), surface);
+    SDL_FreeSurface(surface);
+
+    surface = IMG_Load("img\\block.png");
+    if (surface == NULL)
+    {
+        printf("Cannot find block.png!\n\n");
+        SDL_Quit();
+        exit(1);
+    }
+    this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);
+
+}
+
+void GameState::loadGame()
+{
+    const char *font_name = "fonts\\ka1.ttf";
+    loadImages();
+}
+
+void GameState::init_blocks()
+{
+    int x, y;
+
+    for (x = 0; x < MAP_ROWS; ++x)
+    {
+        for (y = 0; y < MAP_COLUMNS; ++y)
+        {
+            tilemap[x][y] = world_map::map[x][y];
+        }
+    }
+
+    // Intialize the map
+    for (x = 0; x < MAP_ROWS; ++x)
+    {
+        for (y = 0; y < MAP_COLUMNS; ++y)
+        {
+            // DEBUG
+            tile[x][y].set_y((x*BLOCK_WIDTH) / 1);
+            tile[x][y].set_x((y*BLOCK_HEIGHT));
+            tile[x][y].set_w(BLOCK_WIDTH);
+            tile[x][y].set_h(BLOCK_HEIGHT);
+
+            //std::cout << tilemap[x][y];
+        }
+    }
+}
+
+void GameState::doRender(SDL_Renderer *renderer)
+{
+    // set the drawing color to blue
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+
+    // clear the screen (to blue)
+    SDL_RenderClear(renderer);
+
+    // set the drawing color to white
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+    int x, y;
+    for (x = 0; x < MAP_ROWS; ++x)
+    {
+        for (y = 0; y < MAP_COLUMNS; ++y)
+        {
+            switch (tilemap[x][y])
+            {
+                case 0:
+                    SDL_Rect blockRect = { static_cast<int>(this->get_scrollX() + tile[x][y].get_x()), static_cast<int>(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
+                    SDL_RenderCopy(this->get_renderer(), this->get_block(), NULL , &blockRect);
+                    break;
+            }
+        }
+    }
+
+    // draw a rectangle at plyr's position
+    SDL_Rect rect = {  static_cast<int>(this->get_scrollX() + this->plyr.get_x()), static_cast<int>(this->get_scrollY() + this->plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
+    SDL_RenderCopyEx(renderer, this->plyrFrames[this->plyr.get_animFrame()], NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->plyr.get_facingLeft() == 0));
+
+
+    SDL_RenderPresent(renderer);    
+}
+
 void GameState::process()
 {
     // add time
@@ -47,6 +154,7 @@ void GameState::process()
         this->set_scrollX(-38000+320);
     }
 }
+
 
 // DEBUG: Collision detect works properly
 void GameState::collisionDetect()
@@ -198,110 +306,3 @@ int GameState::processEvents(SDL_Window *window)
     return done;
 }
 
-
-// Load images and create rending textures from the images
-void GameState::loadImages()
-{
-    SDL_Surface *surface = NULL;
-    
-    surface = IMG_Load("img\\plyr_ita.png");
-    if (surface == NULL)
-    {
-        printf("Cannot find plyr_ita.png!\n\n");
-        SDL_Quit();
-        exit(1);
-    }
-    this->plyrFrames[0] = SDL_CreateTextureFromSurface(this->get_renderer(), surface);
-    SDL_FreeSurface(surface);
-
-    // Loading the image's second frame.
-    surface = IMG_Load("img\\plyr_itb.png");
-    if (surface == NULL)
-    {
-        printf("Cannot find plyr_itb.png!\n\n");
-        SDL_Quit();
-        exit(1);
-    }
-    this->plyrFrames[1] = SDL_CreateTextureFromSurface(this->get_renderer(), surface);
-    SDL_FreeSurface(surface);
-
-    surface = IMG_Load("img\\block.png");
-    if (surface == NULL)
-    {
-        printf("Cannot find block.png!\n\n");
-        SDL_Quit();
-        exit(1);
-    }
-    this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);
-
-}
-
-void GameState::loadGame()
-{
-    const char *font_name = "fonts\\ka1.ttf";
-    loadImages();
-}
-
-void GameState::init_blocks()
-{
-    int x, y;
-
-    for (x = 0; x < MAP_ROWS; ++x)
-    {
-        for (y = 0; y < MAP_COLUMNS; ++y)
-        {
-            tilemap[x][y] = world_map::map[x][y];
-        }
-    }
-
-    // Intialize the map
-    for (x = 0; x < MAP_ROWS; ++x)
-    {
-        for (y = 0; y < MAP_COLUMNS; ++y)
-        {
-            // DEBUG
-            tile[x][y].set_y((x*BLOCK_WIDTH) / 3);
-            tile[x][y].set_x(y*BLOCK_HEIGHT);
-            tile[x][y].set_w(BLOCK_WIDTH);
-            tile[x][y].set_h(BLOCK_HEIGHT);
-
-            //std::cout << tilemap[x][y];
-        }
-    }
-}
-
-void GameState::doRender(SDL_Renderer *renderer)
-{
-    // set the drawing color to blue
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-
-    // clear the screen (to blue)
-    SDL_RenderClear(renderer);
-
-    // set the drawing color to white
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-
-    int x, y;
-    for (x = 0; x < MAP_ROWS; ++x)
-    {
-        for (y = 0; y < MAP_COLUMNS; ++y)
-        {
-            SDL_Rect blockRect = { static_cast<int>(this->get_scrollX() + tile[x][y].get_x()), static_cast<int>(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
-
-            switch (tilemap[x][y])
-            {
-                case 0:
-                    SDL_RenderCopy(this->get_renderer(), this->get_block(), NULL , &blockRect);
-                    break;
-            }
-        }
-    }
-
-    // draw a rectangle at plyr's position
-    SDL_Rect rect = {  static_cast<int>(this->get_scrollX() + this->plyr.get_x()), static_cast<int>(this->get_scrollY() + this->plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
-    SDL_RenderCopyEx(renderer, this->plyrFrames[this->plyr.get_animFrame()], NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->plyr.get_facingLeft() == 0));
-
-
-    SDL_RenderPresent(renderer);    
-}
