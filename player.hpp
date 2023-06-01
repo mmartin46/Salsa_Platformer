@@ -61,7 +61,7 @@ class Player
 Player::Player() 
 {
    this->set_x(210-PLAYER_WIDTH);
-   this->set_y(240-PLAYER_HEIGHT);
+   this->set_y(0-PLAYER_HEIGHT);
    this->set_dx(0);
    this->set_dy(0);
 
