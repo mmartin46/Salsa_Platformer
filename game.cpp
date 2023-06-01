@@ -76,7 +76,7 @@ void GameState::init_blocks()
             tile[x][y].set_w(BLOCK_WIDTH);
             tile[x][y].set_h(BLOCK_HEIGHT);
 
-            //std::cout << tilemap[x][y];
+            std::cout << tilemap[x][y];
         }
     }
 }
@@ -100,7 +100,7 @@ void GameState::doRender(SDL_Renderer *renderer)
             switch (tilemap[x][y])
             {
                 case 0:
-                    SDL_Rect blockRect = { static_cast<int>(this->get_scrollX() + tile[x][y].get_x()), static_cast<int>(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
+                    SDL_Rect blockRect = { (int)(this->get_scrollX() + tile[x][y].get_x()), (int)(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_block(), NULL , &blockRect);
                     break;
             }
@@ -108,7 +108,7 @@ void GameState::doRender(SDL_Renderer *renderer)
     }
 
     // draw a rectangle at plyr's position
-    SDL_Rect rect = {  static_cast<int>(this->get_scrollX() + this->plyr.get_x()), static_cast<int>(this->get_scrollY() + this->plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
+    SDL_Rect rect = {  (int)(this->get_scrollX() + this->plyr.get_x()), (int)(this->get_scrollY() + this->plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
     SDL_RenderCopyEx(renderer, this->plyrFrames[this->plyr.get_animFrame()], NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->plyr.get_facingLeft() == 0));
 
 
@@ -164,57 +164,60 @@ void GameState::collisionDetect()
     {
         for (int j = 0; j < MAP_COLUMNS; j++)
         {
-            float pw = PLAYER_WIDTH, ph = PLAYER_HEIGHT;
-            float px = this->plyr.get_x(), py = this->plyr.get_y();
-            float bx = this->tile[i][j].get_x(), by = this->tile[i][j].get_y(), bw = this->tile[i][j].get_w(), bh = this->tile[i][j].get_h();
-        
-            if (px+pw/2 > bx && px+pw/2 < bx+bw)
+            if (this->tilemap[i][j] == 0)
             {
-                // Head Bump
-                if (py < by+bh && py>by && this->plyr.get_dy() < 0)
+                float pw = PLAYER_WIDTH, ph = PLAYER_HEIGHT;
+                float px = this->plyr.get_x(), py = this->plyr.get_y();
+                float bx = this->tile[i][j].get_x(), by = this->tile[i][j].get_y(), bw = this->tile[i][j].get_w(), bh = this->tile[i][j].get_h();
+            
+                if (px+pw/2 > bx && px+pw/2 < bx+bw)
                 {
-                    // correct y
-                    this->plyr.set_y(by+bh);
-                    py = by+bh;
+                    // Head Bump
+                    if (py < by+bh && py>by && this->plyr.get_dy() < 0)
+                    {
+                        // correct y
+                        this->plyr.set_y(by+bh);
+                        py = by+bh;
 
-                    // bumped our head, stop any jump velocity
-                    this->plyr.set_dy(0);
-                    this->plyr.set_onBlock();
+                        // bumped our head, stop any jump velocity
+                        this->plyr.set_dy(0);
+                        this->plyr.set_onBlock();
+                    }
                 }
-            }
-            if (px+pw > bx && px<bx+bw)
-            {
-                // Head bump
-                if (py+ph > by && py < by && this->plyr.get_dy() > 0)
+                if (px+pw > bx && px<bx+bw)
                 {
-                    // correct y
-                    this->plyr.set_y(by-ph);
-                    py = by-ph;
+                    // Head bump
+                    if (py+ph > by && py < by && this->plyr.get_dy() > 0)
+                    {
+                        // correct y
+                        this->plyr.set_y(by-ph);
+                        py = by-ph;
 
-                    //landed on this ledge, stop any jump velocity
-                    this->plyr.set_dy(0);
-                    this->plyr.set_onBlock();
+                        //landed on this ledge, stop any jump velocity
+                        this->plyr.set_dy(0);
+                        this->plyr.set_onBlock();
+                    }
                 }
-            }
-            if (py+ph > by && py<by+bh)
-            {
-                // Rubbing against right edge
-                if (px < bx+bw && px+pw > bx+bw && this->plyr.get_dx() < 0)
+                if (py+ph > by && py<by+bh)
                 {
-                    // correct x
-                    this->plyr.set_x(bx+bw);
-                    px = bx+bw;
+                    // Rubbing against right edge
+                    if (px < bx+bw && px+pw > bx+bw && this->plyr.get_dx() < 0)
+                    {
+                        // correct x
+                        this->plyr.set_x(bx+bw);
+                        px = bx+bw;
 
-                    this->plyr.set_dx(0);
-                }
-                // Rubbing against left edge
-                else if (px+pw > bx && px < bx && this->plyr.get_dx() > 0)
-                {
-                    // correct x
-                    this->plyr.set_x(bx-pw);
-                    px = bx-pw;
+                        this->plyr.set_dx(0);
+                    }
+                    // Rubbing against left edge
+                    else if (px+pw > bx && px < bx && this->plyr.get_dx() > 0)
+                    {
+                        // correct x
+                        this->plyr.set_x(bx-pw);
+                        px = bx-pw;
 
-                    this->plyr.set_dx(0);
+                        this->plyr.set_dx(0);
+                    }
                 }
             }
         }
