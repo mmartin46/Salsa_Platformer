@@ -16,23 +16,40 @@
 #include "player.hpp"
 
 
-// Handles each block
-// within the map.
-class Block
+// An entity is a item, enemy, etc. that
+// isn't a player and has a sprite.
+class Entity
 {
    private:
       int x, y, w, h;
    public:
-      inline int get_x() { return x; } const
-      inline void set_x(int val) { x = val; }
-      inline int get_y() { return y; } const
-      inline void set_y(int val) { y = val; }
+      inline virtual int get_x() { return x; } const
+      inline virtual void set_x(int val) { x = val; }
+      inline virtual int get_y() { return y; } const
+      inline virtual void set_y(int val) { y = val; }
 
-      inline int get_w() { return w; } const
-      inline void set_w(int val) { w = val; }
-      inline int get_h() { return h; } const
-      inline void set_h(int val) { h = val; }
+      inline virtual int get_w() { return w; } const
+      inline virtual void set_w(int val) { w = val; }
+      inline virtual int get_h() { return h; } const
+      inline virtual void set_h(int val) { h = val; }    
+};
 
+// Handles each block
+// within the map.
+class Block : public Entity
+{
+   private:
+      int x, y, w, h;
+   public:
+      friend class GameState;
+};
+
+// Handles each taco within the map.
+class Taco : public Entity
+{
+   private:
+      int x, y, w, h;
+   public:
       friend class GameState;
 };
 
@@ -47,6 +64,7 @@ class GameState
       SDL_Renderer *renderer;
       // Images
       SDL_Texture *block;
+      SDL_Texture *taco;
       // Fonts
       TTF_Font *font;
 
@@ -60,12 +78,16 @@ class GameState
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
 
 
-      GameState();
 
+      GameState();
       // Block
       inline SDL_Texture* get_block() { return block; }
       inline void set_block(SDL_Texture* b) { block = b; }
 
+      // Taco
+      inline SDL_Texture* get_taco() { return taco; }
+      inline void set_taco(SDL_Texture* t) { taco = t; }
+      
       // Renderer
       inline SDL_Renderer* get_renderer() { return renderer; } const
       inline void set_renderer(SDL_Renderer *r) { renderer = r; }

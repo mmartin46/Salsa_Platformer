@@ -45,6 +45,17 @@ void GameState::loadImages()
     this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
+
+    surface = IMG_Load("img\\taco.png");
+    if (surface == NULL)
+    {
+        printf("Cannot find block.png!\n\n");
+        SDL_Quit();
+        exit(1);
+    }
+    this->set_taco(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);
+
 }
 
 void GameState::loadGame()
