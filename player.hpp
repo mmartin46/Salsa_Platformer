@@ -45,12 +45,12 @@ class Player
 
 
 
-      inline int get_animFrame() { return animFrame; } const
-      inline void set_animFrame(int af) { animFrame = af; }
-      inline int get_facingLeft() { return facingLeft; } const
-      inline void set_facingLeft(int v) { facingLeft = v; }
-      inline bool get_slowingDown() { return slowingDown; } const
-      inline void set_slowingDown(bool s) { slowingDown = s; }
+      inline virtual int get_animFrame() { return animFrame; } const
+      inline virtual void set_animFrame(int af) { animFrame = af; }
+      inline virtual int get_facingLeft() { return facingLeft; } const
+      inline virtual void set_facingLeft(int v) { facingLeft = v; }
+      inline virtual bool get_slowingDown() { return slowingDown; } const
+      inline virtual void set_slowingDown(bool s) { slowingDown = s; }
       
       friend class GameState;
 };

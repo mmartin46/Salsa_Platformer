@@ -14,51 +14,47 @@ int collide2d(float x1, float y1, float x2, float y2, float ht1, float wt1, floa
     return (!((x1 > (x2+wt2)) || (x2 > (x1+wt1)) || (y1 > (y2+ht2)) || (y2 > (y1+ht1))));
 }
 
+// Allows the user to load a texture and returns a surface.
+//
+// Parameters:
+// \param file includes the file path
+// \param error_msg includes an error message if the file isn't found.
+SDL_Surface* get_surface(const char *file, const char *error_msg)
+{
+    SDL_Surface *surface = NULL;
+    
+    surface = IMG_Load(file);
+    if (surface == NULL)
+    {
+        printf(error_msg);
+        SDL_Quit();
+        exit(1);
+    } 
+    return surface;   
+}
+
 
 // Load images and create rending textures from the images
 void GameState::loadImages()
 {
-    SDL_Surface *surface = NULL;
-    
-    surface = IMG_Load("img\\plyr_ita.png");
-    if (surface == NULL)
-    {
-        printf("Cannot find plyr_ita.png!\n\n");
-        SDL_Quit();
-        exit(1);
-    }
+
+    // Loading the player's first frame.
+    SDL_Surface* surface = get_surface("img\\plyr_ita.png", "Cannot find plyr_ita.png!\n\n");
     this->plyrFrames[0] = SDL_CreateTextureFromSurface(this->get_renderer(), surface);
     SDL_FreeSurface(surface);
 
-    // Loading the image's second frame.
-    surface = IMG_Load("img\\plyr_itb.png");
-    if (surface == NULL)
-    {
-        printf("Cannot find plyr_itb.png!\n\n");
-        SDL_Quit();
-        exit(1);
-    }
+    // Loading the player's second frame.
+    surface = get_surface("img\\plyr_itb.png", "Cannot find plyr_itb.png!\n\n");
     this->plyrFrames[1] = SDL_CreateTextureFromSurface(this->get_renderer(), surface);
     SDL_FreeSurface(surface);
 
-    surface = IMG_Load("img\\block.png");
-    if (surface == NULL)
-    {
-        printf("Cannot find block.png!\n\n");
-        SDL_Quit();
-        exit(1);
-    }
+    // Loading the block's texture.
+    surface = get_surface("img\\block.png", "Cannot find block.png!\n\n");
     this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
-
-    surface = IMG_Load("img\\taco.png");
-    if (surface == NULL)
-    {
-        printf("Cannot find block.png!\n\n");
-        SDL_Quit();
-        exit(1);
-    }
+    // Loading the taco texture.
+    surface = get_surface("img\\taco.png", "Cannot find block.png!\n\n");
     this->set_taco(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 }
