@@ -162,10 +162,22 @@ void GameState::process()
     // add time
     this->set_time(this->get_time() + 1);
 
+    enemy_movement();
+
     // plyr movement
     Player *plyr = &this->plyr;
     plyr->set_x(plyr->get_x() + plyr->get_dx());
     plyr->set_y(plyr->get_y() + plyr->get_dy());
+
+    // enemy movement
+    for (int i = 0; i < MAP_ROWS; ++i)
+    {
+        for (int j = 0; j < MAP_COLUMNS; ++j)
+        {
+            this->enemies[i][j].set_x(this->enemies[i][j].get_x() + this->enemies[i][j].get_dx());
+            this->enemies[i][j].set_y(this->enemies[i][j].get_y() + this->enemies[i][j].get_dy());
+        }
+    }    
 
     if (plyr->get_dx() != 0 && plyr->get_onBlock() && (plyr->get_slowingDown() == false) )
     {
@@ -181,9 +193,20 @@ void GameState::process()
             }
         }
     }
-    
+
+    // Player Gravity    
     plyr->apply_gravity();
 
+    // Enemy Gravity
+    for (int i = 0; i < MAP_ROWS; ++i)
+    {
+        for (int j = 0; j < MAP_COLUMNS; ++j)
+        {
+            this->enemies[i][j].apply_gravity();
+        }
+    }
+
+    // Scrolling
     this->set_scrollX(-this->plyr.get_x() + 620);
     this->set_scrollY(-this->plyr.get_y() + 320);
 
@@ -205,8 +228,9 @@ void GameState::process()
 // \param P_W represents the first rect's width
 // \param P_H represents the first rect's height
 template <typename T>
-void GameState::collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int j , int P_W, int P_H)
+int GameState::collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int j , int P_W, int P_H)
 {
+    int touched = 0;
     float pw = P_W, ph = P_H;
     float px = plyr.get_x(), py = plyr.get_y();
     float bx = tile[i][j].get_x(), by = tile[i][j].get_y(), bw = tile[i][j].get_w(), bh = tile[i][j].get_h();
@@ -223,6 +247,7 @@ void GameState::collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int 
             // bumped our head, stop any jump velocity
             plyr.set_dy(0);
             plyr.set_onBlock();
+            touched = 1;
         }
     }
     if (px+pw > bx && px<bx+bw)
@@ -237,6 +262,7 @@ void GameState::collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int 
             //landed on this ledge, stop any jump velocity
             plyr.set_dy(0);
             plyr.set_onBlock();
+            touched = 1;
         }
     }
     if (py+ph > by && py<by+bh)
@@ -249,6 +275,7 @@ void GameState::collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int 
             px = bx+bw;
 
             plyr.set_dx(0);
+            touched = 1;
         }
         // Rubbing against left edge
         else if (px+pw > bx && px < bx && plyr.get_dx() > 0)
@@ -258,8 +285,10 @@ void GameState::collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int 
             px = bx-pw;
 
             plyr.set_dx(0);
+            touched = 1;
         }
     }
+    return touched;
 }
 
 
@@ -316,6 +345,7 @@ void GameState::collisionDetect()
             if (this->tilemap[i][j] == world_map::BLOCK_COLLISION)
             {
                 collision_in_map(this->plyr, this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
+                collision_in_map(this->enemies[i][j], this->tile, i, j, ENEMY_WIDTH, ENEMY_HEIGHT);
             }
         }
     }

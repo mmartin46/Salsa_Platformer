@@ -124,12 +124,29 @@ class GameState
       void enemy_movement();
 
       template <typename T>
-      void collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int j, int, int);
+      int collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int j, int, int);
 
       friend class Enemy;    
 };
 
 
-
+void GameState::enemy_movement()
+{
+   for (int i = 0; i < MAP_ROWS; ++i)
+   {
+      for (int j = 0; j < MAP_COLUMNS; ++j)
+      {
+         if ((this->get_time() % 1000) < 500)
+         {
+            this->enemies[i][j].set_x(this->enemies[i][j].get_x() + 1);
+         }
+         else
+         {
+            this->enemies[i][j].set_x(this->enemies[i][j].get_x() - 1);           
+         }
+      
+      }
+   }
+}
 
 #endif
