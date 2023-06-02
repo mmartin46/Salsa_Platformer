@@ -14,6 +14,7 @@
 #include <string>
 #include "constants.hpp"
 #include "player.hpp"
+#include "enemy.hpp"
 
 
 // An entity is a item, enemy, etc. that
@@ -73,13 +74,12 @@ class GameState
 
       int tilemap[MAP_ROWS][MAP_COLUMNS];
       Block tile[MAP_ROWS][MAP_COLUMNS];
-
    public:
       // Players
       Player plyr;
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
-
+      std::vector<Enemy> enemies = std::vector<Enemy>(ENEMY_COUNT);
 
 
       GameState();
@@ -120,12 +120,15 @@ class GameState
       void loadImages();
       void loadGame();
       void doRender(SDL_Renderer*);
+      void enemy_movement();
 
       template <typename T>
       void collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int j, int, int);
 
       friend class Enemy;    
 };
+
+
 
 
 #endif

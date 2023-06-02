@@ -69,6 +69,7 @@ void GameState::loadGame()
     loadImages();
 }
 
+
 void GameState::init_blocks()
 {
     int x, y;
@@ -124,6 +125,10 @@ void GameState::doRender(SDL_Renderer *renderer)
                 case world_map::TACO_COLLISION : {
                     SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile[x][y].get_x()), (int)(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_taco(), NULL , &tacoRect);
+                } break;
+                case world_map::EMEMY_COLLISION : {
+                    SDL_Rect enemyRect = { (int)(this->get_scrollX() + tile[x][y].get_x()), (int)(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
+                    SDL_RenderCopy(this->get_renderer(), this->get_enemy(), NULL , &enemyRect);              
                 } break;
             }
         }
@@ -269,6 +274,22 @@ void GameState::collisionDetect()
                 // Makes sure the collision will not be repeated.
                 tilemap[i][j] = -1;
             }
+            // If the player and enemy collide.
+            else if ((this->tilemap[i][j] == 2) && collide2d(
+                this->plyr.get_x(),
+                this->plyr.get_y(),
+                this->tile[i][j].get_x(),
+                this->tile[i][j].get_y(),
+                PLAYER_HEIGHT,
+                PLAYER_WIDTH,
+                ENEMY_WIDTH,
+                ENEMY_HEIGHT
+            ))
+            {
+                std::cout << "HIT!!!!" << std::endl;
+            }
+
+
         }
     }
 
