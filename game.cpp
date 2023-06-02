@@ -178,6 +178,64 @@ void GameState::process()
 }
 
 
+template <typename T>
+void GameState::collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int j , int P_W, int P_H)
+{
+    float pw = P_W, ph = P_H;
+    float px = plyr.get_x(), py = plyr.get_y();
+    float bx = tile[i][j].get_x(), by = tile[i][j].get_y(), bw = tile[i][j].get_w(), bh = tile[i][j].get_h();
+            
+    if (px+pw/2 > bx && px+pw/2 < bx+bw)
+    {
+        // Head Bump
+        if (py < by+bh && py>by && plyr.get_dy() < 0)
+        {
+            // correct y
+            plyr.set_y(by+bh);
+            py = by+bh;
+
+            // bumped our head, stop any jump velocity
+            plyr.set_dy(0);
+            plyr.set_onBlock();
+        }
+    }
+    if (px+pw > bx && px<bx+bw)
+    {
+        // Head bump
+        if (py+ph > by && py < by && plyr.get_dy() > 0)
+        {
+            // correct y
+            plyr.set_y(by-ph);
+            py = by-ph;
+
+            //landed on this ledge, stop any jump velocity
+            plyr.set_dy(0);
+            plyr.set_onBlock();
+        }
+    }
+    if (py+ph > by && py<by+bh)
+    {
+        // Rubbing against right edge
+        if (px < bx+bw && px+pw > bx+bw && plyr.get_dx() < 0)
+        {
+            // correct x
+            plyr.set_x(bx+bw);
+            px = bx+bw;
+
+            plyr.set_dx(0);
+        }
+        // Rubbing against left edge
+        else if (px+pw > bx && px < bx && plyr.get_dx() > 0)
+        {
+            // correct x
+            plyr.set_x(bx-pw);
+            px = bx-pw;
+
+            plyr.set_dx(0);
+        }
+    }
+}
+
 
 // DEBUG: Collision detect works properly
 void GameState::collisionDetect()
@@ -218,63 +276,13 @@ void GameState::collisionDetect()
         {
             if (this->tilemap[i][j] == world_map::BLOCK_COLLISION)
             {
-                float pw = PLAYER_WIDTH, ph = PLAYER_HEIGHT;
-                float px = this->plyr.get_x(), py = this->plyr.get_y();
-                float bx = this->tile[i][j].get_x(), by = this->tile[i][j].get_y(), bw = this->tile[i][j].get_w(), bh = this->tile[i][j].get_h();
-            
-                if (px+pw/2 > bx && px+pw/2 < bx+bw)
-                {
-                    // Head Bump
-                    if (py < by+bh && py>by && this->plyr.get_dy() < 0)
-                    {
-                        // correct y
-                        this->plyr.set_y(by+bh);
-                        py = by+bh;
-
-                        // bumped our head, stop any jump velocity
-                        this->plyr.set_dy(0);
-                        this->plyr.set_onBlock();
-                    }
-                }
-                if (px+pw > bx && px<bx+bw)
-                {
-                    // Head bump
-                    if (py+ph > by && py < by && this->plyr.get_dy() > 0)
-                    {
-                        // correct y
-                        this->plyr.set_y(by-ph);
-                        py = by-ph;
-
-                        //landed on this ledge, stop any jump velocity
-                        this->plyr.set_dy(0);
-                        this->plyr.set_onBlock();
-                    }
-                }
-                if (py+ph > by && py<by+bh)
-                {
-                    // Rubbing against right edge
-                    if (px < bx+bw && px+pw > bx+bw && this->plyr.get_dx() < 0)
-                    {
-                        // correct x
-                        this->plyr.set_x(bx+bw);
-                        px = bx+bw;
-
-                        this->plyr.set_dx(0);
-                    }
-                    // Rubbing against left edge
-                    else if (px+pw > bx && px < bx && this->plyr.get_dx() > 0)
-                    {
-                        // correct x
-                        this->plyr.set_x(bx-pw);
-                        px = bx-pw;
-
-                        this->plyr.set_dx(0);
-                    }
-                }
+                collision_in_map(this->plyr, this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
             }
         }
     }
 }
+
+
 
 
 int GameState::processEvents(SDL_Window *window)

@@ -1,6 +1,7 @@
 #include "game.hpp"
 #include "game.cpp"
 #include "player.hpp"
+#include "enemy.hpp"
 
 
 int main(int argc, char *argv[] )
