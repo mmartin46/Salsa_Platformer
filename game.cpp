@@ -88,12 +88,27 @@ void GameState::init_blocks()
         for (y = 0; y < MAP_COLUMNS; ++y)
         {
             // DEBUG
-            tile[x][y].set_y((x*BLOCK_WIDTH) / 1);
-            tile[x][y].set_x((y*BLOCK_HEIGHT));
-            tile[x][y].set_w(BLOCK_WIDTH);
-            tile[x][y].set_h(BLOCK_HEIGHT);
-
-            std::cout << tilemap[x][y];
+            switch (tilemap[x][y]) 
+            {
+                case world_map::BLOCK_COLLISION : {
+                    tile[x][y].set_y((x*BLOCK_WIDTH) / 1);
+                    tile[x][y].set_x((y*BLOCK_HEIGHT));
+                    tile[x][y].set_w(BLOCK_WIDTH);
+                    tile[x][y].set_h(BLOCK_HEIGHT);
+                } break;
+                case world_map::TACO_COLLISION : {
+                    tile[x][y].set_y((x*BLOCK_WIDTH) / 1);
+                    tile[x][y].set_x((y*BLOCK_HEIGHT));
+                    tile[x][y].set_w(BLOCK_WIDTH);
+                    tile[x][y].set_h(BLOCK_HEIGHT);
+                } break;
+                case world_map::EMEMY_COLLISION : {
+                    enemies[x][y].set_y((x*BLOCK_WIDTH) / 1);
+                    enemies[x][y].set_x((y*BLOCK_HEIGHT));
+                    enemies[x][y].set_w(BLOCK_WIDTH);
+                    enemies[x][y].set_h(BLOCK_HEIGHT);
+                } break;
+            }
         }
     }
 }
@@ -127,7 +142,7 @@ void GameState::doRender(SDL_Renderer *renderer)
                     SDL_RenderCopy(this->get_renderer(), this->get_taco(), NULL , &tacoRect);
                 } break;
                 case world_map::EMEMY_COLLISION : {
-                    SDL_Rect enemyRect = { (int)(this->get_scrollX() + tile[x][y].get_x()), (int)(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
+                    SDL_Rect enemyRect = { (int)(this->get_scrollX() + enemies[x][y].get_x()), (int)(this->get_scrollY() + enemies[x][y].get_y()), enemies[x][y].get_w(), enemies[x][y].get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_enemy(), NULL , &enemyRect);              
                 } break;
             }
@@ -278,8 +293,8 @@ void GameState::collisionDetect()
             else if ((this->tilemap[i][j] == 2) && collide2d(
                 this->plyr.get_x(),
                 this->plyr.get_y(),
-                this->tile[i][j].get_x(),
-                this->tile[i][j].get_y(),
+                this->enemies[i][j].get_x(),
+                this->enemies[i][j].get_y(),
                 PLAYER_HEIGHT,
                 PLAYER_WIDTH,
                 ENEMY_WIDTH,

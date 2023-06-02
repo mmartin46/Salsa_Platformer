@@ -74,12 +74,13 @@ class GameState
 
       int tilemap[MAP_ROWS][MAP_COLUMNS];
       Block tile[MAP_ROWS][MAP_COLUMNS];
+      Enemy enemies[MAP_ROWS][MAP_COLUMNS];
    public:
       // Players
       Player plyr;
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
-      std::vector<Enemy> enemies = std::vector<Enemy>(ENEMY_COUNT);
+
 
 
       GameState();
