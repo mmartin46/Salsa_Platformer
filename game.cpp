@@ -8,7 +8,6 @@ GameState::GameState()
    this->init_blocks();
 }
 
-
 // Are two rectangles colliding.
 int collide2d(float x1, float y1, float x2, float y2, float ht1, float wt1, float wt2, float ht2)
 {
@@ -117,12 +116,12 @@ void GameState::doRender(SDL_Renderer *renderer)
             switch (tilemap[x][y])
             {
                 // Block
-                case 0: {
+                case world_map::BLOCK_COLLISION : {
                     SDL_Rect blockRect = { (int)(this->get_scrollX() + tile[x][y].get_x()), (int)(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_block(), NULL , &blockRect);
                 } break;
                 // Taco
-                case 1: {
+                case world_map::TACO_COLLISION : {
                     SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile[x][y].get_x()), (int)(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_taco(), NULL , &tacoRect);
                 } break;
@@ -200,8 +199,10 @@ void GameState::collisionDetect()
                 BLOCK_HEIGHT
             ))
             {
+                // Create a rectangle and set the texture to null.
                 SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile[i][j].get_x()), (int)(this->get_scrollY() + tile[i][j].get_y()), tile[i][j].get_w(), tile[i][j].get_h() };
                 SDL_RenderCopy(this->get_renderer(), NULL, NULL , &tacoRect);
+                // Makes sure the collision will not be repeated.
                 tilemap[i][j] = -1;
             }
         }
@@ -215,7 +216,7 @@ void GameState::collisionDetect()
     {
         for (int j = 0; j < MAP_COLUMNS; j++)
         {
-            if (this->tilemap[i][j] == 0)
+            if (this->tilemap[i][j] == world_map::BLOCK_COLLISION)
             {
                 float pw = PLAYER_WIDTH, ph = PLAYER_HEIGHT;
                 float px = this->plyr.get_x(), py = this->plyr.get_y();

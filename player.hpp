@@ -15,33 +15,33 @@ class Player
       Player();
       Player(int, int);
       
-      inline int get_x() { return x; } const
-      inline void set_x(int val) { x = val; }
-      inline int get_y() { return y; } const
-      inline void set_y(int val) { y = val; }
+      inline virtual int get_x() { return x; } const
+      inline virtual void set_x(int val) { x = val; }
+      inline virtual int get_y() { return y; } const
+      inline virtual void set_y(int val) { y = val; }
 
-      inline int get_dx() { return dx; } const
-      inline void set_dx(int val) { dx = val; }
-      inline int get_dy() { return dy; } const
-      inline void set_dy(int val) { dy = val; }
+      inline virtual int get_dx() { return dx; } const
+      inline virtual void set_dx(int val) { dx = val; }
+      inline virtual int get_dy() { return dy; } const
+      inline virtual void set_dy(int val) { dy = val; }
 
 
       // Player Physics 
 
-      inline void apply_gravity() { dy += GRAVITY; } // Accumulates the gravity constant to the player.
+      inline virtual void apply_gravity() { dy += GRAVITY; } // Accumulates the gravity constant to the player.
 
-      inline void apply_jump() { dy -= 0.3f; }
+      inline virtual void apply_jump() { dy -= 0.3f; }
       
-      inline void move_left_x() { dx += -PLAYER_SPEED; }
-      inline void move_right_x() { dx += PLAYER_SPEED; }
+      inline virtual void move_left_x() { dx += -PLAYER_SPEED; }
+      inline virtual void move_right_x() { dx += PLAYER_SPEED; }
 
-      inline void move_left_dx() { dx = -PLAYER_SPEED_DX; }
-      inline void move_right_dx() { dx = PLAYER_SPEED_DX; }
-      inline void slow_movement() { dx *= 0.8; };
-      inline void apply_static_movement() { dx = 0; }
-      inline void set_onBlock() { onBlock = 1; }
-      inline void reset_onBlock() { onBlock = 0; }
-      inline int get_onBlock() { return onBlock; }
+      inline virtual void move_left_dx() { dx = -PLAYER_SPEED_DX; }
+      inline virtual void move_right_dx() { dx = PLAYER_SPEED_DX; }
+      inline virtual void slow_movement() { dx *= 0.8; };
+      inline virtual void apply_static_movement() { dx = 0; }
+      inline virtual void set_onBlock() { onBlock = 1; }
+      inline virtual void reset_onBlock() { onBlock = 0; }
+      inline virtual int get_onBlock() { return onBlock; }
 
 
 
