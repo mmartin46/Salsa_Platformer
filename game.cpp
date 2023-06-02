@@ -177,7 +177,13 @@ void GameState::process()
     }
 }
 
-
+// Represents a collision within the map
+// \param plyr represents the first rect
+// \param tile represents a 2D array map
+// \param i represents the current row
+// \param j represents the current column
+// \param P_W represents the first rect's width
+// \param P_H represents the first rect's height
 template <typename T>
 void GameState::collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int j , int P_W, int P_H)
 {
@@ -265,9 +271,6 @@ void GameState::collisionDetect()
             }
         }
     }
-
-
-
 
     // Check for collision with any blocks (brick blocks)
     for (int i = 0; i < MAP_ROWS; i++)
