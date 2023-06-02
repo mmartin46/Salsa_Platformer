@@ -9,6 +9,13 @@ GameState::GameState()
 }
 
 
+// Are two rectangles colliding.
+int collide2d(float x1, float y1, float x2, float y2, float ht1, float wt1, float wt2, float ht2)
+{
+    return (!((x1 > (x2+wt2)) || (x2 > (x1+wt1)) || (y1 > (y2+ht2)) || (y2 > (y1+ht1))));
+}
+
+
 // Load images and create rending textures from the images
 void GameState::loadImages()
 {
@@ -55,7 +62,6 @@ void GameState::loadImages()
     }
     this->set_taco(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
-
 }
 
 void GameState::loadGame()
@@ -110,10 +116,12 @@ void GameState::doRender(SDL_Renderer *renderer)
         {
             switch (tilemap[x][y])
             {
+                // Block
                 case 0: {
                     SDL_Rect blockRect = { (int)(this->get_scrollX() + tile[x][y].get_x()), (int)(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_block(), NULL , &blockRect);
                 } break;
+                // Taco
                 case 1: {
                     SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile[x][y].get_x()), (int)(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_taco(), NULL , &tacoRect);
@@ -171,9 +179,37 @@ void GameState::process()
 }
 
 
+
 // DEBUG: Collision detect works properly
 void GameState::collisionDetect()
 {
+    // Check for collision with any tacos
+    for (int i = 0; i < MAP_ROWS; i++)
+    {
+        for (int j = 0; j < MAP_COLUMNS; j++)
+        {
+            // If the player and taco collide.
+            if ((this->tilemap[i][j] == 1) && collide2d(
+                this->plyr.get_x(),
+                this->plyr.get_y(),
+                this->tile[i][j].get_x(),
+                this->tile[i][j].get_y(),
+                PLAYER_HEIGHT,
+                PLAYER_WIDTH,
+                BLOCK_WIDTH,
+                BLOCK_HEIGHT
+            ))
+            {
+                SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile[i][j].get_x()), (int)(this->get_scrollY() + tile[i][j].get_y()), tile[i][j].get_w(), tile[i][j].get_h() };
+                SDL_RenderCopy(this->get_renderer(), NULL, NULL , &tacoRect);
+                tilemap[i][j] = -1;
+            }
+        }
+    }
+
+
+
+
     // Check for collision with any blocks (brick blocks)
     for (int i = 0; i < MAP_ROWS; i++)
     {
