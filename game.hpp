@@ -67,6 +67,7 @@ class GameState
       // Images
       SDL_Texture *block;
       SDL_Texture *taco;
+      SDL_Texture *enemy;
       // Fonts
       TTF_Font *font;
 
