@@ -57,6 +57,10 @@ void GameState::loadImages()
     surface = get_surface("img\\taco.png", "Cannot find block.png!\n\n");
     this->set_taco(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
+
+    // Loading enemy texture.
+    surface = get_surface("img\\enemy.png", "Cannot find enemy.png!\n\n");
+    this->set_enemy(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
 }
 
 void GameState::loadGame()

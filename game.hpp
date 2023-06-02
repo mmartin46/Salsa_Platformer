@@ -83,14 +83,16 @@ class GameState
 
 
       GameState();
-      // Block
+
+      // Textures
       inline SDL_Texture* get_block() { return block; }
       inline void set_block(SDL_Texture* b) { block = b; }
-
-      // Taco
       inline SDL_Texture* get_taco() { return taco; }
       inline void set_taco(SDL_Texture* t) { taco = t; }
-      
+      inline SDL_Texture* get_enemy() { return enemy; }
+      inline void set_enemy(SDL_Texture* e) { enemy = e; }
+
+
       // Renderer
       inline SDL_Renderer* get_renderer() { return renderer; } const
       inline void set_renderer(SDL_Renderer *r) { renderer = r; }
