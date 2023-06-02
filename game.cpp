@@ -110,10 +110,14 @@ void GameState::doRender(SDL_Renderer *renderer)
         {
             switch (tilemap[x][y])
             {
-                case 0:
+                case 0: {
                     SDL_Rect blockRect = { (int)(this->get_scrollX() + tile[x][y].get_x()), (int)(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_block(), NULL , &blockRect);
-                    break;
+                } break;
+                case 1: {
+                    SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile[x][y].get_x()), (int)(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
+                    SDL_RenderCopy(this->get_renderer(), this->get_taco(), NULL , &tacoRect);
+                } break;
             }
         }
     }
