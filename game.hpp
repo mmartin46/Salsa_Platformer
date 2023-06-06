@@ -105,6 +105,10 @@ class GameState
       inline void set_taco(SDL_Texture* t) { taco = t; }
       inline SDL_Texture* get_enemy() { return enemy; }
       inline void set_enemy(SDL_Texture* e) { enemy = e; }
+      inline SDL_Texture* get_soil() { return soil; }
+      inline void set_soil(SDL_Texture* s) { soil = s; }
+      inline SDL_Texture* get_spike() { return spike; }
+      inline void set_spike(SDL_Texture* s) { spike = s; }
 
 
       // Renderer

@@ -61,6 +61,16 @@ void GameState::loadImages()
     // Loading enemy texture.
     surface = get_surface("img\\enemy.png", "Cannot find enemy.png!\n\n");
     this->set_enemy(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+
+    //Loading spike texture.
+    surface = get_surface("img\\spike.png", "Cannot find spike.png!\n\n");
+    this->set_spike(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);
+
+    // Loading soil texture.
+    surface = get_surface("img\\soil.png", "Cannot find soil.png!\n\n");
+    this->set_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);    
 }
 
 void GameState::loadGame()
