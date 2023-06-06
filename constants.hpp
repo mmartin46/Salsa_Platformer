@@ -4,8 +4,8 @@
 /***********************/
 /*   GAME CONSTANTS    */
 /***********************/
-#define MAP_COLUMNS 229
-#define MAP_ROWS 20
+#define MAP_COLUMNS 242
+#define MAP_ROWS 31
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
@@ -36,7 +36,6 @@
 #define ENEMY_COUNT 30
 #define ENEMY_WIDTH 20
 #define ENEMY_HEIGHT 20
-
 
 
 namespace world_map {

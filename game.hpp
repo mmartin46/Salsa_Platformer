@@ -63,6 +63,11 @@ class Taco : public Entity
       friend class GameState;
 };
 
+class Backdrop : public Entity
+{
+   private:
+      int x, y, w, h;
+};
 
 
 
@@ -80,6 +85,7 @@ class GameState
       SDL_Texture *enemy;
       SDL_Texture *soil;
       SDL_Texture *spike;
+      SDL_Texture *backdrop_texture;
       // Fonts
       TTF_Font *font;
 
@@ -88,6 +94,7 @@ class GameState
       Soil soiltile[MAP_ROWS][MAP_COLUMNS];
       Enemy enemies[MAP_ROWS][MAP_COLUMNS];
       Spike spikes[MAP_ROWS][MAP_COLUMNS];
+      Backdrop backdrop;
    public:
       // Players
       Player plyr;
@@ -109,6 +116,8 @@ class GameState
       inline void set_soil(SDL_Texture* s) { soil = s; }
       inline SDL_Texture* get_spike() { return spike; }
       inline void set_spike(SDL_Texture* s) { spike = s; }
+      inline SDL_Texture* get_backdrop_texture() { return backdrop_texture; }
+      inline void set_backdrop_texture(SDL_Texture* b) { backdrop_texture = b; }
 
 
       // Renderer

@@ -71,6 +71,11 @@ void GameState::loadImages()
     surface = get_surface("img\\soil.png", "Cannot find soil.png!\n\n");
     this->set_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);    
+
+    // Loading background texture.
+    surface = get_surface("img\\building_backdrop.png", "Cannot find building_backdrop.png!\n\n");
+    this->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);    
 }
 
 void GameState::loadGame()
@@ -91,6 +96,11 @@ void GameState::init_blocks()
             tilemap[x][y] = world_map::map[x][y];
         }
     }
+
+    this->backdrop.set_x(200);
+    this->backdrop.set_y(200);
+    this->backdrop.set_h(10000);
+    this->backdrop.set_w(10000);
 
     // Intialize the map
     for (x = 0; x < MAP_ROWS; ++x)
@@ -145,6 +155,12 @@ void GameState::doRender(SDL_Renderer *renderer)
 
     // set the drawing color to white
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+
+    // Background
+    SDL_Rect bgRect = { (int)((this->scrollX / 5) + this->backdrop.get_x()),(int)((this->scrollY / 7) + this->backdrop.get_y()), this->backdrop.get_w(), this->backdrop.get_h() };
+    SDL_RenderCopy(this->get_renderer(), this->get_block(), NULL, &bgRect);
+
 
     int x, y;
     for (x = 0; x < MAP_ROWS; ++x)
@@ -227,14 +243,14 @@ void GameState::process()
     // Player Gravity    
     plyr->apply_gravity();
 
-    // Enemy Gravity
-    for (int i = 0; i < MAP_ROWS; ++i)
-    {
-        for (int j = 0; j < MAP_COLUMNS; ++j)
-        {
-            //this->enemies[i][j].apply_gravity();
-        }
-    }
+    // // Enemy Gravity
+    // for (int i = 0; i < MAP_ROWS; ++i)
+    // {
+    //     for (int j = 0; j < MAP_COLUMNS; ++j)
+    //     {
+    //         //this->enemies[i][j].apply_gravity();
+    //     }
+    // }
 
     // Scrolling
     this->set_scrollX(-this->plyr.get_x() + 620);
