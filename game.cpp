@@ -118,6 +118,18 @@ void GameState::init_blocks()
                     enemies[x][y].set_w(BLOCK_WIDTH);
                     enemies[x][y].set_h(BLOCK_HEIGHT);
                 } break;
+                case world_map::SOIL_COLLISION : {
+                    soiltile[x][y].set_y((x*BLOCK_WIDTH) / 1);
+                    soiltile[x][y].set_x((y*BLOCK_HEIGHT));
+                    soiltile[x][y].set_w(BLOCK_WIDTH);
+                    soiltile[x][y].set_h(BLOCK_HEIGHT);
+                } break;
+                case world_map::SPIKE_COLLISION : {
+                    spikes[x][y].set_y((x*BLOCK_WIDTH) / 1);
+                    spikes[x][y].set_x((y*BLOCK_HEIGHT));
+                    spikes[x][y].set_w(BLOCK_WIDTH);
+                    spikes[x][y].set_h(BLOCK_HEIGHT);                   
+                }
             }
         }
     }
@@ -155,6 +167,14 @@ void GameState::doRender(SDL_Renderer *renderer)
                     SDL_Rect enemyRect = { (int)(this->get_scrollX() + enemies[x][y].get_x()), (int)(this->get_scrollY() + enemies[x][y].get_y()), enemies[x][y].get_w(), enemies[x][y].get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_enemy(), NULL , &enemyRect);              
                 } break;
+                case world_map::SOIL_COLLISION : {
+                    SDL_Rect soilRect = { (int)(this->get_scrollX() + soiltile[x][y].get_x()), (int)(this->get_scrollY() + soiltile[x][y].get_y()), soiltile[x][y].get_w(), soiltile[x][y].get_h() };
+                    SDL_RenderCopy(this->get_renderer(), this->get_soil(), NULL , &soilRect);              
+                } break;
+                case world_map::SPIKE_COLLISION : {
+                    SDL_Rect spikeRect = { (int)(this->get_scrollX() + spikes[x][y].get_x()), (int)(this->get_scrollY() + spikes[x][y].get_y()), spikes[x][y].get_w(), spikes[x][y].get_h() };
+                    SDL_RenderCopy(this->get_renderer(), this->get_spike(), NULL , &spikeRect);              
+                } break;     
             }
         }
     }

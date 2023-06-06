@@ -72,8 +72,11 @@ enum collisions {
    BLOCK_COLLISION = 0,
    TACO_COLLISION = 1,
    NO_COLLISION = -1,
-   EMEMY_COLLISION = 2
+   EMEMY_COLLISION = 2,
+   SPIKE_COLLISION = 3,
+   SOIL_COLLISION = 4
 };
+
 
 
 }
