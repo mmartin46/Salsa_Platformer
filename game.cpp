@@ -202,7 +202,7 @@ void GameState::process()
     {
         for (int j = 0; j < MAP_COLUMNS; ++j)
         {
-            this->enemies[i][j].apply_gravity();
+            //this->enemies[i][j].apply_gravity();
         }
     }
 
@@ -332,8 +332,6 @@ void GameState::collisionDetect()
             {
                 std::cout << "HIT!!!!" << std::endl;
             }
-
-
         }
     }
 
@@ -345,7 +343,11 @@ void GameState::collisionDetect()
             if (this->tilemap[i][j] == world_map::BLOCK_COLLISION)
             {
                 collision_in_map(this->plyr, this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
-                collision_in_map(this->enemies[i][j], this->tile, i, j, ENEMY_WIDTH, ENEMY_HEIGHT);
+                if (collision_in_map(this->enemies[i][j], this->tile, i, j, ENEMY_WIDTH, ENEMY_HEIGHT))
+                {
+                    std::cout << "TOUCH" << std::endl;
+                }
+                // Debug onBlock
             }
         }
     }

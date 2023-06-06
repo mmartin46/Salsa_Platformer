@@ -29,6 +29,7 @@ class Player
       // Player Physics 
 
       inline virtual void apply_gravity() { dy += GRAVITY; } // Accumulates the gravity constant to the player.
+      
 
       inline virtual void apply_jump() { dy -= 0.3f; }
       

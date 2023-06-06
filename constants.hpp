@@ -13,6 +13,12 @@
 #define BLOCK_HEIGHT 20
 #define BLOCK_WIDTH 20
 
+#define SOIL_WIDTH 20
+#define SOIL_HEIGHT 20
+
+#define SPIKE_WIDTH 20
+#define SPIKE_HEIGHT 20
+
 #define FONT_SIZE 48
 
 #define GRAVITY 0.5f

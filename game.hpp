@@ -45,6 +45,15 @@ class Block : public Entity
       friend class GameState;
 };
 
+// Handles each soil block within the map.
+class Soil : public Entity
+{
+   private:
+      int x, y, w, h;
+   public:
+      friend class GameState;
+};
+
 // Handles each taco within the map.
 class Taco : public Entity
 {
@@ -69,18 +78,22 @@ class GameState
       SDL_Texture *block;
       SDL_Texture *taco;
       SDL_Texture *enemy;
+      SDL_Texture *soil;
+      SDL_Texture *spike;
       // Fonts
       TTF_Font *font;
 
       int tilemap[MAP_ROWS][MAP_COLUMNS];
       Block tile[MAP_ROWS][MAP_COLUMNS];
+      Soil soiltile[MAP_ROWS][MAP_COLUMNS];
       Enemy enemies[MAP_ROWS][MAP_COLUMNS];
+      Spike spikes[MAP_ROWS][MAP_COLUMNS];
    public:
       // Players
       Player plyr;
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
-
+      std::vector<SDL_Texture*> enemyFrames = std::vector<SDL_Texture*>(2);
 
 
       GameState();
@@ -136,13 +149,13 @@ void GameState::enemy_movement()
    {
       for (int j = 0; j < MAP_COLUMNS; ++j)
       {
-         if ((this->get_time() % 1000) < 500)
+         if ((this->get_time() % 300) < 150)
          {
-            this->enemies[i][j].set_x(this->enemies[i][j].get_x() + 1);
+            this->enemies[i][j].set_y(this->enemies[i][j].get_y() - 1);
          }
          else
          {
-            this->enemies[i][j].set_x(this->enemies[i][j].get_x() - 1);           
+            this->enemies[i][j].set_y(this->enemies[i][j].get_y() + 1);           
          }
       
       }
