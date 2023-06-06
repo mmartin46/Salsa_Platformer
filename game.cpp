@@ -362,6 +362,19 @@ void GameState::collisionDetect()
             {
                 std::cout << "HIT!!!!" << std::endl;
             }
+            else if ((this->tilemap[i][j] == 3) && collide2d(
+                this->plyr.get_x(),
+                this->plyr.get_y(),
+                this->spikes[i][j].get_x(),
+                this->spikes[i][j].get_y(),
+                PLAYER_HEIGHT,
+                PLAYER_WIDTH,
+                SPIKE_WIDTH,
+                SPIKE_HEIGHT
+            ))
+            {
+                std::cout << "HIT!!!!" << std::endl;
+            }
         }
     }
 
