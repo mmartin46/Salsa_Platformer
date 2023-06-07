@@ -419,7 +419,7 @@ void GameState::collisionDetect()
             ))
             {
                 this->set_life(this->get_life() - 1);
-                std::cout << this->life << std::endl;
+                //std::cout << this->life << std::endl;
             }
             else if ((this->tilemap[i][j] == 3) && collide2d(
                 this->plyr.get_x(),

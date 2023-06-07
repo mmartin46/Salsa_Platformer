@@ -11,12 +11,12 @@ int main(int argc, char *argv[] )
     SDL_Renderer *renderer = NULL;         // Declare a renderer
     SDL_Surface *starSurface = NULL;
 
-    SDL_Init(SDL_INIT_VIDEO);       // Intialize SDL2
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);       // Intialize SDL2
     srand((int) time(NULL));
 
 
     // Create an application window with the following settings:
-    window = SDL_CreateWindow("Game Window",            // window title
+    window = SDL_CreateWindow("Salsa Platformer",            // window title
                             SDL_WINDOWPOS_UNDEFINED,    // xpos
                             SDL_WINDOWPOS_UNDEFINED,    // ypos
                             STRETCH_WIDTH,                        // width
@@ -32,6 +32,7 @@ int main(int argc, char *argv[] )
     
     // Sets the font
     TTF_Init();
+    // Audio
 
     gameState.loadGame();
 
@@ -61,6 +62,10 @@ int main(int argc, char *argv[] )
     }
 
     // Shutdown game and upload all memory
+    SDL_DestroyTexture(gameState.get_taco());
+    SDL_DestroyTexture(gameState.get_spike());
+    SDL_DestroyTexture(gameState.get_soil());
+    SDL_DestroyTexture(gameState.get_enemy());
     SDL_DestroyTexture(gameState.plyrFrames[0]);
     SDL_DestroyTexture(gameState.plyrFrames[1]);
     SDL_DestroyTexture(gameState.get_block());
