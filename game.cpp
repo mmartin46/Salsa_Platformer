@@ -376,7 +376,8 @@ void GameState::collisionDetect()
                 ENEMY_HEIGHT
             ))
             {
-                std::cout << "HIT!!!!" << std::endl;
+                this->set_life(this->get_life() - 1);
+                std::cout << this->life << std::endl;
             }
             else if ((this->tilemap[i][j] == 3) && collide2d(
                 this->plyr.get_x(),
@@ -389,7 +390,8 @@ void GameState::collisionDetect()
                 SPIKE_HEIGHT
             ))
             {
-                std::cout << "HIT!!!!" << std::endl;
+                this->set_life(this->get_life() - 1);
+                std::cout << this->life << std::endl;
             }
         }
     }
@@ -404,7 +406,7 @@ void GameState::collisionDetect()
                 collision_in_map(this->plyr, this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
                 if (collision_in_map(this->enemies[i][j], this->tile, i, j, ENEMY_WIDTH, ENEMY_HEIGHT))
                 {
-                    std::cout << "TOUCH" << std::endl;
+                    std::cout << this->life << std::endl;
                 }
                 // Debug onBlock
             }
@@ -455,6 +457,11 @@ int GameState::processEvents(SDL_Window *window)
                 done = 1;
             break;
         }
+    }
+
+    if (this->get_life() < 0)
+    {
+        exit(0);
     }
 
     // More jumping

@@ -89,6 +89,9 @@ class GameState
       // Fonts
       TTF_Font *font;
 
+      int life = 10;
+
+
       int tilemap[MAP_ROWS][MAP_COLUMNS];
       Block tile[MAP_ROWS][MAP_COLUMNS];
       Soil soiltile[MAP_ROWS][MAP_COLUMNS];
@@ -96,6 +99,8 @@ class GameState
       Spike spikes[MAP_ROWS][MAP_COLUMNS];
       Backdrop backdrop;
    public:
+
+
       // Players
       Player plyr;
       // Images
@@ -119,6 +124,9 @@ class GameState
       inline SDL_Texture* get_backdrop_texture() { return backdrop_texture; }
       inline void set_backdrop_texture(SDL_Texture* b) { backdrop_texture = b; }
 
+      // Life
+      inline int get_life(){ return life; }
+      inline void set_life(int l){ life = l; }
 
       // Renderer
       inline SDL_Renderer* get_renderer() { return renderer; } const
