@@ -73,7 +73,7 @@ void GameState::loadImages()
     SDL_FreeSurface(surface);    
 
     // Loading background texture.
-    surface = get_surface("img\\building_backdrop.png", "Cannot find building_backdrop.png!\n\n");
+    surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
     this->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);    
 }
@@ -97,10 +97,10 @@ void GameState::init_blocks()
         }
     }
 
-    this->backdrop.set_x(200);
-    this->backdrop.set_y(200);
-    this->backdrop.set_h(10000);
-    this->backdrop.set_w(10000);
+    this->backdrop.set_x(-300);
+    this->backdrop.set_y(-300);
+    this->backdrop.set_h(5000);
+    this->backdrop.set_w(5000);
 
     // Intialize the map
     for (x = 0; x < MAP_ROWS; ++x)
@@ -157,9 +157,10 @@ void GameState::doRender(SDL_Renderer *renderer)
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
 
+
     // Background
-    SDL_Rect bgRect = { (int)((this->scrollX / 7) + this->backdrop.get_x()),(int)((this->scrollY / 7) + this->backdrop.get_y()), this->backdrop.get_w(), this->backdrop.get_h() };
-    SDL_RenderCopy(this->get_renderer(), this->get_block(), NULL, &bgRect);
+    SDL_Rect bgRect = { (int)((this->scrollX / 17) + this->backdrop.get_x()),(int)((this->scrollY / 17) + this->backdrop.get_y()), this->backdrop.get_w(), this->backdrop.get_h() };
+    SDL_RenderCopy(this->get_renderer(), this->get_backdrop_texture(), NULL, &bgRect);
 
 
     int x, y;

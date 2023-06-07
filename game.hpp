@@ -89,7 +89,7 @@ class GameState
       // Fonts
       TTF_Font *font;
 
-      int life = 10;
+      int life = 1000000;
 
 
       int tilemap[MAP_ROWS][MAP_COLUMNS];
