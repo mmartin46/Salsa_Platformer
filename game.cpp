@@ -148,13 +148,13 @@ void GameState::init_blocks()
 void GameState::doRender(SDL_Renderer *renderer)
 {
     // set the drawing color to blue
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    SDL_SetRenderDrawColor(renderer, 50, 60, 57, 255);
 
     // clear the screen (to blue)
     SDL_RenderClear(renderer);
 
     // set the drawing color to white
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(renderer, 50, 60, 57, 255);
 
 
 
