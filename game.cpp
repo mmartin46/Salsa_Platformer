@@ -139,7 +139,7 @@ void GameState::init_blocks()
                     spikes[x][y].set_x((y*BLOCK_HEIGHT));
                     spikes[x][y].set_w(BLOCK_WIDTH);
                     spikes[x][y].set_h(BLOCK_HEIGHT);                   
-                }
+                } break;
             }
         }
     }
@@ -158,7 +158,7 @@ void GameState::doRender(SDL_Renderer *renderer)
 
 
     // Background
-    SDL_Rect bgRect = { (int)((this->scrollX / 5) + this->backdrop.get_x()),(int)((this->scrollY / 7) + this->backdrop.get_y()), this->backdrop.get_w(), this->backdrop.get_h() };
+    SDL_Rect bgRect = { (int)((this->scrollX / 7) + this->backdrop.get_x()),(int)((this->scrollY / 7) + this->backdrop.get_y()), this->backdrop.get_w(), this->backdrop.get_h() };
     SDL_RenderCopy(this->get_renderer(), this->get_block(), NULL, &bgRect);
 
 
@@ -253,17 +253,17 @@ void GameState::process()
     // }
 
     // Scrolling
-    this->set_scrollX(-this->plyr.get_x() + 620);
-    this->set_scrollY(-this->plyr.get_y() + 320);
+    this->set_scrollX(-this->plyr.get_x() + WINDOW_WIDTH/2);
+    this->set_scrollY(-this->plyr.get_y() + WINDOW_HEIGHT/2);
 
     if (this->get_scrollX() > 0)
     {
         this->set_scrollX(0);
     }
-    if (this->get_scrollX() < -38000+320)
-    {
-        this->set_scrollX(-38000+320);
-    }
+    // if (this->get_scrollX() < -38000+320)
+    // {
+    //     this->set_scrollX(-38000+320);
+    // }
 }
 
 // Represents a collision within the map
