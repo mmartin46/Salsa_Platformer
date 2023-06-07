@@ -36,20 +36,38 @@ SDL_Surface* get_surface(const char *file, const char *error_msg)
 void GameState::init_health_texture()
 {
     char str[128] = "";
-    sprintf(str, "Health: %u", (int) this->get_life());
+    sprintf(str, "Health: %u                      Tacos Eaten: %u", (int) this->get_life(), (int) this->get_tacos_eaten());
 
     SDL_Color white = { 255, 255, 255, 255 };
 
-    SDL_Surface *tmp = TTF_RenderText_Blended(this->get_font(), str, white);
-    this->label.set_w(tmp->w);
-    this->label.set_h(tmp->h);
-    this->set_label_texture(SDL_CreateTextureFromSurface(this->get_renderer(), tmp));
+    SDL_Surface *tmp = TTF_RenderText_Blended(this->get_life_font(), str, white);
+    this->life_label.set_w(tmp->w);
+    this->life_label.set_h(tmp->h);
+    this->set_life_label_texture(SDL_CreateTextureFromSurface(this->get_renderer(), tmp));
     SDL_FreeSurface(tmp);
 }
+
 
 // Load images and create rending textures from the images
 void GameState::loadImages()
 {
+
+    // Load fonts
+    set_life_font(TTF_OpenFont("img\\ka1.ttf", 48));
+    if (!this->get_life_font())
+    {
+        printf("Cannot find font file!\n\n");
+        SDL_Quit();
+        exit(1);
+    }
+
+    set_taco_font(TTF_OpenFont("img\\ka1.ttf", 48));
+    if (!this->get_taco_font())
+    {
+        printf("Cannot find font file!\n\n");
+        SDL_Quit();
+        exit(1);
+    }
 
     // Loading the player's first frame.
     SDL_Surface* surface = get_surface("img\\plyr_ita.png", "Cannot find plyr_ita.png!\n\n");
@@ -89,17 +107,6 @@ void GameState::loadImages()
     surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
     this->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);    
-
-    // Load fonts
-    // set_font(TTF_OpenFont("img\\ka1.ttf", 48));
-    // if (!this->get_font())
-    // {
-    //     printf("Cannot find font file!\n\n");
-    //     SDL_Quit();
-    //     exit(1);
-    // }
-
-    //init_health_texture();
 }
 
 void GameState::loadGame()
@@ -228,8 +235,11 @@ void GameState::doRender(SDL_Renderer *renderer)
     SDL_RenderCopyEx(renderer, this->plyrFrames[this->plyr.get_animFrame()], NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->plyr.get_facingLeft() == 0));
 
     // draw text rectangle.
-    // SDL_Rect textRect = { 100, 240-this->label.get_w(), this->label.get_h()};
-    // SDL_RenderCopy(this->get_renderer(), this->lblTexture, NULL, &textRect);
+    SDL_Rect textRect = { 0, 0, (int) (this->life_label.get_w() / 4), (int) (this->life_label.get_h() / 3.75) };
+    SDL_RenderCopy(this->get_renderer(), this->get_life_label_texture(), NULL, &textRect);
+
+    SDL_Rect tERect = { (int) (WINDOW_WIDTH-(WINDOW_WIDTH / 4.8)), 0, (int) (this->taco_label.get_w() / 4), (int) (this->taco_label.get_h() / 3.75) };
+    SDL_RenderCopy(this->get_renderer(), this->get_taco_label_texture(), NULL, &tERect);
 
     SDL_RenderPresent(renderer);    
 }
@@ -389,6 +399,7 @@ void GameState::collisionDetect()
                 BLOCK_HEIGHT
             ))
             {
+                this->set_tacos_eaten(this->get_tacos_eaten() + 1);
                 // Create a rectangle and set the texture to null.
                 SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile[i][j].get_x()), (int)(this->get_scrollY() + tile[i][j].get_y()), tile[i][j].get_w(), tile[i][j].get_h() };
                 SDL_RenderCopy(this->get_renderer(), NULL, NULL , &tacoRect);
@@ -422,7 +433,6 @@ void GameState::collisionDetect()
             ))
             {
                 this->set_life(this->get_life() - 1);
-                std::cout << this->life << std::endl;
             }
         }
     }
@@ -435,10 +445,6 @@ void GameState::collisionDetect()
             if (this->tilemap[i][j] == world_map::BLOCK_COLLISION)
             {
                 collision_in_map(this->plyr, this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
-                if (collision_in_map(this->enemies[i][j], this->tile, i, j, ENEMY_WIDTH, ENEMY_HEIGHT))
-                {
-                    std::cout << this->life << std::endl;
-                }
                 // Debug onBlock
             }
         }
@@ -452,6 +458,9 @@ int GameState::processEvents(SDL_Window *window)
 {
     SDL_Event event;
     int done = 0;
+
+    //init_coin_texture();
+    init_health_texture();
 
     while (SDL_PollEvent(&event))
     {

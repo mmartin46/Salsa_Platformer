@@ -95,10 +95,13 @@ class GameState
       SDL_Texture *spike;
       SDL_Texture *backdrop_texture;
       SDL_Texture *lblTexture;
+      SDL_Texture *tcoTexture;
       // Fonts
-      TTF_Font *font;
+      TTF_Font *life_font;
+      TTF_Font *taco_font;
 
-      int life = 1000000;
+      int life = 100;
+      int tacos_eaten = 0;
 
 
       int tilemap[MAP_ROWS][MAP_COLUMNS];
@@ -106,7 +109,8 @@ class GameState
       Soil soiltile[MAP_ROWS][MAP_COLUMNS];
       Enemy enemies[MAP_ROWS][MAP_COLUMNS];
       Spike spikes[MAP_ROWS][MAP_COLUMNS];
-      Label label;
+      Label life_label;
+      Label taco_label;
       Backdrop backdrop;
    public:
 
@@ -131,15 +135,26 @@ class GameState
       inline void set_soil(SDL_Texture* s) { soil = s; }
       inline SDL_Texture* get_spike() { return spike; }
       inline void set_spike(SDL_Texture* s) { spike = s; }
+
+
+
+      inline void set_taco_texture(SDL_Texture *t) { tcoTexture = t; }
+      inline SDL_Texture* get_taco_texture(SDL_Texture *t) { return tcoTexture; }
+
       inline SDL_Texture* get_backdrop_texture() { return backdrop_texture; }
       inline void set_backdrop_texture(SDL_Texture* b) { backdrop_texture = b; }
-      inline void set_label_texture(SDL_Texture *t) { lblTexture = t; }
-      inline SDL_Texture* get_label_texture() { return lblTexture; } 
-
+      inline void set_life_label_texture(SDL_Texture *t) { lblTexture = t; }
+      inline SDL_Texture* get_life_label_texture() { return lblTexture; } 
+      inline void set_taco_label_texture(SDL_Texture *t) { lblTexture = t; }
+      inline SDL_Texture* get_taco_label_texture() { return lblTexture; } 
 
       // Life
       inline int get_life(){ return life; }
       inline void set_life(int l){ life = l; }
+
+      // Tacos Eaten
+      inline int get_tacos_eaten(){ return tacos_eaten; }
+      inline void set_tacos_eaten(int t) { tacos_eaten = t; }
 
       // Renderer
       inline SDL_Renderer* get_renderer() { return renderer; } const
@@ -150,8 +165,10 @@ class GameState
       inline void set_time(int t) { time = t; }
       
       // Font
-      inline TTF_Font* get_font() { return font; } const
-      inline void set_font(TTF_Font *f) { font = f; }
+      inline TTF_Font* get_life_font() { return life_font; } const
+      inline void set_life_font(TTF_Font *f) { life_font = f; }
+      inline TTF_Font* get_taco_font() { return taco_font; } const
+      inline void set_taco_font(TTF_Font *f) { taco_font = f; }
 
       // Scrolling
       inline float get_scrollX() { return scrollX; } const
@@ -170,6 +187,7 @@ class GameState
       void doRender(SDL_Renderer*);
       void enemy_movement();
       void init_health_texture();
+      void init_coin_texture();
 
       template <typename T>
       int collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int j, int, int);

@@ -26,7 +26,7 @@
 #define PLAYER_HEIGHT 20 // The player height
 #define PLAYER_SPEED 0.5f   // The player walking speed
 #define PLAYER_JUMP_HEIGHT -8 // The player jump height
-#define PLAYER_SPEED_DX 4
+#define PLAYER_SPEED_DX 3
 
 #define TACO_WIDTH 19
 #define TACO_HEIGHT 12

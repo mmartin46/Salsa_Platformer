@@ -29,6 +29,9 @@ int main(int argc, char *argv[] )
     SDL_RenderSetLogicalSize(renderer, WINDOW_WIDTH, WINDOW_HEIGHT);
     
     gameState.set_renderer(renderer);
+    
+    // Sets the font
+    TTF_Init();
 
     gameState.loadGame();
 
