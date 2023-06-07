@@ -8,7 +8,7 @@
 #define MAP_ROWS 37
 
 #define WINDOW_WIDTH 420
-#define WINDOW_HEIGHT 240
+#define WINDOW_HEIGHT 236
 
 #define BLOCK_HEIGHT 20
 #define BLOCK_WIDTH 20

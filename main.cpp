@@ -19,11 +19,15 @@ int main(int argc, char *argv[] )
     window = SDL_CreateWindow("Game Window",            // window title
                             SDL_WINDOWPOS_UNDEFINED,    // xpos
                             SDL_WINDOWPOS_UNDEFINED,    // ypos
-                            WINDOW_WIDTH,                        // width
-                            WINDOW_HEIGHT,                        // height
+                            1280,                        // width
+                            720,                        // height
                             0                           // flags
                             );
+
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+    SDL_RenderSetLogicalSize(renderer, WINDOW_WIDTH, WINDOW_HEIGHT);
+    
     gameState.set_renderer(renderer);
 
     gameState.loadGame();
