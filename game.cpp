@@ -33,6 +33,19 @@ SDL_Surface* get_surface(const char *file, const char *error_msg)
     return surface;   
 }
 
+void GameState::init_health_texture()
+{
+    char str[128] = "";
+    sprintf(str, "Health: %u", (int) this->get_life());
+
+    SDL_Color white = { 255, 255, 255, 255 };
+
+    SDL_Surface *tmp = TTF_RenderText_Blended(this->get_font(), str, white);
+    this->label.set_w(tmp->w);
+    this->label.set_h(tmp->h);
+    this->set_label_texture(SDL_CreateTextureFromSurface(this->get_renderer(), tmp));
+    SDL_FreeSurface(tmp);
+}
 
 // Load images and create rending textures from the images
 void GameState::loadImages()
@@ -76,6 +89,17 @@ void GameState::loadImages()
     surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
     this->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);    
+
+    // Load fonts
+    // set_font(TTF_OpenFont("img\\ka1.ttf", 48));
+    // if (!this->get_font())
+    // {
+    //     printf("Cannot find font file!\n\n");
+    //     SDL_Quit();
+    //     exit(1);
+    // }
+
+    //init_health_texture();
 }
 
 void GameState::loadGame()
@@ -145,6 +169,9 @@ void GameState::init_blocks()
     }
 }
 
+
+
+
 void GameState::doRender(SDL_Renderer *renderer)
 {
     // set the drawing color to blue
@@ -200,6 +227,9 @@ void GameState::doRender(SDL_Renderer *renderer)
     SDL_Rect rect = {  (int)(this->get_scrollX() + this->plyr.get_x()), (int)(this->get_scrollY() + this->plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
     SDL_RenderCopyEx(renderer, this->plyrFrames[this->plyr.get_animFrame()], NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->plyr.get_facingLeft() == 0));
 
+    // draw text rectangle.
+    // SDL_Rect textRect = { 100, 240-this->label.get_w(), this->label.get_h()};
+    // SDL_RenderCopy(this->get_renderer(), this->lblTexture, NULL, &textRect);
 
     SDL_RenderPresent(renderer);    
 }

@@ -63,6 +63,14 @@ class Taco : public Entity
       friend class GameState;
 };
 
+class Label : public Entity
+{
+   private:
+      int x, y, w, h;
+   public:
+      friend class GameState;
+};
+
 class Backdrop : public Entity
 {
    private:
@@ -86,6 +94,7 @@ class GameState
       SDL_Texture *soil;
       SDL_Texture *spike;
       SDL_Texture *backdrop_texture;
+      SDL_Texture *lblTexture;
       // Fonts
       TTF_Font *font;
 
@@ -97,6 +106,7 @@ class GameState
       Soil soiltile[MAP_ROWS][MAP_COLUMNS];
       Enemy enemies[MAP_ROWS][MAP_COLUMNS];
       Spike spikes[MAP_ROWS][MAP_COLUMNS];
+      Label label;
       Backdrop backdrop;
    public:
 
@@ -123,6 +133,9 @@ class GameState
       inline void set_spike(SDL_Texture* s) { spike = s; }
       inline SDL_Texture* get_backdrop_texture() { return backdrop_texture; }
       inline void set_backdrop_texture(SDL_Texture* b) { backdrop_texture = b; }
+      inline void set_label_texture(SDL_Texture *t) { lblTexture = t; }
+      inline SDL_Texture* get_label_texture() { return lblTexture; } 
+
 
       // Life
       inline int get_life(){ return life; }
@@ -156,6 +169,7 @@ class GameState
       void loadGame();
       void doRender(SDL_Renderer*);
       void enemy_movement();
+      void init_health_texture();
 
       template <typename T>
       int collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int j, int, int);
