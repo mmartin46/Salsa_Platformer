@@ -19,8 +19,8 @@ int main(int argc, char *argv[] )
     window = SDL_CreateWindow("Game Window",            // window title
                             SDL_WINDOWPOS_UNDEFINED,    // xpos
                             SDL_WINDOWPOS_UNDEFINED,    // ypos
-                            1280,                        // width
-                            720,                        // height
+                            STRETCH_WIDTH,                        // width
+                            STRETCH_HEIGHT,                        // height
                             0                           // flags
                             );
 

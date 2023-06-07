@@ -7,6 +7,9 @@
 #define MAP_COLUMNS 185
 #define MAP_ROWS 37
 
+#define STRETCH_WIDTH 1280
+#define STRETCH_HEIGHT 720
+
 #define WINDOW_WIDTH 420
 #define WINDOW_HEIGHT 236
 
