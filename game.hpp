@@ -96,14 +96,20 @@ class GameState
       SDL_Texture *backdrop_texture;
       SDL_Texture *lblTexture;
       SDL_Texture *tcoTexture;
+      
       // Fonts
       TTF_Font *life_font;
       TTF_Font *taco_font;
 
+      // Sounds
+      int music_channel;
+      Mix_Chunk *bg_music, *jump_sound;
+
+      // Health
       int life = 100;
       int tacos_eaten = 0;
 
-
+      // Background
       int tilemap[MAP_ROWS][MAP_COLUMNS];
       Block tile[MAP_ROWS][MAP_COLUMNS];
       Soil soiltile[MAP_ROWS][MAP_COLUMNS];
@@ -170,6 +176,13 @@ class GameState
       inline TTF_Font* get_taco_font() { return taco_font; } const
       inline void set_taco_font(TTF_Font *f) { taco_font = f; }
 
+      // Sounds
+      inline Mix_Chunk* get_bg_music() { return bg_music; }
+      inline void set_bg_music(Mix_Chunk* bm) { bg_music = bm; }
+      inline Mix_Chunk* get_jump_music() { return jump_sound; }
+      inline void set_jump_music(Mix_Chunk *j) { jump_sound = j; }
+
+
       // Scrolling
       inline float get_scrollX() { return scrollX; } const
       inline void set_scrollX(float x) { scrollX = x; }
@@ -187,7 +200,6 @@ class GameState
       void doRender(SDL_Renderer*);
       void enemy_movement();
       void init_health_texture();
-      void init_coin_texture();
 
       template <typename T>
       int collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int j, int, int);

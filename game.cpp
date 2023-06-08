@@ -60,11 +60,19 @@ void GameState::loadImages()
         SDL_Quit();
         exit(1);
     }
-
     set_taco_font(TTF_OpenFont("img\\ka1.ttf", 48));
     if (!this->get_taco_font())
     {
         printf("Cannot find font file!\n\n");
+        SDL_Quit();
+        exit(1);
+    }
+
+    // Load Sounds
+    this->set_jump_music(Mix_LoadWAV("sounds\\jump.wav"));
+    if (!this->get_jump_music())
+    {
+        printf("Cannot locate sounds\\jump.wav!");
         SDL_Quit();
         exit(1);
     }
@@ -488,7 +496,9 @@ int GameState::processEvents(SDL_Window *window)
                         {
                             this->plyr.set_dy(PLAYER_JUMP_HEIGHT);
                             this->plyr.reset_onBlock();
+                            Mix_PlayChannel(-1, this->get_jump_music(), 0);
                         }
+                    break;       
                 }
             }
             break;
