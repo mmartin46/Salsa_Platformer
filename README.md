@@ -11,7 +11,9 @@ An SDL2 Gaming Platformer Project Written in C++ and C. The player's only object
   Moreover, you must avoid being touched by
   any enemies.
 
+## Screenshots
 
+[screen-shot.png](https://postimg.cc/4npbM9Df)
 
 ## Acknowledgements
 
