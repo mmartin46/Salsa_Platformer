@@ -70,6 +70,15 @@ int main(int argc, char *argv[] )
     SDL_DestroyTexture(gameState.plyrFrames[1]);
     SDL_DestroyTexture(gameState.get_block());
 
+    if (gameState.get_life_label_texture() != NULL)
+    {
+        SDL_DestroyTexture(gameState.get_life_label_texture());
+    }
+    if (gameState.get_taco_label_texture() != NULL)
+    {
+        SDL_DestroyTexture(gameState.get_taco_label_texture());
+    }
+
 
     // Close and destroy the window
     SDL_DestroyWindow(window);
