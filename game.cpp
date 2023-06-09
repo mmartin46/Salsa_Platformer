@@ -1,9 +1,6 @@
 #include "game.hpp"
 
-void GameState::generate_level()
-{
-    set_level_choice(rand() % 40);
-}
+
 
 /* Constructs the gamestate. */
 GameState::GameState()
@@ -11,7 +8,6 @@ GameState::GameState()
     this->set_time(0);
     this->set_scrollX(0);
     this->set_scrollY(0);
-    this->init_blocks();
 }
 
 // Are two rectangles colliding.
@@ -130,12 +126,14 @@ void GameState::loadGame()
 }
 
 
-void GameState::init_blocks()
+void GameState::init_blocks(int level_choice)
 {
     
     int x, y;
 
-    if (this->get_level_choice() < 20)
+    int choice = level_choice;
+    set_level_choice(choice);
+    if (choice < 20)
     {
         for (x = 0; x < MAP_ROWS; ++x)
         {
@@ -145,7 +143,7 @@ void GameState::init_blocks()
             }
         }
     }
-    else if (this->get_level_choice() >= 20)
+    else if (choice >= 20)
     {   
         for (x = 0; x < MAP_ROWS; ++x)
         {
@@ -307,7 +305,6 @@ void GameState::process()
             }
         }
     }
-    std::cout << level_choice << std::endl;
 
     // Player Gravity    
     plyr->apply_gravity();

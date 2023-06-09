@@ -14,7 +14,7 @@ int main(int argc, char *argv[] )
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);       // Intialize SDL2
     srand((int) time(NULL));
 
-    gameState.generate_level();
+    gameState.init_blocks((int) rand() % 40);
     // Create an application window with the following settings:
     window = SDL_CreateWindow("Salsa Platformer",            // window title
                             SDL_WINDOWPOS_UNDEFINED,    // xpos

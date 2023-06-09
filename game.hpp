@@ -138,7 +138,6 @@ class GameState
       // Level Generation
       inline void set_level_choice(int val) { level_choice = val; }
       inline int get_level_choice() { return level_choice; }
-      void generate_level();
 
 
       // Textures
@@ -202,7 +201,7 @@ class GameState
 
 
       // Functions
-      void init_blocks();
+      void init_blocks(int);
       void process();
       void collisionDetect();
       int processEvents(SDL_Window*);
