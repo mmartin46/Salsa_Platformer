@@ -123,7 +123,7 @@ void GameState::loadImages()
     else if (this->get_level_choice() >= 20)
     {
         // TODO: Change to the second level
-        surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
+        surface = get_surface("img\\grassland.png", "Cannot find grassland.png!\n\n");
         this->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);    
     }
@@ -219,13 +219,26 @@ void GameState::init_blocks(int level_choice)
 void GameState::doRender(SDL_Renderer *renderer)
 {
     // set the drawing color to blue
-    SDL_SetRenderDrawColor(renderer, 50, 60, 57, 255);
+    //SDL_SetRenderDrawColor(renderer, 50, 60, 57, 255);
 
     // clear the screen (to blue)
     SDL_RenderClear(renderer);
 
-    // set the drawing color to white
-    SDL_SetRenderDrawColor(renderer, 50, 60, 57, 255);
+    // Level color
+    if (this->get_level_choice() < 20)
+    {
+        // Level 1
+        SDL_SetRenderDrawColor(renderer, 50, 60, 57, 255);
+    }
+    else if (this->get_level_choice() >= 20)
+    {
+        // Level 2
+        SDL_SetRenderDrawColor(renderer, 255, 82, 76, 255);   
+        this->backdrop.set_x(0);
+        this->backdrop.set_y(0);
+        this->backdrop.set_h(1000);
+        this->backdrop.set_w(1000);
+    }
 
     // Background
     SDL_Rect bgRect = { (int)((this->scrollX / 17) + this->backdrop.get_x()),(int)((this->scrollY / 17) + this->backdrop.get_y()), this->backdrop.get_w(), this->backdrop.get_h() };
