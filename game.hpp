@@ -8,13 +8,16 @@
 #include "src\include\SDL2\SDL_mixer.h"
 #include "src\include\SDL2\SDL_ttf.h"
 
+#include <ctime>
 #include <time.h>
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cstdlib>
 #include "constants.hpp"
 #include "player.hpp"
 #include "enemy.hpp"
+
 
 
 // An entity is a item, enemy, etc. that
@@ -118,6 +121,9 @@ class GameState
       Label life_label;
       Label taco_label;
       Backdrop backdrop;
+
+      // Level
+      int level_choice = rand() % 100;
    public:
 
 
@@ -129,6 +135,9 @@ class GameState
 
 
       GameState();
+      // Level Generation
+      inline void set_level_choice(int val) { level_choice = val; }
+      inline int get_level_choice() { return level_choice; }
 
       // Textures
       inline SDL_Texture* get_block() { return block; }

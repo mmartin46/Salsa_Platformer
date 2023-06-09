@@ -1,11 +1,14 @@
 #include "game.hpp"
 
+
+/* Constructs the gamestate. */
 GameState::GameState()
 {
-   this->set_time(0);
-   this->set_scrollX(0);
-   this->set_scrollY(0);
-   this->init_blocks();
+    this->set_level_choice(rand() % 100);
+    this->set_time(0);
+    this->set_scrollX(0);
+    this->set_scrollY(0);
+    this->init_blocks();
 }
 
 // Are two rectangles colliding.
@@ -126,13 +129,21 @@ void GameState::loadGame()
 
 void GameState::init_blocks()
 {
+    
     int x, y;
 
     for (x = 0; x < MAP_ROWS; ++x)
     {
         for (y = 0; y < MAP_COLUMNS; ++y)
         {
-            tilemap[x][y] = world_map::map[x][y];
+            if (level_choice < 20)
+            {
+                tilemap[x][y] = world_map::map[x][y];
+            }
+            else
+            {
+                tilemap[x][y] = world_map::map_2[x][y];
+            }
         }
     }
 
@@ -140,6 +151,7 @@ void GameState::init_blocks()
     this->backdrop.set_y(-300);
     this->backdrop.set_h(5000);
     this->backdrop.set_w(5000);
+
 
     // Intialize the map
     for (x = 0; x < MAP_ROWS; ++x)
@@ -197,8 +209,6 @@ void GameState::doRender(SDL_Renderer *renderer)
 
     // set the drawing color to white
     SDL_SetRenderDrawColor(renderer, 50, 60, 57, 255);
-
-
 
     // Background
     SDL_Rect bgRect = { (int)((this->scrollX / 17) + this->backdrop.get_x()),(int)((this->scrollY / 17) + this->backdrop.get_y()), this->backdrop.get_w(), this->backdrop.get_h() };
@@ -288,6 +298,7 @@ void GameState::process()
             }
         }
     }
+    std::cout << level_choice << std::endl;
 
     // Player Gravity    
     plyr->apply_gravity();
