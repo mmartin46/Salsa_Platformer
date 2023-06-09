@@ -1,10 +1,10 @@
 #include "game.hpp"
 
 
-
 /* Constructs the gamestate. */
 GameState::GameState()
 {
+    this->tilemap = std::vector<std::vector<int> >(MAP_ROWS, std::vector<int>(MAP_COLUMNS));
     this->tile = std::vector<std::vector<Block> >(MAP_ROWS, std::vector<Block>(MAP_COLUMNS));
     this->soiltile = std::vector<std::vector<Soil> >(MAP_ROWS, std::vector<Soil>(MAP_COLUMNS));
     this->enemies = std::vector<std::vector<Enemy> >(MAP_ROWS, std::vector<Enemy>(MAP_COLUMNS));
@@ -153,7 +153,7 @@ void GameState::init_blocks(int level_choice)
         {
             for (y = 0; y < MAP_COLUMNS; ++y)
             {
-                tilemap[x][y] = world_map::map[x][y];
+                tilemap.at(x).at(y) = world_map::map[x][y];
             }
         }
     }
@@ -163,7 +163,7 @@ void GameState::init_blocks(int level_choice)
         {
             for (y = 0; y < MAP_COLUMNS; ++y)
             {
-                tilemap[x][y] = world_map::map_2[x][y];
+                tilemap.at(x).at(y) = world_map::map_2[x][y];
             }
         }
     }
@@ -180,7 +180,7 @@ void GameState::init_blocks(int level_choice)
         for (y = 0; y < MAP_COLUMNS; ++y)
         {
             // DEBUG
-            switch (tilemap[x][y]) 
+            switch (tilemap.at(x).at(y)) 
             {
                 case world_map::BLOCK_COLLISION : {
                     tile.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
@@ -254,7 +254,7 @@ void GameState::doRender(SDL_Renderer *renderer)
     {
         for (y = 0; y < MAP_COLUMNS; ++y)
         {
-            switch (tilemap[x][y])
+            switch (tilemap.at(x).at(y))
             {
                 // Block
                 case world_map::BLOCK_COLLISION : {
@@ -494,6 +494,7 @@ void GameState::collisionDetect()
             }
         }
     }
+
 
     // Check for collision with any blocks (brick blocks)
     for (int i = 0; i < MAP_ROWS; i++)

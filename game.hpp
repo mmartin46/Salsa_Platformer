@@ -113,9 +113,7 @@ class GameState
       int tacos_eaten = 0;
 
       // Background
-      int tilemap[MAP_ROWS][MAP_COLUMNS];
-      // Block tile[MAP_ROWS][MAP_COLUMNS];
-
+      std::vector<std::vector<int> > tilemap;
       std::vector<std::vector<Block> > tile;
       std::vector<std::vector<Soil> > soiltile;
       std::vector<std::vector<Enemy> > enemies;
