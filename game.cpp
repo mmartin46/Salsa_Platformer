@@ -114,9 +114,19 @@ void GameState::loadImages()
     SDL_FreeSurface(surface);    
 
     // Loading background texture.
-    surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
-    this->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);    
+    if (this->get_level_choice() < 20)
+    {
+        surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
+        this->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);    
+    }
+    else if (this->get_level_choice() >= 20)
+    {
+        // TODO: Change to the second level
+        surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
+        this->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);    
+    }
 }
 
 void GameState::loadGame()
