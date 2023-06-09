@@ -353,6 +353,12 @@ void GameState::process()
     // {
     //     this->set_scrollX(-38000+320);
     // }
+
+    // Player falls off screen
+    if (this->plyr.get_y() >= FALL_DEATH)
+    {
+        exit(0);        
+    }
 }
 
 // Represents a collision within the map

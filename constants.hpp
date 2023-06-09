@@ -31,6 +31,8 @@
 #define PLAYER_JUMP_HEIGHT -8 // The player jump height
 #define PLAYER_SPEED_DX 3
 
+#define FALL_DEATH 4000
+
 #define TACO_WIDTH 19
 #define TACO_HEIGHT 12
 #define TACO_COLUMNS 10
