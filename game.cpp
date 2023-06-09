@@ -5,6 +5,7 @@
 /* Constructs the gamestate. */
 GameState::GameState()
 {
+    this->tile = std::vector<std::vector<Block> >(MAP_ROWS, std::vector<Block>(MAP_COLUMNS));
     this->soiltile = std::vector<std::vector<Soil> >(MAP_ROWS, std::vector<Soil>(MAP_COLUMNS));
     this->enemies = std::vector<std::vector<Enemy> >(MAP_ROWS, std::vector<Enemy>(MAP_COLUMNS));
     this->spikes = std::vector<std::vector<Spike> > (MAP_ROWS, std::vector<Spike>(MAP_COLUMNS));
@@ -182,16 +183,16 @@ void GameState::init_blocks(int level_choice)
             switch (tilemap[x][y]) 
             {
                 case world_map::BLOCK_COLLISION : {
-                    tile[x][y].set_y((x*BLOCK_WIDTH) / 1);
-                    tile[x][y].set_x((y*BLOCK_HEIGHT));
-                    tile[x][y].set_w(BLOCK_WIDTH);
-                    tile[x][y].set_h(BLOCK_HEIGHT);
+                    tile.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
+                    tile.at(x).at(y).set_x((y*BLOCK_HEIGHT));
+                    tile.at(x).at(y).set_w(BLOCK_WIDTH);
+                    tile.at(x).at(y).set_h(BLOCK_HEIGHT);
                 } break;
                 case world_map::TACO_COLLISION : {
-                    tile[x][y].set_y((x*BLOCK_WIDTH) / 1);
-                    tile[x][y].set_x((y*BLOCK_HEIGHT));
-                    tile[x][y].set_w(BLOCK_WIDTH);
-                    tile[x][y].set_h(BLOCK_HEIGHT);
+                    tile.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
+                    tile.at(x).at(y).set_x((y*BLOCK_HEIGHT));
+                    tile.at(x).at(y).set_w(BLOCK_WIDTH);
+                    tile.at(x).at(y).set_h(BLOCK_HEIGHT);
                 } break;
                 case world_map::EMEMY_COLLISION : {
                     enemies.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
@@ -257,12 +258,12 @@ void GameState::doRender(SDL_Renderer *renderer)
             {
                 // Block
                 case world_map::BLOCK_COLLISION : {
-                    SDL_Rect blockRect = { (int)(this->get_scrollX() + tile[x][y].get_x()), (int)(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
+                    SDL_Rect blockRect = { (int)(this->get_scrollX() + tile.at(x).at(y).get_x()), (int)(this->get_scrollY() + tile.at(x).at(y).get_y()), tile.at(x).at(y).get_w(), tile.at(x).at(y).get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_block(), NULL , &blockRect);
                 } break;
                 // Taco
                 case world_map::TACO_COLLISION : {
-                    SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile[x][y].get_x()), (int)(this->get_scrollY() + tile[x][y].get_y()), tile[x][y].get_w(), tile[x][y].get_h() };
+                    SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile.at(x).at(y).get_x()), (int)(this->get_scrollY() + tile.at(x).at(y).get_y()), tile.at(x).at(y).get_w(), tile.at(x).at(y).get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_taco(), NULL , &tacoRect);
                 } break;
                 case world_map::EMEMY_COLLISION : {
@@ -372,7 +373,7 @@ void GameState::process()
 // \param P_W represents the first rect's width
 // \param P_H represents the first rect's height
 template <typename T>
-int GameState::collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int j , int P_W, int P_H)
+int GameState::collision_in_map(T &plyr, std::vector<std::vector<Block> > &tile, int i, int j , int P_W, int P_H)
 {
     int touched = 0;
     float pw = P_W, ph = P_H;

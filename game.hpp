@@ -114,7 +114,9 @@ class GameState
 
       // Background
       int tilemap[MAP_ROWS][MAP_COLUMNS];
-      Block tile[MAP_ROWS][MAP_COLUMNS];
+      // Block tile[MAP_ROWS][MAP_COLUMNS];
+
+      std::vector<std::vector<Block> > tile;
       std::vector<std::vector<Soil> > soiltile;
       std::vector<std::vector<Enemy> > enemies;
       std::vector<std::vector<Spike> > spikes;
@@ -212,7 +214,7 @@ class GameState
       void init_health_texture();
 
       template <typename T>
-      int collision_in_map(T &plyr, Block tile[][MAP_COLUMNS], int i, int j, int, int);
+      int collision_in_map(T &plyr, std::vector<std::vector<Block> > &, int i, int j, int, int);
 
       friend class Enemy;    
 };
