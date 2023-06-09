@@ -5,6 +5,9 @@
 /* Constructs the gamestate. */
 GameState::GameState()
 {
+    this->soiltile = std::vector<std::vector<Soil> >(MAP_ROWS, std::vector<Soil>(MAP_COLUMNS));
+    this->enemies = std::vector<std::vector<Enemy> >(MAP_ROWS, std::vector<Enemy>(MAP_COLUMNS));
+    this->spikes = std::vector<std::vector<Spike> > (MAP_ROWS, std::vector<Spike>(MAP_COLUMNS));
     this->set_time(0);
     this->set_scrollX(0);
     this->set_scrollY(0);
@@ -203,10 +206,10 @@ void GameState::init_blocks(int level_choice)
                     soiltile[x][y].set_h(BLOCK_HEIGHT);
                 } break;
                 case world_map::SPIKE_COLLISION : {
-                    spikes[x][y].set_y((x*BLOCK_WIDTH) / 1);
-                    spikes[x][y].set_x((y*BLOCK_HEIGHT));
-                    spikes[x][y].set_w(BLOCK_WIDTH);
-                    spikes[x][y].set_h(BLOCK_HEIGHT);                   
+                    spikes.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
+                    spikes.at(x).at(y).set_x((y*BLOCK_HEIGHT));
+                    spikes.at(x).at(y).set_w(BLOCK_WIDTH);
+                    spikes.at(x).at(y).set_h(BLOCK_HEIGHT);                   
                 } break;
             }
         }
@@ -271,7 +274,7 @@ void GameState::doRender(SDL_Renderer *renderer)
                     SDL_RenderCopy(this->get_renderer(), this->get_soil(), NULL , &soilRect);              
                 } break;
                 case world_map::SPIKE_COLLISION : {
-                    SDL_Rect spikeRect = { (int)(this->get_scrollX() + spikes[x][y].get_x()), (int)(this->get_scrollY() + spikes[x][y].get_y()), spikes[x][y].get_w(), spikes[x][y].get_h() };
+                    SDL_Rect spikeRect = { (int)(this->get_scrollX() + spikes.at(x).at(y).get_x()), (int)(this->get_scrollY() + spikes.at(x).at(y).get_y()), spikes.at(x).at(y).get_w(), spikes.at(x).at(y).get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_spike(), NULL , &spikeRect);              
                 } break;     
             }

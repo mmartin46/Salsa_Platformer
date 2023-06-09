@@ -115,9 +115,9 @@ class GameState
       // Background
       int tilemap[MAP_ROWS][MAP_COLUMNS];
       Block tile[MAP_ROWS][MAP_COLUMNS];
-      Soil soiltile[MAP_ROWS][MAP_COLUMNS];
-      Enemy enemies[MAP_ROWS][MAP_COLUMNS];
-      Spike spikes[MAP_ROWS][MAP_COLUMNS];
+      std::vector<std::vector<Soil> > soiltile;
+      std::vector<std::vector<Enemy> > enemies;
+      std::vector<std::vector<Spike> > spikes;
       Label life_label;
       Label taco_label;
       Backdrop backdrop;
