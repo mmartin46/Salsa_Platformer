@@ -123,7 +123,7 @@ class GameState
       Backdrop backdrop;
 
       // Level
-      int level_choice = rand() % 100;
+      int level_choice;
    public:
 
 
@@ -138,6 +138,8 @@ class GameState
       // Level Generation
       inline void set_level_choice(int val) { level_choice = val; }
       inline int get_level_choice() { return level_choice; }
+      void generate_level();
+
 
       // Textures
       inline SDL_Texture* get_block() { return block; }

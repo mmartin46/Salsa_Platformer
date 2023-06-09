@@ -1,10 +1,13 @@
 #include "game.hpp"
 
+void GameState::generate_level()
+{
+    set_level_choice(rand() % 40);
+}
 
 /* Constructs the gamestate. */
 GameState::GameState()
 {
-    this->set_level_choice(rand() % 100);
     this->set_time(0);
     this->set_scrollX(0);
     this->set_scrollY(0);
@@ -132,15 +135,21 @@ void GameState::init_blocks()
     
     int x, y;
 
-    for (x = 0; x < MAP_ROWS; ++x)
+    if (this->get_level_choice() < 20)
     {
-        for (y = 0; y < MAP_COLUMNS; ++y)
+        for (x = 0; x < MAP_ROWS; ++x)
         {
-            if (level_choice < 20)
+            for (y = 0; y < MAP_COLUMNS; ++y)
             {
                 tilemap[x][y] = world_map::map[x][y];
             }
-            else
+        }
+    }
+    else if (this->get_level_choice() >= 20)
+    {   
+        for (x = 0; x < MAP_ROWS; ++x)
+        {
+            for (y = 0; y < MAP_COLUMNS; ++y)
             {
                 tilemap[x][y] = world_map::map_2[x][y];
             }
