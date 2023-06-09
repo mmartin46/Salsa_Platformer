@@ -233,7 +233,7 @@ void GameState::doRender(SDL_Renderer *renderer)
     else if (this->get_level_choice() >= 20)
     {
         // Level 2
-        SDL_SetRenderDrawColor(renderer, 255, 82, 76, 255);   
+        SDL_SetRenderDrawColor(renderer, 73, 118, 201, 255);   
         this->backdrop.set_x(0);
         this->backdrop.set_y(0);
         this->backdrop.set_h(1000);
