@@ -313,8 +313,8 @@ void GameState::process()
     {
         for (int j = 0; j < MAP_COLUMNS; ++j)
         {
-            this->enemies[i][j].set_x(this->enemies[i][j].get_x() + this->enemies[i][j].get_dx());
-            this->enemies[i][j].set_y(this->enemies[i][j].get_y() + this->enemies[i][j].get_dy());
+            this->enemies.at(i).at(j).set_x(this->enemies.at(i).at(j).get_x() + this->enemies.at(i).at(j).get_dx());
+            this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() + this->enemies.at(i).at(j).get_dy());
         }
     }    
 
@@ -341,7 +341,7 @@ void GameState::process()
     // {
     //     for (int j = 0; j < MAP_COLUMNS; ++j)
     //     {
-    //         //this->enemies[i][j].apply_gravity();
+    //         //this->enemies.at(i).at(j).apply_gravity();
     //     }
     // }
 
@@ -378,7 +378,7 @@ int GameState::collision_in_map(T &plyr, std::vector<std::vector<Block> > &tile,
     int touched = 0;
     float pw = P_W, ph = P_H;
     float px = plyr.get_x(), py = plyr.get_y();
-    float bx = tile[i][j].get_x(), by = tile[i][j].get_y(), bw = tile[i][j].get_w(), bh = tile[i][j].get_h();
+    float bx = tile.at(i).at(j).get_x(), by = tile.at(i).at(j).get_y(), bw = tile.at(i).at(j).get_w(), bh = tile.at(i).at(j).get_h();
             
     if (px+pw/2 > bx && px+pw/2 < bx+bw)
     {
@@ -446,11 +446,11 @@ void GameState::collisionDetect()
         for (int j = 0; j < MAP_COLUMNS; j++)
         {
             // If the player and taco collide.
-            if ((this->tilemap[i][j] == 1) && collide2d(
+            if ((this->tilemap.at(i).at(j) == 1) && collide2d(
                 this->plyr.get_x(),
                 this->plyr.get_y(),
-                this->tile[i][j].get_x(),
-                this->tile[i][j].get_y(),
+                this->tile.at(i).at(j).get_x(),
+                this->tile.at(i).at(j).get_y(),
                 PLAYER_HEIGHT,
                 PLAYER_WIDTH,
                 BLOCK_WIDTH,
@@ -459,17 +459,17 @@ void GameState::collisionDetect()
             {
                 this->set_tacos_eaten(this->get_tacos_eaten() + 1);
                 // Create a rectangle and set the texture to null.
-                SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile[i][j].get_x()), (int)(this->get_scrollY() + tile[i][j].get_y()), tile[i][j].get_w(), tile[i][j].get_h() };
+                SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile.at(i).at(j).get_x()), (int)(this->get_scrollY() + tile.at(i).at(j).get_y()), tile.at(i).at(j).get_w(), tile.at(i).at(j).get_h() };
                 SDL_RenderCopy(this->get_renderer(), NULL, NULL , &tacoRect);
                 // Makes sure the collision will not be repeated.
-                tilemap[i][j] = -1;
+                tilemap.at(i).at(j) = -1;
             }
             // If the player and enemy collide.
-            else if ((this->tilemap[i][j] == 2) && collide2d(
+            else if ((this->tilemap.at(i).at(j) == 2) && collide2d(
                 this->plyr.get_x(),
                 this->plyr.get_y(),
-                this->enemies[i][j].get_x(),
-                this->enemies[i][j].get_y(),
+                this->enemies.at(i).at(j).get_x(),
+                this->enemies.at(i).at(j).get_y(),
                 PLAYER_HEIGHT,
                 PLAYER_WIDTH,
                 ENEMY_WIDTH,
@@ -479,7 +479,7 @@ void GameState::collisionDetect()
                 this->set_life(this->get_life() - 1);
                 //std::cout << this->life << std::endl;
             }
-            else if ((this->tilemap[i][j] == 3) && collide2d(
+            else if ((this->tilemap.at(i).at(j) == 3) && collide2d(
                 this->plyr.get_x(),
                 this->plyr.get_y(),
                 this->spikes[i][j].get_x(),
@@ -501,7 +501,7 @@ void GameState::collisionDetect()
     {
         for (int j = 0; j < MAP_COLUMNS; j++)
         {
-            if (this->tilemap[i][j] == world_map::BLOCK_COLLISION)
+            if (this->tilemap.at(i).at(j) == world_map::BLOCK_COLLISION)
             {
                 collision_in_map(this->plyr, this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
                 // Debug onBlock
