@@ -4,6 +4,7 @@
 /* Constructs the gamestate. */
 GameState::GameState()
 {
+    this->ptr = &plyr;
     this->tilemap = std::vector<std::vector<int> >(MAP_ROWS, std::vector<int>(MAP_COLUMNS));
     this->tile = std::vector<std::vector<Block> >(MAP_ROWS, std::vector<Block>(MAP_COLUMNS));
     this->soiltile = std::vector<std::vector<Soil> >(MAP_ROWS, std::vector<Soil>(MAP_COLUMNS));

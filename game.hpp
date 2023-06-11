@@ -127,7 +127,7 @@ class GameState
 
       // Players
       Player plyr;
-      Player *ptr = &plyr;
+      Player *ptr = NULL;
 
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
@@ -140,6 +140,7 @@ class GameState
       inline SDL_Texture* get_player_frame(int n) { return plyrFrames.at(n); }
 
       GameState();
+      virtual ~GameState();
       // Level Generation
       inline void set_level_choice(int val) { level_choice = val; }
       inline int get_level_choice() { return level_choice; }
@@ -224,8 +225,8 @@ class GameState
 
 void GameState::set_player_frame(int n, SDL_Texture* t) 
 { 
-   if (n >= this->plyrFrames.size()) {
-      std::cout << "n is out of bounds" << std::endl;
+   if (n >= this->plyrFrames.size() || n < 0) {
+      std::cout << "player_frame: argument is out of bounds" << std::endl;
       exit(1);
    }
    this->plyrFrames.at(n) = t;
@@ -248,6 +249,11 @@ void GameState::enemy_movement()
       
       }
    }
+}
+
+GameState::~GameState()
+{
+   delete [] ptr;
 }
 
 #endif
