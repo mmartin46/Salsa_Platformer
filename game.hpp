@@ -124,11 +124,13 @@ class GameState
 
       // Level
       int level_choice;
-   public:
-
 
       // Players
       Player plyr;
+      Player *ptr = &plyr;
+   public:
+
+      Player* get_player() { return ptr; };
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
       std::vector<SDL_Texture*> enemyFrames = std::vector<SDL_Texture*>(2);

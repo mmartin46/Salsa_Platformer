@@ -283,8 +283,8 @@ void GameState::doRender(SDL_Renderer *renderer)
     }
 
     // draw a rectangle at plyr's position
-    SDL_Rect rect = {  (int)(this->get_scrollX() + this->plyr.get_x()), (int)(this->get_scrollY() + this->plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
-    SDL_RenderCopyEx(renderer, this->plyrFrames[this->plyr.get_animFrame()], NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->plyr.get_facingLeft() == 0));
+    SDL_Rect rect = {  (int)(this->get_scrollX() + this->get_player()->get_x()), (int)(this->get_scrollY() + this->get_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
+    SDL_RenderCopyEx(renderer, this->plyrFrames[this->get_player()->get_animFrame()], NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->get_player()->get_facingLeft() == 0));
 
     // draw text rectangle.
     SDL_Rect textRect = { 0, 0, (int) (this->life_label.get_w() / 4), (int) (this->life_label.get_h() / 3.75) };
@@ -304,7 +304,7 @@ void GameState::process()
     enemy_movement();
 
     // plyr movement
-    Player *plyr = &this->plyr;
+    Player *plyr = this->get_player();
     plyr->set_x(plyr->get_x() + plyr->get_dx());
     plyr->set_y(plyr->get_y() + plyr->get_dy());
 
@@ -346,8 +346,8 @@ void GameState::process()
     // }
 
     // Scrolling
-    this->set_scrollX(-this->plyr.get_x() + WINDOW_WIDTH/2);
-    this->set_scrollY(-this->plyr.get_y() + WINDOW_HEIGHT/2);
+    this->set_scrollX(-plyr->get_x() + WINDOW_WIDTH/2);
+    this->set_scrollY(-plyr->get_y() + WINDOW_HEIGHT/2);
 
     if (this->get_scrollX() > 0)
     {
@@ -359,7 +359,7 @@ void GameState::process()
     // }
 
     // Player falls off screen
-    if (this->plyr.get_y() >= FALL_DEATH)
+    if (plyr->get_y() >= FALL_DEATH)
     {
         exit(0);        
     }
@@ -447,8 +447,8 @@ void GameState::collisionDetect()
         {
             // If the player and taco collide.
             if ((this->tilemap.at(i).at(j) == 1) && collide2d(
-                this->plyr.get_x(),
-                this->plyr.get_y(),
+                this->get_player()->get_x(),
+                this->get_player()->get_y(),
                 this->tile.at(i).at(j).get_x(),
                 this->tile.at(i).at(j).get_y(),
                 PLAYER_HEIGHT,
@@ -466,8 +466,8 @@ void GameState::collisionDetect()
             }
             // If the player and enemy collide.
             else if ((this->tilemap.at(i).at(j) == 2) && collide2d(
-                this->plyr.get_x(),
-                this->plyr.get_y(),
+                this->get_player()->get_x(),
+                this->get_player()->get_y(),
                 this->enemies.at(i).at(j).get_x(),
                 this->enemies.at(i).at(j).get_y(),
                 PLAYER_HEIGHT,
@@ -480,8 +480,8 @@ void GameState::collisionDetect()
                 //std::cout << this->life << std::endl;
             }
             else if ((this->tilemap.at(i).at(j) == 3) && collide2d(
-                this->plyr.get_x(),
-                this->plyr.get_y(),
+                this->get_player()->get_x(),
+                this->get_player()->get_y(),
                 this->spikes[i][j].get_x(),
                 this->spikes[i][j].get_y(),
                 PLAYER_HEIGHT,
@@ -503,7 +503,7 @@ void GameState::collisionDetect()
         {
             if (this->tilemap.at(i).at(j) == world_map::BLOCK_COLLISION)
             {
-                collision_in_map(this->plyr, this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
+                collision_in_map(*this->get_player(), this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
                 // Debug onBlock
             }
         }
@@ -543,10 +543,10 @@ int GameState::processEvents(SDL_Window *window)
                         done = 1;
                     break;
                     case SDLK_UP:
-                        if (this->plyr.get_onBlock())
+                        if (this->get_player()->get_onBlock())
                         {
-                            this->plyr.set_dy(PLAYER_JUMP_HEIGHT);
-                            this->plyr.reset_onBlock();
+                            this->get_player()->set_dy(PLAYER_JUMP_HEIGHT);
+                            this->get_player()->reset_onBlock();
                             Mix_PlayChannel(-1, this->get_jump_music(), 0);
                         }
                     break;       
@@ -569,39 +569,39 @@ int GameState::processEvents(SDL_Window *window)
     const Uint8 *state = SDL_GetKeyboardState(NULL);
     if (state[SDL_SCANCODE_UP])
     {
-        this->plyr.apply_jump();
+        this->get_player()->apply_jump();
     }
 
     // Walking
     if (state[SDL_SCANCODE_LEFT])
     {
-       this->plyr.move_left_x();
-       if (this->plyr.get_dx() < -6)
+       this->get_player()->move_left_x();
+       if (this->get_player()->get_dx() < -6)
        {
-           this->plyr.move_left_dx(); 
+           this->get_player()->move_left_dx(); 
        }
-       this->plyr.set_facingLeft(true);
-       this->plyr.set_slowingDown(false);
+       this->get_player()->set_facingLeft(true);
+       this->get_player()->set_slowingDown(false);
     }
     else if (state[SDL_SCANCODE_RIGHT])
     {
-       this->plyr.move_right_x();;
-       if (this->plyr.get_dx() > 6)
+       this->get_player()->move_right_x();;
+       if (this->get_player()->get_dx() > 6)
        {
-           this->plyr.move_right_dx();
+           this->get_player()->move_right_dx();
        }
-       this->plyr.set_facingLeft(false);
-       this->plyr.set_slowingDown(false);
+       this->get_player()->set_facingLeft(false);
+       this->get_player()->set_slowingDown(false);
     }
     else
     {
         // Slows down to 0.
-        this->plyr.set_animFrame(0);
-        this->plyr.slow_movement();
-        this->plyr.set_slowingDown(true);
-        if (SDL_fabsf(this->plyr.get_dx()) < 0.1f)
+        this->get_player()->set_animFrame(0);
+        this->get_player()->slow_movement();
+        this->get_player()->set_slowingDown(true);
+        if (SDL_fabsf(this->get_player()->get_dx()) < 0.1f)
         {
-            this->plyr.apply_static_movement();
+            this->get_player()->apply_static_movement();
         }
     }
     return done;
