@@ -85,12 +85,12 @@ void GameState::loadImages()
 
     // Loading the player's first frame.
     SDL_Surface* surface = get_surface("img\\plyr_ita.png", "Cannot find plyr_ita.png!\n\n");
-    this->plyrFrames[0] = SDL_CreateTextureFromSurface(this->get_renderer(), surface);
+    this->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
     // Loading the player's second frame.
     surface = get_surface("img\\plyr_itb.png", "Cannot find plyr_itb.png!\n\n");
-    this->plyrFrames[1] = SDL_CreateTextureFromSurface(this->get_renderer(), surface);
+    this->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
     // Loading the block's texture.
@@ -284,7 +284,7 @@ void GameState::doRender(SDL_Renderer *renderer)
 
     // draw a rectangle at plyr's position
     SDL_Rect rect = {  (int)(this->get_scrollX() + this->get_player()->get_x()), (int)(this->get_scrollY() + this->get_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
-    SDL_RenderCopyEx(renderer, this->plyrFrames[this->get_player()->get_animFrame()], NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->get_player()->get_facingLeft() == 0));
+    SDL_RenderCopyEx(renderer, this->get_player_frame(this->get_player()->get_animFrame()), NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->get_player()->get_facingLeft() == 0));
 
     // draw text rectangle.
     SDL_Rect textRect = { 0, 0, (int) (this->life_label.get_w() / 4), (int) (this->life_label.get_h() / 3.75) };
@@ -504,7 +504,7 @@ void GameState::collisionDetect()
             if (this->tilemap.at(i).at(j) == world_map::BLOCK_COLLISION)
             {
                 collision_in_map(*this->get_player(), this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
-                // Debug onBlock
+                // TODO: Debug onBlock
             }
         }
     }
