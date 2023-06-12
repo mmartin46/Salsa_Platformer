@@ -1,6 +1,7 @@
 #include "game.hpp"
 #include "game.cpp"
 #include "player.hpp"
+#include "player.cpp"
 #include "enemy.hpp"
 
 
