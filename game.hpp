@@ -203,25 +203,4 @@ class GameState
 };
 
 
-GameState::~GameState()
-{
-    // Shutdown game and upload all memory
-    SDL_DestroyTexture(this->get_taco());
-    SDL_DestroyTexture(this->get_spike());
-    SDL_DestroyTexture(this->get_soil());
-    SDL_DestroyTexture(this->get_enemy());
-    SDL_DestroyTexture(this->get_player()->get_player_frame(0));
-    SDL_DestroyTexture(this->get_player()->get_player_frame(1));
-    SDL_DestroyTexture(this->get_block());
-
-    if (this->get_life_label_texture() != NULL)
-    {
-        SDL_DestroyTexture(this->get_life_label_texture());
-    }
-    if (this->get_taco_label_texture() != NULL)
-    {
-        SDL_DestroyTexture(this->get_taco_label_texture());
-    }
-}
-
 #endif
