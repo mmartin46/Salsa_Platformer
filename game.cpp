@@ -635,11 +635,11 @@ void GameState::enemy_movement()
       {
          if ((this->get_time() % 300) < 150)
          {
-            this->enemies[i][j].set_y(this->enemies[i][j].get_y() - 1);
+            this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() - 1);
          }
          else
          {
-            this->enemies[i][j].set_y(this->enemies[i][j].get_y() + 1);           
+            this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() + 1);           
          }
       
       }
