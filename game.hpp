@@ -203,25 +203,6 @@ class GameState
 };
 
 
-void GameState::enemy_movement()
-{
-   for (int i = 0; i < MAP_ROWS; ++i)
-   {
-      for (int j = 0; j < MAP_COLUMNS; ++j)
-      {
-         if ((this->get_time() % 300) < 150)
-         {
-            this->enemies[i][j].set_y(this->enemies[i][j].get_y() - 1);
-         }
-         else
-         {
-            this->enemies[i][j].set_y(this->enemies[i][j].get_y() + 1);           
-         }
-      
-      }
-   }
-}
-
 GameState::~GameState()
 {
 }
