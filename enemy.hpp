@@ -37,7 +37,6 @@ Enemy::Enemy()
 class Spike : public Enemy
 {
    private:
-   private:
    /* data */
       float x, y, w, h;
       float dx, dy;

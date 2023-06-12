@@ -17,6 +17,7 @@ class Player
       Player();
       Player(int, int);
       
+      // Player Coordinates
       inline virtual int get_x() { return x; } const
       inline virtual void set_x(int val) { x = val; }
       inline virtual int get_y() { return y; } const
@@ -27,6 +28,7 @@ class Player
       inline virtual int get_dy() { return dy; } const
       inline virtual void set_dy(int val) { dy = val; }
 
+      // Player Textures
       void set_player_frame(int n, SDL_Texture* t);
       inline SDL_Texture* get_player_frame(int n) { return plyrFrames.at(n); }
 
