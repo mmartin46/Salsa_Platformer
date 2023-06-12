@@ -94,10 +94,7 @@ void GameState::loadImages()
     this->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
-    // Loading the block's texture.
-    surface = get_surface("img\\block.png", "Cannot find block.png!\n\n");
-    this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);
+
 
     // Loading the taco texture.
     surface = get_surface("img\\taco.png", "Cannot find block.png!\n\n");
@@ -113,23 +110,40 @@ void GameState::loadImages()
     this->set_spike(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
-    // Loading soil texture.
-    surface = get_surface("img\\soil.png", "Cannot find soil.png!\n\n");
-    this->set_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);    
+
 
     // Loading background texture.
     if (this->get_level_choice() < 20)
     {
         surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
         this->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);  
+
+        // Loading the block's texture.
+        surface = get_surface("img\\block.png", "Cannot find block.png!\n\n");
+        this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);  
+
+        // Loading soil texture.
+        surface = get_surface("img\\soil.png", "Cannot find soil.png!\n\n");
+        this->set_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);    
     }
     else if (this->get_level_choice() >= 20)
     {
         // TODO: Change to the second level
-        surface = get_surface("img\\grassland.png", "Cannot find grassland.png!\n\n");
+        surface = get_surface("img\\world_bg_1.png", "Cannot find world_bg_1.png!\n\n");
         this->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);   
+
+        // Loading the block's texture.
+        surface = get_surface("img\\block_1.png", "Cannot find block.png!\n\n");
+        this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface); 
+
+        // Loading soil texture.
+        surface = get_surface("img\\soil_1.png", "Cannot find soil.png!\n\n");
+        this->set_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);    
     }
 }
@@ -169,11 +183,20 @@ void GameState::init_blocks(int level_choice)
         }
     }
 
-    this->backdrop.set_x(-300);
-    this->backdrop.set_y(-300);
-    this->backdrop.set_h(5000);
-    this->backdrop.set_w(5000);
-
+    if (choice < 20)
+    {
+        this->backdrop.set_x(-300);
+        this->backdrop.set_y(-300);
+        this->backdrop.set_h(5000);
+        this->backdrop.set_w(5000);
+    }
+    else if (choice >= 20)
+    {
+        this->backdrop.set_x(-50);
+        this->backdrop.set_y(-200);   
+        this->backdrop.set_h(598);
+        this->backdrop.set_w(900);        
+    }
 
     // Intialize the map
     for (x = 0; x < MAP_ROWS; ++x)
@@ -239,10 +262,6 @@ void GameState::doRender(SDL_Renderer *renderer)
     {
         // Level 2
         SDL_SetRenderDrawColor(renderer, 73, 118, 201, 255);   
-        this->backdrop.set_x(0);
-        this->backdrop.set_y(0);
-        this->backdrop.set_h(1000);
-        this->backdrop.set_w(1000);
     }
 
     // Background

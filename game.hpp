@@ -235,7 +235,6 @@ void GameState::enemy_movement()
 
 GameState::~GameState()
 {
-   delete [] ptr;
 }
 
 #endif
