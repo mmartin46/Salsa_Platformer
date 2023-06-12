@@ -11,6 +11,8 @@ class Player
       int onBlock;
       int animFrame;
       bool slowingDown, facingLeft;
+      // Images
+      std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
    public:
       Player();
       Player(int, int);
@@ -24,6 +26,9 @@ class Player
       inline virtual void set_dx(int val) { dx = val; }
       inline virtual int get_dy() { return dy; } const
       inline virtual void set_dy(int val) { dy = val; }
+
+      void set_player_frame(int n, SDL_Texture* t);
+      inline SDL_Texture* get_player_frame(int n) { return plyrFrames.at(n); }
 
 
       // Player Physics 
@@ -52,9 +57,11 @@ class Player
       inline virtual void set_facingLeft(int v) { facingLeft = v; }
       inline virtual bool get_slowingDown() { return slowingDown; } const
       inline virtual void set_slowingDown(bool s) { slowingDown = s; }
+
       
       friend class GameState;
 };
+
 
 // Defaults the character's position
 // x = 210
@@ -85,6 +92,15 @@ Player::Player(int x_pos, int y_pos)
    this->set_animFrame(0);
    this->set_facingLeft(true);
    this->set_slowingDown(false);
+}
+
+void Player::set_player_frame(int n, SDL_Texture* t) 
+{ 
+   if (n >= this->plyrFrames.size() || n < 0) {
+      std::cout << "player_frame: argument is out of bounds" << std::endl;
+      exit(1);
+   }
+   this->plyrFrames.at(n) = t;
 }
 
 #endif

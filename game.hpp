@@ -118,9 +118,6 @@ class GameState
 
       Player* get_player() { return ptr; };
 
-      void set_player_frame(int n, SDL_Texture* t);
-      inline SDL_Texture* get_player_frame(int n) { return plyrFrames.at(n); }
-
       GameState();
       virtual ~GameState();
       // Level Generation
@@ -205,14 +202,6 @@ class GameState
       friend class Enemy;    
 };
 
-void GameState::set_player_frame(int n, SDL_Texture* t) 
-{ 
-   if (n >= this->plyrFrames.size() || n < 0) {
-      std::cout << "player_frame: argument is out of bounds" << std::endl;
-      exit(1);
-   }
-   this->plyrFrames.at(n) = t;
-}
 
 void GameState::enemy_movement()
 {

@@ -66,8 +66,8 @@ int main(int argc, char *argv[] )
     SDL_DestroyTexture(gameState.get_spike());
     SDL_DestroyTexture(gameState.get_soil());
     SDL_DestroyTexture(gameState.get_enemy());
-    SDL_DestroyTexture(gameState.get_player_frame(0));
-    SDL_DestroyTexture(gameState.get_player_frame(1));
+    SDL_DestroyTexture(gameState.get_player()->get_player_frame(0));
+    SDL_DestroyTexture(gameState.get_player()->get_player_frame(1));
     SDL_DestroyTexture(gameState.get_block());
 
     if (gameState.get_life_label_texture() != NULL)
