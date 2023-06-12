@@ -62,23 +62,6 @@ int main(int argc, char *argv[] )
         // SDL_Delay(100);
     }
 
-    // Shutdown game and upload all memory
-    SDL_DestroyTexture(gameState.get_taco());
-    SDL_DestroyTexture(gameState.get_spike());
-    SDL_DestroyTexture(gameState.get_soil());
-    SDL_DestroyTexture(gameState.get_enemy());
-    SDL_DestroyTexture(gameState.get_player()->get_player_frame(0));
-    SDL_DestroyTexture(gameState.get_player()->get_player_frame(1));
-    SDL_DestroyTexture(gameState.get_block());
-
-    if (gameState.get_life_label_texture() != NULL)
-    {
-        SDL_DestroyTexture(gameState.get_life_label_texture());
-    }
-    if (gameState.get_taco_label_texture() != NULL)
-    {
-        SDL_DestroyTexture(gameState.get_taco_label_texture());
-    }
 
 
     // Close and destroy the window
