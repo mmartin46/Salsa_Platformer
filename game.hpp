@@ -107,14 +107,13 @@ class GameState
       Label life_label;
       Label taco_label;
 
-      Backdrop *backdrop;
+      Backdrop *backdrop = NULL;
    
 
       // Level
       int level_choice;
 
       // Players
-      Player plyr;
       Player *ptr = NULL;
 
       // Images

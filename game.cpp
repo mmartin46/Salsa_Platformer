@@ -4,7 +4,7 @@
 /* Constructs the gamestate. */
 GameState::GameState()
 {
-    this->ptr = &plyr;
+    this->ptr = new Player;
     this->backdrop = new Backdrop;
     this->tilemap = std::vector<std::vector<int> >(MAP_ROWS, std::vector<int>(MAP_COLUMNS));
     this->tile = std::vector<std::vector<Block> >(MAP_ROWS, std::vector<Block>(MAP_COLUMNS));
@@ -666,4 +666,7 @@ GameState::~GameState()
     {
         SDL_DestroyTexture(this->get_taco_label_texture());
     }
+
+    delete backdrop;
+    delete ptr;
 }
