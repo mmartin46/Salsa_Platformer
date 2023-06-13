@@ -4,6 +4,7 @@
 /* Constructs the gamestate. */
 GameState::GameState()
 {
+    this->maximum_y = FALL_DEATH;
     this->ptr = new Player;
     this->backdrop = new Backdrop;
     this->tilemap = std::vector<std::vector<int> >(MAP_ROWS, std::vector<int>(MAP_COLUMNS));
@@ -379,7 +380,7 @@ void GameState::process()
     // }
 
     // Player falls off screen
-    if (plyr->get_y() >= FALL_DEATH)
+    if (plyr->get_y() >= this->get_maximum_y())
     {
         exit(0);        
     }

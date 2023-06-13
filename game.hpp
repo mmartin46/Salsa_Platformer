@@ -112,6 +112,9 @@ class GameState
 
       // Level
       int level_choice;
+      int maximum_y;
+      int maximum_x;
+
 
       // Players
       Player *ptr = NULL;
@@ -130,8 +133,9 @@ class GameState
       // Level Generation
       inline void set_level_choice(int val) { level_choice = val; }
       inline int get_level_choice() { return level_choice; }
-
-      
+      inline void set_maximum_y(int my) { maximum_y = my; }
+      inline int get_maximum_y() { return maximum_y; }
+      inline void set_maximum_x(int mx) { maximum_x = mx; }
 
       // Textures
       inline SDL_Texture* get_block() { return block; }
