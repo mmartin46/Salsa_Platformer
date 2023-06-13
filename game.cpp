@@ -513,7 +513,7 @@ void GameState::collisionDetect()
             {
                 this->set_life(this->get_life() - 1);
             }
-            else if ((this->tilemap.at(i).at(j) == world_map::EMEMY_COLLISION) && collide2d(
+            else if ((collide2d(
                 this->enemies.at(i).at(j).get_x(),
                 this->enemies.at(i).at(j).get_y(),
                 this->tile.at(i).at(j).get_x(),
@@ -522,10 +522,10 @@ void GameState::collisionDetect()
                 ENEMY_WIDTH,
                 BLOCK_WIDTH,
                 BLOCK_HEIGHT
-            ))
+            )))
             {
                 // DEBUG: Enemy and block collision
-                std::cout << "EOSH" << std::endl; 
+                //std::cout << "EOSH" << std::endl; 
                 this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() - (this->enemies.at(i).at(j).get_enemySpeed()));
             }
         }
