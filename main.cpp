@@ -16,6 +16,7 @@ int main(int argc, char *argv[] )
     srand((int) time(NULL));
 
     gameState.init_blocks((int) rand() % 40);
+    //gameState.init_blocks(19);
     // Create an application window with the following settings:
     window = SDL_CreateWindow("Salsa Platformer",            // window title
                             SDL_WINDOWPOS_UNDEFINED,    // xpos

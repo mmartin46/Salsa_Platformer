@@ -380,10 +380,10 @@ void GameState::process()
     // }
 
     // Player falls off screen
-    if (plyr->get_y() >= this->get_maximum_y())
-    {
-        exit(0);        
-    }
+    // if (plyr->get_y() >= this->get_maximum_y())
+    // {
+    //     exit(0);        
+    // }
 }
 
 // Represents a collision within the map
@@ -467,7 +467,7 @@ void GameState::collisionDetect()
         for (int j = 0; j < MAP_COLUMNS; j++)
         {
             // If the player and taco collide.
-            if ((this->tilemap.at(i).at(j) == 1) && collide2d(
+            if ((this->tilemap.at(i).at(j) == world_map::TACO_COLLISION) && collide2d(
                 this->get_player()->get_x(),
                 this->get_player()->get_y(),
                 this->tile.at(i).at(j).get_x(),
@@ -486,7 +486,7 @@ void GameState::collisionDetect()
                 tilemap.at(i).at(j) = -1;
             }
             // If the player and enemy collide.
-            else if ((this->tilemap.at(i).at(j) == 2) && collide2d(
+            else if ((this->tilemap.at(i).at(j) == world_map::EMEMY_COLLISION) && collide2d(
                 this->get_player()->get_x(),
                 this->get_player()->get_y(),
                 this->enemies.at(i).at(j).get_x(),
@@ -500,7 +500,7 @@ void GameState::collisionDetect()
                 this->set_life(this->get_life() - 1);
                 //std::cout << this->life << std::endl;
             }
-            else if ((this->tilemap.at(i).at(j) == 3) && collide2d(
+            else if ((this->tilemap.at(i).at(j) == world_map::SPIKE_COLLISION) && collide2d(
                 this->get_player()->get_x(),
                 this->get_player()->get_y(),
                 this->spikes[i][j].get_x(),
