@@ -311,6 +311,7 @@ void GameState::doRender(SDL_Renderer *renderer)
     SDL_Rect textRect = { 0, 0, (int) (this->life_label.get_w() / 4), (int) (this->life_label.get_h() / 3.75) };
     SDL_RenderCopy(this->get_renderer(), this->get_life_label_texture(), NULL, &textRect);
 
+    // draw taco text rectangle
     SDL_Rect tERect = { (int) (WINDOW_WIDTH-(WINDOW_WIDTH / 4.8)), 0, (int) (this->taco_label.get_w() / 4), (int) (this->taco_label.get_h() / 3.75) };
     SDL_RenderCopy(this->get_renderer(), this->get_taco_label_texture(), NULL, &tERect);
 

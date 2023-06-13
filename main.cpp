@@ -4,6 +4,13 @@
 #include "player.cpp"
 #include "enemy.hpp"
 
+// Generates a random number
+// to generate our level.
+static int generate_random_number() {
+    srand((int) time(NULL));
+    int n = ((int) rand() % 40);
+    return n;
+}
 
 int main(int argc, char *argv[] )
 {
@@ -13,9 +20,9 @@ int main(int argc, char *argv[] )
     SDL_Surface *starSurface = NULL;
 
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);       // Intialize SDL2
-    srand((int) time(NULL));
 
-    gameState.init_blocks((int) rand() % 40);
+
+    gameState.init_blocks(generate_random_number());
     //gameState.init_blocks(19);
     // Create an application window with the following settings:
     window = SDL_CreateWindow("Salsa Platformer",            // window title
