@@ -513,6 +513,21 @@ void GameState::collisionDetect()
             {
                 this->set_life(this->get_life() - 1);
             }
+            else if ((this->tilemap.at(i).at(j) == world_map::EMEMY_COLLISION) && collide2d(
+                this->enemies.at(i).at(j).get_x(),
+                this->enemies.at(i).at(j).get_y(),
+                this->tile.at(i).at(j).get_x(),
+                this->tile.at(i).at(j).get_y(),
+                ENEMY_HEIGHT,
+                ENEMY_WIDTH,
+                BLOCK_WIDTH,
+                BLOCK_HEIGHT
+            ))
+            {
+                // DEBUG: Enemy and block collision
+                std::cout << "EOSH" << std::endl; 
+                this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() - (this->enemies.at(i).at(j).get_enemySpeed()));
+            }
         }
     }
 
@@ -526,6 +541,11 @@ void GameState::collisionDetect()
             {
                 collision_in_map(*this->get_player(), this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
                 // TODO: Debug onBlock
+                if (collision_in_map(this->enemies.at(i).at(j), this->tile, i, j, ENEMY_WIDTH, ENEMY_HEIGHT))
+                {
+                    std::cout << "EOSH" << std::endl;
+                    this->enemies.at(i).at(j).set_enemySpeed(this->enemies.at(i).at(j).get_enemySpeed() * -1);
+                }
             }
         }
     }
@@ -634,15 +654,14 @@ void GameState::enemy_movement()
    {
       for (int j = 0; j < MAP_COLUMNS; ++j)
       {
-         if ((this->get_time() % 300) < 150)
-         {
-            this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() - 1);
-         }
-         else
-         {
-            this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() + 1);           
-         }
-      
+        if ((this->get_time() % 300) < 150)
+        {
+            this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() - (this->enemies.at(i).at(j).get_enemySpeed()));
+        }
+        else
+        {
+            this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() - (this->enemies.at(i).at(j).get_enemySpeed()) * -1);
+        }
       }
    }
 }

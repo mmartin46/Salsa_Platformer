@@ -12,13 +12,22 @@ class Enemy : public Player
       float dx, dy;
       int onBlock;
       int animFrame;
+      int enemySpeed = 1;
       bool slowingDown, facingLeft;
    public:
       Enemy();
-      inline virtual int get_w() { return w; } const
-      inline virtual void set_w(int val) { w = val; }
-      inline virtual int get_h() { return h; } const
-      inline virtual void set_h(int val) { h = val; }    
+
+      inline int get_x() { return x; } const
+      inline void set_x(int val) { x = val; }
+      inline int get_y() { return y; } const
+      inline void set_y(int val) { y = val; }
+
+      inline int get_w() { return w; } const
+      inline void set_w(int val) { w = val; }
+      inline int get_h() { return h; } const
+      inline void set_h(int val) { h = val; }    
+      inline void set_enemySpeed(int s) { enemySpeed = s; }
+      inline int get_enemySpeed() { return enemySpeed; }
 };
 
 // Defaults the enemy's position
