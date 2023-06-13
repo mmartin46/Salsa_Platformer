@@ -60,6 +60,10 @@ class Backdrop : public Entity
 {
    private:
       int x, y, w, h;
+      SDL_Texture* backdrop_texture;
+   public:
+      inline SDL_Texture* get_backdrop_texture() { return backdrop_texture; }
+      inline void set_backdrop_texture(SDL_Texture* b) { backdrop_texture = b; }
 };
 
 
@@ -102,7 +106,9 @@ class GameState
       std::vector<std::vector<Spike> > spikes;
       Label life_label;
       Label taco_label;
-      Backdrop backdrop;
+
+      Backdrop *backdrop;
+   
 
       // Level
       int level_choice;
@@ -117,6 +123,8 @@ class GameState
    public:
 
       Player* get_player() { return ptr; };
+      Backdrop* get_backdrop() { return backdrop; }
+
 
       GameState();
       virtual ~GameState();
@@ -124,6 +132,7 @@ class GameState
       inline void set_level_choice(int val) { level_choice = val; }
       inline int get_level_choice() { return level_choice; }
 
+      
 
       // Textures
       inline SDL_Texture* get_block() { return block; }
@@ -142,8 +151,7 @@ class GameState
       inline void set_taco_texture(SDL_Texture *t) { tcoTexture = t; }
       inline SDL_Texture* get_taco_texture(SDL_Texture *t) { return tcoTexture; }
 
-      inline SDL_Texture* get_backdrop_texture() { return backdrop_texture; }
-      inline void set_backdrop_texture(SDL_Texture* b) { backdrop_texture = b; }
+
       inline void set_life_label_texture(SDL_Texture *t) { lblTexture = t; }
       inline SDL_Texture* get_life_label_texture() { return lblTexture; } 
       inline void set_taco_label_texture(SDL_Texture *t) { lblTexture = t; }

@@ -5,6 +5,7 @@
 GameState::GameState()
 {
     this->ptr = &plyr;
+    this->backdrop = new Backdrop;
     this->tilemap = std::vector<std::vector<int> >(MAP_ROWS, std::vector<int>(MAP_COLUMNS));
     this->tile = std::vector<std::vector<Block> >(MAP_ROWS, std::vector<Block>(MAP_COLUMNS));
     this->soiltile = std::vector<std::vector<Soil> >(MAP_ROWS, std::vector<Soil>(MAP_COLUMNS));
@@ -116,7 +117,7 @@ void GameState::loadImages()
     if (this->get_level_choice() < 20)
     {
         surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
-        this->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);  
 
         // Loading the block's texture.
@@ -133,7 +134,7 @@ void GameState::loadImages()
     {
         // TODO: Change to the second level
         surface = get_surface("img\\world_bg_1.png", "Cannot find world_bg_1.png!\n\n");
-        this->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);   
 
         // Loading the block's texture.
@@ -185,17 +186,17 @@ void GameState::init_blocks(int level_choice)
 
     if (choice < 20)
     {
-        this->backdrop.set_x(-300);
-        this->backdrop.set_y(-300);
-        this->backdrop.set_h(5000);
-        this->backdrop.set_w(5000);
+        this->get_backdrop()->set_x(-300);
+        this->get_backdrop()->set_y(-300);
+        this->get_backdrop()->set_h(5000);
+        this->get_backdrop()->set_w(5000);
     }
     else if (choice >= 20)
     {
-        this->backdrop.set_x(-50);
-        this->backdrop.set_y(-200);   
-        this->backdrop.set_h(598);
-        this->backdrop.set_w(900);        
+        this->get_backdrop()->set_x(-50);
+        this->get_backdrop()->set_y(-200);   
+        this->get_backdrop()->set_h(598);
+        this->get_backdrop()->set_w(900);        
     }
 
     // Intialize the map
@@ -265,9 +266,8 @@ void GameState::doRender(SDL_Renderer *renderer)
     }
 
     // Background
-    SDL_Rect bgRect = { (int)((this->scrollX / 17) + this->backdrop.get_x()),(int)((this->scrollY / 17) + this->backdrop.get_y()), this->backdrop.get_w(), this->backdrop.get_h() };
-    SDL_RenderCopy(this->get_renderer(), this->get_backdrop_texture(), NULL, &bgRect);
-
+    SDL_Rect bgRect = { (int)((this->scrollX / 17) + this->get_backdrop()->get_x()),(int)((this->scrollY / 17) + this->get_backdrop()->get_y()), this->get_backdrop()->get_w(), this->get_backdrop()->get_h() };
+    SDL_RenderCopy(this->get_renderer(), this->get_backdrop()->get_backdrop_texture(), NULL, &bgRect);
 
     int x, y;
     for (x = 0; x < MAP_ROWS; ++x)
