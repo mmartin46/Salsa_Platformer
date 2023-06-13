@@ -503,8 +503,8 @@ void GameState::collisionDetect()
             else if ((this->tilemap.at(i).at(j) == world_map::SPIKE_COLLISION) && collide2d(
                 this->get_player()->get_x(),
                 this->get_player()->get_y(),
-                this->spikes[i][j].get_x(),
-                this->spikes[i][j].get_y(),
+                this->spikes.at(i).at(j).get_x(),
+                this->spikes.at(i).at(j).get_y(),
                 PLAYER_HEIGHT,
                 PLAYER_WIDTH,
                 SPIKE_WIDTH,
