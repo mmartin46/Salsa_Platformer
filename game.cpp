@@ -1,5 +1,19 @@
 #include "game.hpp"
 
+// Returns the minimum in a vector.
+double minimum(const std::vector<double> &v)
+{
+    double min = v.at(0);
+    typename std::vector<double>::const_pointer p, end = v.data() + v.size();
+    for (p = v.data(); p < end; ++p)
+    {
+        if (min > *p)
+        {
+            min = *p;
+        }
+    }
+    return min;
+}
 
 /* Constructs the gamestate. */
 GameState::GameState()
@@ -740,9 +754,46 @@ void GameState::computer_player_movement()
         this->get_comp_player()->apply_up_movement();
     }
 
-    if (plyr_distance > 50)
+    if (plyr_distance > 20)
     {
+        // Right
+        double state_1 = this->get_distances(pc.x_1 + 10, pc.x_2, pc.y_1, pc.y_2);
+        // Down
+        double state_2 = this->get_distances(pc.x_1, pc.x_2, pc.y_1 + 10, pc.y_2);
+        // Left
+        double state_3 = this->get_distances(pc.x_1 - 10, pc.x_2, pc.y_1, pc.y_2);
+        // Up
+        double state_4 = this->get_distances(pc.x_1, pc.x_2, pc.y_1 - 10, pc.y_2);
+        
+        std::cout << state_1 << " ";
+        std::cout << state_2 << " ";
+        std::cout << state_3 << " ";
+        std::cout << state_4 << "\n";
 
+
+        std::vector<double> states = { state_1, state_2, state_3, state_4 };
+ 
+
+        double min_distance = minimum(states); 
+
+        std::cout << "Min Distance: " << min_distance << std::endl;  
+
+        if (min_distance == state_1)
+        {
+            this->get_comp_player()->apply_left_movement(3);
+        }
+        else if (min_distance == state_2)
+        {
+            this->get_comp_player()->apply_down_movement();
+        }
+        else if (min_distance == state_3)
+        {
+            this->get_comp_player()->apply_right_movement(3);
+        }
+        else if (min_distance == state_4)
+        {
+            this->get_comp_player()->apply_up_movement();
+        }
     }
     else
     {
