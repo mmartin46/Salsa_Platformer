@@ -345,13 +345,6 @@ void GameState::process()
 
     enemy_movement();
 
-    this->get_comp_player()->apply_right_movement();
-    
-    if (this->get_time() % 20 == 0)
-    {
-        this->get_comp_player()->apply_up_movement();
-    }
-
     // plyr movement
     Player *plyr = this->get_player();
     plyr->set_x(plyr->get_x() + plyr->get_dx());
@@ -666,11 +659,11 @@ int GameState::processEvents(SDL_Window *window)
     // Walking
     if (state[SDL_SCANCODE_LEFT])
     {
-       this->get_player()->apply_left_movement();
+       this->get_player()->apply_left_movement(6);
     }
     else if (state[SDL_SCANCODE_RIGHT])
     {
-       this->get_player()->apply_right_movement();
+       this->get_player()->apply_right_movement(6);
     }
     else
     {

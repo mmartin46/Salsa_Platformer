@@ -42,10 +42,10 @@ void Player::set_player_frame(int n, SDL_Texture* t)
 }
 
 // Allows the player to move left.
-void Player::apply_left_movement()
+void Player::apply_left_movement(int speed_limit)
 {
    this->move_left_x();
-   if (this->get_dx() < -6)
+   if (this->get_dx() < -speed_limit)
    {
        this->move_left_dx(); 
    }
@@ -53,10 +53,10 @@ void Player::apply_left_movement()
    this->set_slowingDown(false);
 }
 // Allows the player to move right.
-void Player::apply_right_movement()
+void Player::apply_right_movement(int speed_limit)
 {
    this->move_right_x();;
-   if (this->get_dx() > 6)
+   if (this->get_dx() > speed_limit)
    {
        this->move_right_dx();
    }
