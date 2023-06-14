@@ -7,7 +7,7 @@
 #include "src\include\SDL2\SDL_image.h"
 #include "src\include\SDL2\SDL_mixer.h"
 #include "src\include\SDL2\SDL_ttf.h"
-#include "utils\Basic_Calculator.h"
+#include "cmath"
 
 #include <ctime>
 #include <time.h>
@@ -211,6 +211,7 @@ class GameState
       void doRender(SDL_Renderer*);
       void enemy_movement();
       void init_health_texture();
+      double get_player_distances();
 
       template <typename T>
       int collision_in_map(T &plyr, std::vector<std::vector<Block> > &, int i, int j, int, int);

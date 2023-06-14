@@ -345,6 +345,8 @@ void GameState::process()
 
     enemy_movement();
 
+    std::cout << this->get_player_distances() << std::endl;
+
     // plyr movement
     Player *plyr = this->get_player();
     plyr->set_x(plyr->get_x() + plyr->get_dx());
@@ -688,6 +690,19 @@ void GameState::enemy_movement()
         }
       }
    }
+}
+
+// Uses the manhattan distance formula
+// to track the distance between the players.
+double GameState::get_player_distances()
+{
+    double x_1 = this->get_player()->get_x();
+    double x_2 = this->get_comp_player()->get_x();
+    double y_1 = this->get_player()->get_y();
+    double y_2 = this->get_comp_player()->get_y();
+
+    double val = sqrt(pow(x_1 - x_2, 2) + pow(y_1 - y_2, 2));
+    return val;
 }
 
 
