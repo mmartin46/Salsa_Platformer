@@ -9,6 +9,7 @@
 #include "src\include\SDL2\SDL_ttf.h"
 #include "cmath"
 
+#include <utility>
 #include <ctime>
 #include <time.h>
 #include <iostream>
@@ -130,6 +131,9 @@ class GameState
       Player *ptr = NULL;
       Player *cptr = NULL;
 
+      // Computer Player Tracker
+      std::vector<std::pair<double, double> > not_moving;
+
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
       std::vector<SDL_Texture*> enemyFrames = std::vector<SDL_Texture*>(2);
@@ -139,6 +143,8 @@ class GameState
       Backdrop* get_backdrop() { return backdrop; }
 
       Player* get_comp_player() { return cptr; }
+
+      
 
 
       GameState();

@@ -491,7 +491,7 @@ int GameState::collision_in_map(T &plyr, std::vector<std::vector<Block> > &tile,
             //landed on this ledge, stop any jump velocity
             plyr.set_dy(0);
             plyr.set_onBlock();
-            touched = 1;
+            touched = 2;
         }
     }
     if (py+ph > by && py<by+bh)
@@ -504,7 +504,7 @@ int GameState::collision_in_map(T &plyr, std::vector<std::vector<Block> > &tile,
             px = bx+bw;
 
             plyr.set_dx(0);
-            touched = 1;
+            touched = 3;
         }
         // Rubbing against left edge
         else if (px+pw > bx && px < bx && plyr.get_dx() > 0)
@@ -514,7 +514,7 @@ int GameState::collision_in_map(T &plyr, std::vector<std::vector<Block> > &tile,
             px = bx-pw;
 
             plyr.set_dx(0);
-            touched = 1;
+            touched = 4;
         }
     }
     return touched;
@@ -749,10 +749,28 @@ void GameState::computer_player_movement()
     double plyr_distance = this->get_distances(pc.x_1, pc.x_2, 
                                                       pc.y_1, pc.y_2);
 
-    if (this->get_time() % 100 == 0)
+    std::pair<double, double> cp_c;
+    cp_c.first = pc.x_1;
+    cp_c.second = pc.x_1;
+    this->not_moving.push_back(cp_c);
+
+    if (this->not_moving.size() > 50)
     {
-        this->get_comp_player()->apply_up_movement();
+        this->not_moving.clear();
     }
+
+
+    // if (this->get_time() % 100 == 0)
+    // {
+    //     this->get_comp_player()->apply_up_movement();
+    // }
+    if (plyr_distance > 400)
+    {
+        this->get_comp_player()->set_x(this->get_player()->get_x());
+        this->get_comp_player()->set_y(this->get_player()->get_y());
+    }
+
+
 
     if (plyr_distance > 20)
     {
@@ -765,18 +783,27 @@ void GameState::computer_player_movement()
         // Up
         double state_4 = this->get_distances(pc.x_1, pc.x_2, pc.y_1 - 10, pc.y_2);
         
-        std::cout << state_1 << " ";
-        std::cout << state_2 << " ";
-        std::cout << state_3 << " ";
-        std::cout << state_4 << "\n";
-
 
         std::vector<double> states = { state_1, state_2, state_3, state_4 };
  
+        if (this->not_moving.size() == 30)
+        {
+            if (this->not_moving.at(0) == this->not_moving.at(1))
+            {
+                if (this->not_moving.at(0).first == this->not_moving.at(20).first)
+                {
+                    this->get_comp_player()->apply_up_movement();
+                }
+                if (this->not_moving.at(0).second == this->not_moving.at(20).second)
+                {
+
+                }
+            }
+        }
 
         double min_distance = minimum(states); 
-
-        std::cout << "Min Distance: " << min_distance << std::endl;  
+        
+        std::cout << pc.x_2 << " " << pc.y_2 << std::endl;
 
         if (min_distance == state_1)
         {
@@ -784,7 +811,7 @@ void GameState::computer_player_movement()
         }
         else if (min_distance == state_2)
         {
-            this->get_comp_player()->apply_down_movement();
+            this->get_comp_player()->apply_up_movement();
         }
         else if (min_distance == state_3)
         {
@@ -792,7 +819,7 @@ void GameState::computer_player_movement()
         }
         else if (min_distance == state_4)
         {
-            this->get_comp_player()->apply_up_movement();
+            this->get_comp_player()->apply_down_movement();
         }
     }
     else
