@@ -213,6 +213,8 @@ class GameState
       void init_health_texture();
       double get_player_distances();
 
+      void computer_player_movement();
+
       template <typename T>
       int collision_in_map(T &plyr, std::vector<std::vector<Block> > &, int i, int j, int, int);
 

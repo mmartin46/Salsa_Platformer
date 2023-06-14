@@ -4,7 +4,7 @@
 /* Constructs the gamestate. */
 GameState::GameState()
 {
-    this->maximum_y = FALL_DEATH;
+    this->set_maximum_y(FALL_DEATH);
     this->ptr = new Player;
     this->cptr = new CompPlayer;
     this->backdrop = new Backdrop;
@@ -344,8 +344,7 @@ void GameState::process()
     this->set_time(this->get_time() + 1);
 
     enemy_movement();
-
-    std::cout << this->get_player_distances() << std::endl;
+    computer_player_movement();
 
     // plyr movement
     Player *plyr = this->get_player();
@@ -423,10 +422,17 @@ void GameState::process()
     // }
 
     // Player falls off screen
-    // if (plyr->get_y() >= this->get_maximum_y())
-    // {
-    //     exit(0);        
-    // }
+    if (plyr->get_y() >= this->get_maximum_y())
+    {
+        exit(0);        
+    }
+    if (cplyr->get_y() >= this->get_maximum_y())
+    {
+        std::cout << "FELL" << std::endl;
+        cplyr->set_x(plyr->get_x() - 20);
+        cplyr->set_y(plyr->get_y() - 20);       
+    }
+
 }
 
 // Represents a collision within the map
@@ -513,6 +519,25 @@ void GameState::collisionDetect()
             if ((this->tilemap.at(i).at(j) == world_map::TACO_COLLISION) && collide2d(
                 this->get_player()->get_x(),
                 this->get_player()->get_y(),
+                this->tile.at(i).at(j).get_x(),
+                this->tile.at(i).at(j).get_y(),
+                PLAYER_HEIGHT,
+                PLAYER_WIDTH,
+                BLOCK_WIDTH,
+                BLOCK_HEIGHT
+            ))
+            {
+                this->set_tacos_eaten(this->get_tacos_eaten() + 1);
+                // Create a rectangle and set the texture to null.
+                SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile.at(i).at(j).get_x()), (int)(this->get_scrollY() + tile.at(i).at(j).get_y()), tile.at(i).at(j).get_w(), tile.at(i).at(j).get_h() };
+                SDL_RenderCopy(this->get_renderer(), NULL, NULL , &tacoRect);
+                // Makes sure the collision will not be repeated.
+                tilemap.at(i).at(j) = -1;
+            }
+            // If the computer player and taco collide.
+            else if ((this->tilemap.at(i).at(j) == world_map::TACO_COLLISION) && collide2d(
+                this->get_comp_player()->get_x(),
+                this->get_comp_player()->get_y(),
                 this->tile.at(i).at(j).get_x(),
                 this->tile.at(i).at(j).get_y(),
                 PLAYER_HEIGHT,
@@ -703,6 +728,32 @@ double GameState::get_player_distances()
 
     double val = sqrt(pow(x_1 - x_2, 2) + pow(y_1 - y_2, 2));
     return val;
+}
+
+void GameState::computer_player_movement()
+{
+    double plyr_distance = this->get_player_distances();
+
+    if (this->get_time() % 100 == 0)
+    {
+        this->get_comp_player()->apply_up_movement();
+    }
+
+    if (plyr_distance > 50)
+    {
+        if (this->get_player()->get_dx() > 0)
+        {
+            this->get_comp_player()->apply_right_movement(2);
+        }
+        else if (this->get_player()->get_dx() < 0)
+        {
+            this->get_comp_player()->apply_left_movement(2);
+        }
+    }
+    else
+    {
+        this->get_comp_player()->slow_movement();
+    }
 }
 
 
