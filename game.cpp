@@ -718,21 +718,22 @@ void GameState::enemy_movement()
 }
 
 // Uses the manhattan distance formula
-// to track the distance between the players.
-double GameState::get_player_distances()
+double GameState::get_distances(double x_1, double x_2, double y_1, double y_2)
 {
-    double x_1 = this->get_player()->get_x();
-    double x_2 = this->get_comp_player()->get_x();
-    double y_1 = this->get_player()->get_y();
-    double y_2 = this->get_comp_player()->get_y();
-
     double val = sqrt(pow(x_1 - x_2, 2) + pow(y_1 - y_2, 2));
     return val;
 }
 
 void GameState::computer_player_movement()
 {
-    double plyr_distance = this->get_player_distances();
+    Coordinates pc;
+    pc.x_1 = this->get_player()->get_x();
+    pc.x_2 = this->get_comp_player()->get_x();
+    pc.y_1 = this->get_player()->get_y();
+    pc.y_2 = this->get_comp_player()->get_y();
+
+    double plyr_distance = this->get_distances(pc.x_1, pc.x_2, 
+                                                      pc.y_1, pc.y_2);
 
     if (this->get_time() % 100 == 0)
     {
@@ -741,14 +742,7 @@ void GameState::computer_player_movement()
 
     if (plyr_distance > 50)
     {
-        if (this->get_player()->get_dx() > 0)
-        {
-            this->get_comp_player()->apply_right_movement(2);
-        }
-        else if (this->get_player()->get_dx() < 0)
-        {
-            this->get_comp_player()->apply_left_movement(2);
-        }
+
     }
     else
     {

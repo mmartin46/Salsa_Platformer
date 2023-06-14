@@ -22,6 +22,14 @@
 #include "entity.hpp"
 
 
+/* Keeps track of two player coordinates.*/
+typedef struct {
+    double x_1;
+    double x_2;
+    double y_1;
+    double y_2;
+} Coordinates;
+
 // Handles each block
 // within the map.
 class Block : public Entity
@@ -211,7 +219,7 @@ class GameState
       void doRender(SDL_Renderer*);
       void enemy_movement();
       void init_health_texture();
-      double get_player_distances();
+      double get_distances(double, double, double, double);
 
       void computer_player_movement();
 
