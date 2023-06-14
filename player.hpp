@@ -36,10 +36,7 @@ class Player
       // Player Physics 
 
       inline virtual void apply_gravity() { dy += GRAVITY; } // Accumulates the gravity constant to the player.
-      
-
-      inline virtual void apply_jump() { dy -= 0.3f; }
-      
+            
       inline virtual void move_left_x() { dx += -PLAYER_SPEED; }
       inline virtual void move_right_x() { dx += PLAYER_SPEED; }
 
@@ -50,6 +47,11 @@ class Player
       inline virtual void set_onBlock() { onBlock = 1; }
       inline virtual void reset_onBlock() { onBlock = 0; }
       inline virtual int get_onBlock() { return onBlock; }
+
+      virtual void apply_left_movement();
+      virtual void apply_right_movement();
+      inline virtual void apply_jump() { dy -= 0.3f; }
+      virtual void apply_down_movement();
 
 
 

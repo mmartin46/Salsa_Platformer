@@ -617,34 +617,15 @@ int GameState::processEvents(SDL_Window *window)
     // Walking
     if (state[SDL_SCANCODE_LEFT])
     {
-       this->get_player()->move_left_x();
-       if (this->get_player()->get_dx() < -6)
-       {
-           this->get_player()->move_left_dx(); 
-       }
-       this->get_player()->set_facingLeft(true);
-       this->get_player()->set_slowingDown(false);
+       this->get_player()->apply_left_movement();
     }
     else if (state[SDL_SCANCODE_RIGHT])
     {
-       this->get_player()->move_right_x();;
-       if (this->get_player()->get_dx() > 6)
-       {
-           this->get_player()->move_right_dx();
-       }
-       this->get_player()->set_facingLeft(false);
-       this->get_player()->set_slowingDown(false);
+       this->get_player()->apply_right_movement();
     }
     else
     {
-        // Slows down to 0.
-        this->get_player()->set_animFrame(0);
-        this->get_player()->slow_movement();
-        this->get_player()->set_slowingDown(true);
-        if (SDL_fabsf(this->get_player()->get_dx()) < 0.1f)
-        {
-            this->get_player()->apply_static_movement();
-        }
+        this->get_player()->apply_down_movement();
     }
     return done;
 }

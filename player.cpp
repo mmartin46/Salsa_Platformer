@@ -39,3 +39,39 @@ void Player::set_player_frame(int n, SDL_Texture* t)
    }
    this->plyrFrames.at(n) = t;
 }
+
+// Allows the player to move left.
+void Player::apply_left_movement()
+{
+   this->move_left_x();
+   if (this->get_dx() < -6)
+   {
+       this->move_left_dx(); 
+   }
+   this->set_facingLeft(true);
+   this->set_slowingDown(false);
+}
+// Allows the player to move right.
+void Player::apply_right_movement()
+{
+   this->move_right_x();;
+   if (this->get_dx() > 6)
+   {
+       this->move_right_dx();
+   }
+   this->set_facingLeft(false);
+   this->set_slowingDown(false);
+}
+
+// Allows the player to move down.
+void Player::apply_down_movement()
+{
+   // Slows down to 0.
+   this->set_animFrame(0);
+   this->slow_movement();
+   this->set_slowingDown(true);
+   if (SDL_fabsf(this->get_dx()) < 0.1f)
+   {
+       this->apply_static_movement();
+   }
+}
