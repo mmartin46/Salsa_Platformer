@@ -16,6 +16,7 @@
 #include <cstdlib>
 #include "constants.hpp"
 #include "player.hpp"
+#include "comp.hpp"
 #include "enemy.hpp"
 #include "entity.hpp"
 
@@ -118,6 +119,7 @@ class GameState
 
       // Players
       Player *ptr = NULL;
+      CompPlayer *cptr = NULL;
 
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
@@ -126,6 +128,8 @@ class GameState
 
       Player* get_player() { return ptr; };
       Backdrop* get_backdrop() { return backdrop; }
+
+      CompPlayer* get_comp_player() { return cptr; }
 
 
       GameState();

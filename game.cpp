@@ -671,4 +671,5 @@ GameState::~GameState()
 
     delete backdrop;
     delete ptr;
+    delete cptr;
 }
