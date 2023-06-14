@@ -23,7 +23,7 @@ class CompPlayer : public Player
 CompPlayer::CompPlayer()
 {
    std::cout << "Computer player " << std::endl;
-   this->set_x(200-PLAYER_WIDTH);
+   this->set_x(190-PLAYER_WIDTH);
    this->set_y(0-PLAYER_HEIGHT);
    this->set_dx(0);
    this->set_dy(0);
