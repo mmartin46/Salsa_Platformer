@@ -48,13 +48,14 @@ class Player
       inline virtual void reset_onBlock() { onBlock = 0; }
       inline virtual int get_onBlock() { return onBlock; }
 
+      // General Movement
       virtual void apply_left_movement();
       virtual void apply_right_movement();
       inline virtual void apply_jump() { dy -= 0.3f; }
       virtual void apply_down_movement();
 
 
-
+      // Player Animation 
       inline virtual int get_animFrame() { return animFrame; } const
       inline virtual void set_animFrame(int af) { animFrame = af; }
       inline virtual int get_facingLeft() { return facingLeft; } const
