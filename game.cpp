@@ -760,18 +760,15 @@ void GameState::computer_player_movement()
     }
 
 
-    // if (this->get_time() % 100 == 0)
-    // {
-    //     this->get_comp_player()->apply_up_movement();
-    // }
+    // If the computer player is too far from the screen.
     if (plyr_distance > 400)
     {
         this->get_comp_player()->set_x(this->get_player()->get_x());
         this->get_comp_player()->set_y(this->get_player()->get_y());
     }
 
-
-
+    // If the player and computer player are too far
+    // distant.
     if (plyr_distance > 20)
     {
         // Right
@@ -790,33 +787,31 @@ void GameState::computer_player_movement()
         {
             if (this->not_moving.at(0) == this->not_moving.at(1))
             {
-                if (this->not_moving.at(0).first == this->not_moving.at(20).first)
+                if (this->not_moving.at(0).first == this->not_moving.at(10).first)
                 {
                     this->get_comp_player()->apply_up_movement();
-                }
-                if (this->not_moving.at(0).second == this->not_moving.at(20).second)
-                {
-
                 }
             }
         }
 
         double min_distance = minimum(states); 
         
-        std::cout << pc.x_2 << " " << pc.y_2 << std::endl;
-
+        // Left
         if (min_distance == state_1)
         {
             this->get_comp_player()->apply_left_movement(3);
         }
+        // Up
         else if (min_distance == state_2)
         {
             this->get_comp_player()->apply_up_movement();
         }
+        // Right
         else if (min_distance == state_3)
         {
             this->get_comp_player()->apply_right_movement(3);
         }
+        // Down
         else if (min_distance == state_4)
         {
             this->get_comp_player()->apply_down_movement();
