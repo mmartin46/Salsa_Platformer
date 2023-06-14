@@ -754,7 +754,8 @@ void GameState::computer_player_movement()
     cp_c.second = pc.x_1;
     this->not_moving.push_back(cp_c);
 
-    if (this->not_moving.size() > 50)
+    // Clear out the vector.
+    if (this->not_moving.size() > 20)
     {
         this->not_moving.clear();
     }
@@ -769,7 +770,7 @@ void GameState::computer_player_movement()
 
     // If the player and computer player are too far
     // distant.
-    if (plyr_distance > 20)
+    if (plyr_distance > 30)
     {
         // Right
         double state_1 = this->get_distances(pc.x_1 + 10, pc.x_2, pc.y_1, pc.y_2);
@@ -783,7 +784,7 @@ void GameState::computer_player_movement()
 
         std::vector<double> states = { state_1, state_2, state_3, state_4 };
  
-        if (this->not_moving.size() == 30)
+        if (this->not_moving.size() > 10)
         {
             if (this->not_moving.at(0) == this->not_moving.at(1))
             {
