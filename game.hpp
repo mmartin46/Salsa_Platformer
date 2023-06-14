@@ -7,7 +7,9 @@
 #include "src\include\SDL2\SDL_image.h"
 #include "src\include\SDL2\SDL_mixer.h"
 #include "src\include\SDL2\SDL_ttf.h"
+#include "cmath"
 
+#include <utility>
 #include <ctime>
 #include <time.h>
 #include <iostream>
@@ -16,9 +18,18 @@
 #include <cstdlib>
 #include "constants.hpp"
 #include "player.hpp"
+#include "comp.hpp"
 #include "enemy.hpp"
 #include "entity.hpp"
 
+
+/* Keeps track of two player coordinates.*/
+typedef struct {
+    double x_1;
+    double x_2;
+    double y_1;
+    double y_2;
+} Coordinates;
 
 // Handles each block
 // within the map.
@@ -118,6 +129,10 @@ class GameState
 
       // Players
       Player *ptr = NULL;
+      Player *cptr = NULL;
+
+      // Computer Player Tracker
+      std::vector<std::pair<double, double> > not_moving;
 
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
@@ -126,6 +141,10 @@ class GameState
 
       Player* get_player() { return ptr; };
       Backdrop* get_backdrop() { return backdrop; }
+
+      Player* get_comp_player() { return cptr; }
+
+      
 
 
       GameState();
@@ -206,6 +225,9 @@ class GameState
       void doRender(SDL_Renderer*);
       void enemy_movement();
       void init_health_texture();
+      double get_distances(double, double, double, double);
+
+      void computer_player_movement();
 
       template <typename T>
       int collision_in_map(T &plyr, std::vector<std::vector<Block> > &, int i, int j, int, int);

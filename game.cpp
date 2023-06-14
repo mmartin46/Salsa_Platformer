@@ -1,11 +1,26 @@
 #include "game.hpp"
 
+// Returns the minimum in a vector.
+double minimum(const std::vector<double> &v)
+{
+    double min = v.at(0);
+    typename std::vector<double>::const_pointer p, end = v.data() + v.size();
+    for (p = v.data(); p < end; ++p)
+    {
+        if (min > *p)
+        {
+            min = *p;
+        }
+    }
+    return min;
+}
 
 /* Constructs the gamestate. */
 GameState::GameState()
 {
-    this->maximum_y = FALL_DEATH;
+    this->set_maximum_y(FALL_DEATH);
     this->ptr = new Player;
+    this->cptr = new CompPlayer;
     this->backdrop = new Backdrop;
     this->tilemap = std::vector<std::vector<int> >(MAP_ROWS, std::vector<int>(MAP_COLUMNS));
     this->tile = std::vector<std::vector<Block> >(MAP_ROWS, std::vector<Block>(MAP_COLUMNS));
@@ -86,6 +101,8 @@ void GameState::loadImages()
         exit(1);
     }
 
+    // Players
+
     // Loading the player's first frame.
     SDL_Surface* surface = get_surface("img\\plyr_ita.png", "Cannot find plyr_ita.png!\n\n");
     this->get_player()->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
@@ -94,6 +111,16 @@ void GameState::loadImages()
     // Loading the player's second frame.
     surface = get_surface("img\\plyr_itb.png", "Cannot find plyr_itb.png!\n\n");
     this->get_player()->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);
+
+    // Loading the comp-player's first frame.
+    surface = get_surface("img\\plyr_ita_2.png", "Cannot find plyr_ita.png!\n\n");
+    this->get_comp_player()->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);
+
+    // // // Loading the comp-player's second frame.
+    surface = get_surface("img\\plyr_itb_2.png", "Cannot find plyr_itb.png!\n\n");
+    this->get_comp_player()->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
 
@@ -303,9 +330,16 @@ void GameState::doRender(SDL_Renderer *renderer)
         }
     }
 
+    // Players
+
     // draw a rectangle at plyr's position
     SDL_Rect rect = {  (int)(this->get_scrollX() + this->get_player()->get_x()), (int)(this->get_scrollY() + this->get_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
     SDL_RenderCopyEx(renderer, this->get_player()->get_player_frame(this->get_player()->get_animFrame()), NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->get_player()->get_facingLeft() == 0));
+
+    SDL_Rect crect = {  (int) (this->get_scrollX() + this->get_comp_player()->get_x()), (int)(this->get_scrollY() + this->get_comp_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
+    SDL_RenderCopyEx(renderer, this->get_comp_player()->get_player_frame(this->get_comp_player()->get_animFrame()), NULL, &crect, 0, NULL, (SDL_RendererFlip)(this->get_comp_player()->get_facingLeft() == 0));
+
+
 
     // draw text rectangle.
     SDL_Rect textRect = { 0, 0, (int) (this->life_label.get_w() / 4), (int) (this->life_label.get_h() / 3.75) };
@@ -324,11 +358,16 @@ void GameState::process()
     this->set_time(this->get_time() + 1);
 
     enemy_movement();
+    computer_player_movement();
 
     // plyr movement
     Player *plyr = this->get_player();
     plyr->set_x(plyr->get_x() + plyr->get_dx());
     plyr->set_y(plyr->get_y() + plyr->get_dy());
+
+    Player *cplyr = this->get_comp_player();
+    cplyr->set_x(cplyr->get_x() + cplyr->get_dx());
+    cplyr->set_y(cplyr->get_y() + cplyr->get_dy());
 
     // enemy movement
     for (int i = 0; i < MAP_ROWS; ++i)
@@ -354,9 +393,25 @@ void GameState::process()
             }
         }
     }
+    if (cplyr->get_dx() != 0 && cplyr->get_onBlock() && (cplyr->get_slowingDown() == false) )
+    {
+        if (this->get_time() % 8 == 0)
+        {
+            if (cplyr->get_animFrame() == 0)
+            {
+                cplyr->set_animFrame(1);
+            }
+            else
+            {
+                cplyr->set_animFrame(0);
+            }
+        }
+    }
+
 
     // Player Gravity    
     plyr->apply_gravity();
+    cplyr->apply_gravity();
 
     // // Enemy Gravity
     // for (int i = 0; i < MAP_ROWS; ++i)
@@ -381,10 +436,17 @@ void GameState::process()
     // }
 
     // Player falls off screen
-    // if (plyr->get_y() >= this->get_maximum_y())
-    // {
-    //     exit(0);        
-    // }
+    if (plyr->get_y() >= this->get_maximum_y())
+    {
+        exit(0);        
+    }
+    if (cplyr->get_y() >= this->get_maximum_y())
+    {
+        std::cout << "FELL" << std::endl;
+        cplyr->set_x(plyr->get_x() - 20);
+        cplyr->set_y(plyr->get_y() - 20);       
+    }
+
 }
 
 // Represents a collision within the map
@@ -429,7 +491,7 @@ int GameState::collision_in_map(T &plyr, std::vector<std::vector<Block> > &tile,
             //landed on this ledge, stop any jump velocity
             plyr.set_dy(0);
             plyr.set_onBlock();
-            touched = 1;
+            touched = 2;
         }
     }
     if (py+ph > by && py<by+bh)
@@ -442,7 +504,7 @@ int GameState::collision_in_map(T &plyr, std::vector<std::vector<Block> > &tile,
             px = bx+bw;
 
             plyr.set_dx(0);
-            touched = 1;
+            touched = 3;
         }
         // Rubbing against left edge
         else if (px+pw > bx && px < bx && plyr.get_dx() > 0)
@@ -452,7 +514,7 @@ int GameState::collision_in_map(T &plyr, std::vector<std::vector<Block> > &tile,
             px = bx-pw;
 
             plyr.set_dx(0);
-            touched = 1;
+            touched = 4;
         }
     }
     return touched;
@@ -471,6 +533,25 @@ void GameState::collisionDetect()
             if ((this->tilemap.at(i).at(j) == world_map::TACO_COLLISION) && collide2d(
                 this->get_player()->get_x(),
                 this->get_player()->get_y(),
+                this->tile.at(i).at(j).get_x(),
+                this->tile.at(i).at(j).get_y(),
+                PLAYER_HEIGHT,
+                PLAYER_WIDTH,
+                BLOCK_WIDTH,
+                BLOCK_HEIGHT
+            ))
+            {
+                this->set_tacos_eaten(this->get_tacos_eaten() + 1);
+                // Create a rectangle and set the texture to null.
+                SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile.at(i).at(j).get_x()), (int)(this->get_scrollY() + tile.at(i).at(j).get_y()), tile.at(i).at(j).get_w(), tile.at(i).at(j).get_h() };
+                SDL_RenderCopy(this->get_renderer(), NULL, NULL , &tacoRect);
+                // Makes sure the collision will not be repeated.
+                tilemap.at(i).at(j) = -1;
+            }
+            // If the computer player and taco collide.
+            else if ((this->tilemap.at(i).at(j) == world_map::TACO_COLLISION) && collide2d(
+                this->get_comp_player()->get_x(),
+                this->get_comp_player()->get_y(),
                 this->tile.at(i).at(j).get_x(),
                 this->tile.at(i).at(j).get_y(),
                 PLAYER_HEIGHT,
@@ -541,6 +622,7 @@ void GameState::collisionDetect()
             if (this->tilemap.at(i).at(j) == world_map::BLOCK_COLLISION)
             {
                 collision_in_map(*this->get_player(), this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
+                collision_in_map(*this->get_comp_player(), this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
                 // TODO: Debug onBlock
                 if (collision_in_map(this->enemies.at(i).at(j), this->tile, i, j, ENEMY_WIDTH, ENEMY_HEIGHT))
                 {
@@ -607,6 +689,7 @@ int GameState::processEvents(SDL_Window *window)
         exit(0);
     }
 
+
     // More jumping
     const Uint8 *state = SDL_GetKeyboardState(NULL);
     if (state[SDL_SCANCODE_UP])
@@ -617,11 +700,11 @@ int GameState::processEvents(SDL_Window *window)
     // Walking
     if (state[SDL_SCANCODE_LEFT])
     {
-       this->get_player()->apply_left_movement();
+       this->get_player()->apply_left_movement(6);
     }
     else if (state[SDL_SCANCODE_RIGHT])
     {
-       this->get_player()->apply_right_movement();
+       this->get_player()->apply_right_movement(6);
     }
     else
     {
@@ -648,6 +731,99 @@ void GameState::enemy_movement()
    }
 }
 
+// Uses the manhattan distance formula
+double GameState::get_distances(double x_1, double x_2, double y_1, double y_2)
+{
+    double val = sqrt(pow(x_1 - x_2, 2) + pow(y_1 - y_2, 2));
+    return val;
+}
+
+void GameState::computer_player_movement()
+{
+    Coordinates pc;
+    pc.x_1 = this->get_player()->get_x();
+    pc.x_2 = this->get_comp_player()->get_x();
+    pc.y_1 = this->get_player()->get_y();
+    pc.y_2 = this->get_comp_player()->get_y();
+
+    double plyr_distance = this->get_distances(pc.x_1, pc.x_2, 
+                                                      pc.y_1, pc.y_2);
+
+    std::pair<double, double> cp_c;
+    cp_c.first = pc.x_1;
+    cp_c.second = pc.x_1;
+    this->not_moving.push_back(cp_c);
+
+    // Clear out the vector.
+    if (this->not_moving.size() > 20)
+    {
+        this->not_moving.clear();
+    }
+
+
+    // If the computer player is too far from the screen.
+    if (plyr_distance > 400)
+    {
+        this->get_comp_player()->set_x(this->get_player()->get_x());
+        this->get_comp_player()->set_y(this->get_player()->get_y());
+    }
+
+    // If the player and computer player are too far
+    // distant.
+    if (plyr_distance > 30)
+    {
+        // Right
+        double state_1 = this->get_distances(pc.x_1 + 10, pc.x_2, pc.y_1, pc.y_2);
+        // Down
+        double state_2 = this->get_distances(pc.x_1, pc.x_2, pc.y_1 + 10, pc.y_2);
+        // Left
+        double state_3 = this->get_distances(pc.x_1 - 10, pc.x_2, pc.y_1, pc.y_2);
+        // Up
+        double state_4 = this->get_distances(pc.x_1, pc.x_2, pc.y_1 - 10, pc.y_2);
+        
+
+        std::vector<double> states = { state_1, state_2, state_3, state_4 };
+ 
+        if (this->not_moving.size() > 10)
+        {
+            if (this->not_moving.at(0) == this->not_moving.at(1))
+            {
+                if (this->not_moving.at(0).first == this->not_moving.at(10).first)
+                {
+                    this->get_comp_player()->apply_up_movement();
+                }
+            }
+        }
+
+        double min_distance = minimum(states); 
+        
+        // Left
+        if (min_distance == state_1)
+        {
+            this->get_comp_player()->apply_left_movement(3);
+        }
+        // Up
+        else if (min_distance == state_2)
+        {
+            this->get_comp_player()->apply_up_movement();
+        }
+        // Right
+        else if (min_distance == state_3)
+        {
+            this->get_comp_player()->apply_right_movement(3);
+        }
+        // Down
+        else if (min_distance == state_4)
+        {
+            this->get_comp_player()->apply_down_movement();
+        }
+    }
+    else
+    {
+        this->get_comp_player()->slow_movement();
+    }
+}
+
 
 GameState::~GameState()
 {
@@ -671,4 +847,5 @@ GameState::~GameState()
 
     delete backdrop;
     delete ptr;
+    delete cptr;
 }

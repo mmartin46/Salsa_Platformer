@@ -49,9 +49,11 @@ class Player
       inline virtual int get_onBlock() { return onBlock; }
 
       // General Movement
-      virtual void apply_left_movement();
-      virtual void apply_right_movement();
+      virtual void apply_left_movement(int);
+      virtual void apply_right_movement(int);
       inline virtual void apply_jump() { dy -= 0.3f; }
+
+      virtual void apply_up_movement();
       virtual void apply_down_movement();
 
 
