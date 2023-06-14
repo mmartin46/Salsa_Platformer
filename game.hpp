@@ -119,7 +119,7 @@ class GameState
 
       // Players
       Player *ptr = NULL;
-      CompPlayer *cptr = NULL;
+      Player *cptr = NULL;
 
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
@@ -129,7 +129,7 @@ class GameState
       Player* get_player() { return ptr; };
       Backdrop* get_backdrop() { return backdrop; }
 
-      CompPlayer* get_comp_player() { return cptr; }
+      Player* get_comp_player() { return cptr; }
 
 
       GameState();

@@ -6,6 +6,7 @@ GameState::GameState()
 {
     this->maximum_y = FALL_DEATH;
     this->ptr = new Player;
+    this->cptr = new CompPlayer;
     this->backdrop = new Backdrop;
     this->tilemap = std::vector<std::vector<int> >(MAP_ROWS, std::vector<int>(MAP_COLUMNS));
     this->tile = std::vector<std::vector<Block> >(MAP_ROWS, std::vector<Block>(MAP_COLUMNS));
@@ -95,6 +96,16 @@ void GameState::loadImages()
     surface = get_surface("img\\plyr_itb.png", "Cannot find plyr_itb.png!\n\n");
     this->get_player()->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
+
+    // Loading the comp-player's first frame.
+    surface = get_surface("img\\plyr_ita.png", "Cannot find plyr_ita.png!\n\n");
+    this->get_comp_player()->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);
+
+    // // // Loading the comp-player's second frame.
+    // surface = get_surface("img\\plyr_itb.png", "Cannot find plyr_itb.png!\n\n");
+    // this->get_comp_player()->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    // SDL_FreeSurface(surface);
 
 
 

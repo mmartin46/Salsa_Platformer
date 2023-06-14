@@ -11,13 +11,18 @@ class CompPlayer : public Player
       int animFrame;
       bool slowingDOwn, facingLeft;
       // Images
-      std::vector<SDL_Texture*> plyFrames = std::vector<SDL_Texture*>(2);
+      std::vector<SDL_Texture*> compFrames = std::vector<SDL_Texture*>(2);
    public:
       CompPlayer();
+      void set_player_frame(int n, SDL_Texture* t);
+      inline SDL_Texture* get_player_frame(int n) { return this->compFrames.at(n); }
+
 };
+
 
 CompPlayer::CompPlayer()
 {
+   std::cout << "Computer player " << std::endl;
    this->set_x(200-PLAYER_WIDTH);
    this->set_y(0-PLAYER_HEIGHT);
    this->set_dx(0);
