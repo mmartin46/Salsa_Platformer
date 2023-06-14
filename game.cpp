@@ -345,6 +345,13 @@ void GameState::process()
 
     enemy_movement();
 
+    this->get_comp_player()->apply_right_movement();
+    
+    if (this->get_time() % 20 == 0)
+    {
+        this->get_comp_player()->apply_up_movement();
+    }
+
     // plyr movement
     Player *plyr = this->get_player();
     plyr->set_x(plyr->get_x() + plyr->get_dx());
@@ -647,6 +654,7 @@ int GameState::processEvents(SDL_Window *window)
     {
         exit(0);
     }
+
 
     // More jumping
     const Uint8 *state = SDL_GetKeyboardState(NULL);

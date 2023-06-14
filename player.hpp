@@ -52,6 +52,8 @@ class Player
       virtual void apply_left_movement();
       virtual void apply_right_movement();
       inline virtual void apply_jump() { dy -= 0.3f; }
+
+      virtual void apply_up_movement();
       virtual void apply_down_movement();
 
 

@@ -1,4 +1,5 @@
 #include "player.hpp"
+#include "game.hpp"
 
 // Defaults the character's position
 // x = 210
@@ -73,5 +74,15 @@ void Player::apply_down_movement()
    if (SDL_fabsf(this->get_dx()) < 0.1f)
    {
        this->apply_static_movement();
+   }
+}
+
+// Allows the player to move up.
+void Player::apply_up_movement()
+{
+   if (this->get_onBlock())
+   {
+      this->set_dy(PLAYER_JUMP_HEIGHT);
+      this->reset_onBlock();
    }
 }
