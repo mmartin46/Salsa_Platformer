@@ -12,6 +12,10 @@ An SDL2 Gaming Platformer Project Written in C++ and C. The player's only object
   any enemies.
 - The game experiments with a computer-player that is
   supposed to follow and help the player collect coins.
+  
+  The computer-player uses a hill-climbing algorithmic approach and determines which state is the most optimal based on how close the computer-player is with the main player. 
+  
+
 
 ## Screenshots
 <p float="left">
