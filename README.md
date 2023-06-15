@@ -12,7 +12,7 @@ An SDL2 Gaming Platformer Project Written in C++ and C. The player's only object
   any enemies.
 
 ## Screenshots
-![alt text]([https://i.postimg.cc/05BWzGZw/screen-shot.png](https://i.postimg.cc/vHm7xwxs/scs.png))
+![alt text]([scs.png](https://postimg.cc/YjJLTVxn))
 
 
 ## Acknowledgements
