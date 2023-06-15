@@ -442,7 +442,6 @@ void GameState::process()
     }
     if (cplyr->get_y() >= this->get_maximum_y())
     {
-        std::cout << "FELL" << std::endl;
         cplyr->set_x(plyr->get_x() - 20);
         cplyr->set_y(plyr->get_y() - 20);       
     }
@@ -626,7 +625,7 @@ void GameState::collisionDetect()
                 // TODO: Debug onBlock
                 if (collision_in_map(this->enemies.at(i).at(j), this->tile, i, j, ENEMY_WIDTH, ENEMY_HEIGHT))
                 {
-                    std::cout << "EOSH" << std::endl;
+                    //std::cout << "EOSH" << std::endl;
                     this->enemies.at(i).at(j).set_enemySpeed(this->enemies.at(i).at(j).get_enemySpeed() * -1);
                 }
             }
@@ -784,6 +783,7 @@ void GameState::computer_player_movement()
 
         std::vector<double> states = { state_1, state_2, state_3, state_4 };
  
+        // If the computer player isn't moving.
         if (this->not_moving.size() > 10)
         {
             if (this->not_moving.at(0) == this->not_moving.at(1))

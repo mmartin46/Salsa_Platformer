@@ -125,7 +125,7 @@ class GameState
       int level_choice;
       int maximum_y;
       int maximum_x;
-
+      int random_int;
 
       // Players
       Player *ptr = NULL;
@@ -226,6 +226,8 @@ class GameState
       void enemy_movement();
       void init_health_texture();
       double get_distances(double, double, double, double);
+      inline int get_random_int() { return random_int; }
+      inline void set_random_int(int rn) { random_int = rn; }
 
       void computer_player_movement();
 
