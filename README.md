@@ -13,7 +13,7 @@ An SDL2 Gaming Platformer Project Written in C++ and C. The player's only object
 
 ## Screenshots
 <p float="left">
-   <img src="https://i.postimg.cc/fRNYMpxY/dp.png" width="190" />
+   <img src="https://i.postimg.cc/vHm7xwxs/scs.png" width="190" />
 </p>
 
 ## Acknowledgements
