@@ -10,10 +10,17 @@ An SDL2 Gaming Platformer Project Written in C++ and C. The player's only object
   needs to collect as many tacos as possible.
   Moreover, you must avoid being touched by
   any enemies.
+- The game experiments with a computer-player that is
+  supposed to follow and help the player collect coins.
+  
+  The computer-player uses a hill-climbing algorithmic approach by looking at all possible movements 10 pixels ahead determining which state is the most optimal based on how close the computer-player is with the main player. 
+  
+
 
 ## Screenshots
-![alt text](https://i.postimg.cc/05BWzGZw/screen-shot.png)
-
+<p float="left">
+   <img src="https://i.postimg.cc/vHm7xwxs/scs.png" width="790" />
+</p>
 
 ## Acknowledgements
 
