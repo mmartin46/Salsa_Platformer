@@ -90,12 +90,16 @@ class GameState
       // Images
       SDL_Texture *block;
       SDL_Texture *taco;
+      
+      SDL_Texture *taco_soil;
       SDL_Texture *enemy;
       SDL_Texture *soil;
       SDL_Texture *spike;
       SDL_Texture *backdrop_texture;
       SDL_Texture *lblTexture;
       SDL_Texture *tcoTexture;
+
+
       
       // Fonts
       TTF_Font *life_font;
@@ -115,6 +119,7 @@ class GameState
       std::vector<std::vector<Soil> > soiltile;
       std::vector<std::vector<Enemy> > enemies;
       std::vector<std::vector<Spike> > spikes;
+
       Label life_label;
       Label taco_label;
 
@@ -167,6 +172,8 @@ class GameState
       inline void set_soil(SDL_Texture* s) { soil = s; }
       inline SDL_Texture* get_spike() { return spike; }
       inline void set_spike(SDL_Texture* s) { spike = s; }
+      inline SDL_Texture* get_taco_soil() { return taco_soil; }
+      inline void set_taco_soil(SDL_Texture *s) { taco_soil = s; }
 
 
 

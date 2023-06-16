@@ -156,7 +156,12 @@ void GameState::loadImages()
         // Loading soil texture.
         surface = get_surface("img\\soil.png", "Cannot find soil.png!\n\n");
         this->set_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);    
+        SDL_FreeSurface(surface);  
+
+        // Loading taco_soil texture.
+        surface = get_surface("img\\taco_soil.png", "Cannot find taco_soil.png!\n\n");
+        this->set_taco_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);  
     }
     else if (this->get_level_choice() >= 20)
     {
@@ -174,6 +179,11 @@ void GameState::loadImages()
         surface = get_surface("img\\soil_1.png", "Cannot find soil.png!\n\n");
         this->set_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);    
+
+        // Loading taco_soil texture.
+        surface = get_surface("img\\taco_soil_1.png", "Cannot find taco_soil.png!\n\n");
+        this->set_taco_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);  
     }
 }
 
@@ -197,7 +207,7 @@ void GameState::init_blocks(int level_choice)
         {
             for (y = 0; y < MAP_COLUMNS; ++y)
             {
-                tilemap.at(x).at(y) = world_map::map[x][y];
+                tilemap.at(x).at(y) = world_map::map_3[x][y];
             }
         }
     }
@@ -265,6 +275,12 @@ void GameState::init_blocks(int level_choice)
                     spikes.at(x).at(y).set_w(BLOCK_WIDTH);
                     spikes.at(x).at(y).set_h(BLOCK_HEIGHT);                   
                 } break;
+                case world_map::TACO_SOIL_COLLISION : {
+                    tile.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
+                    tile.at(x).at(y).set_x((y*BLOCK_HEIGHT));
+                    tile.at(x).at(y).set_w(BLOCK_WIDTH);
+                    tile.at(x).at(y).set_h(BLOCK_HEIGHT);                   
+                }
             }
         }
     }
@@ -325,7 +341,11 @@ void GameState::doRender(SDL_Renderer *renderer)
                 case world_map::SPIKE_COLLISION : {
                     SDL_Rect spikeRect = { (int)(this->get_scrollX() + spikes.at(x).at(y).get_x()), (int)(this->get_scrollY() + spikes.at(x).at(y).get_y()), spikes.at(x).at(y).get_w(), spikes.at(x).at(y).get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_spike(), NULL , &spikeRect);              
-                } break;     
+                } break;  
+                case world_map::TACO_SOIL_COLLISION : {
+                    SDL_Rect tacoSoilRect = { (int)(this->get_scrollX() + tile.at(x).at(y).get_x()), (int)(this->get_scrollY() + tile.at(x).at(y).get_y()), tile.at(x).at(y).get_w(), tile.at(x).at(y).get_h() };
+                    SDL_RenderCopy(this->get_renderer(), this->get_taco_soil(), NULL , &tacoSoilRect);
+                }   
             }
         }
     }
@@ -609,6 +629,41 @@ void GameState::collisionDetect()
                 //std::cout << "EOSH" << std::endl; 
                 this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() - (this->enemies.at(i).at(j).get_enemySpeed()));
             }
+            else if ((this->tilemap.at(i).at(j) == world_map::TACO_SOIL_COLLISION) && collide2d(
+                this->get_player()->get_x(),
+                this->get_player()->get_y(),
+                this->tile.at(i).at(j).get_x(),
+                this->tile.at(i).at(j).get_y(),
+                PLAYER_HEIGHT,
+                PLAYER_WIDTH,
+                BLOCK_WIDTH,
+                BLOCK_HEIGHT)) 
+            {
+                this->set_tacos_eaten(this->get_tacos_eaten() + 1);
+                // Create a rectangle and set the texture to soil.
+                SDL_Rect tacoSoilRect = { (int)(this->get_scrollX() + soiltile.at(i).at(j).get_x()), (int)(this->get_scrollY() + soiltile.at(i).at(j).get_y()), soiltile.at(i).at(j).get_w(), soiltile.at(i).at(j).get_h() };
+                SDL_RenderCopy(this->get_renderer(), this->get_soil(), NULL , &tacoSoilRect);
+                // Makes sure the collision will not be repeated.
+                tilemap.at(i).at(j) = static_cast<int>(world_map::SOIL_COLLISION);                
+            }
+            else if ((this->tilemap.at(i).at(j) == world_map::TACO_SOIL_COLLISION) && collide2d(
+                this->get_comp_player()->get_x(),
+                this->get_comp_player()->get_y(),
+                this->tile.at(i).at(j).get_x(),
+                this->tile.at(i).at(j).get_y(),
+                PLAYER_HEIGHT,
+                PLAYER_WIDTH,
+                BLOCK_WIDTH,
+                BLOCK_HEIGHT)) 
+            {
+                this->set_tacos_eaten(this->get_tacos_eaten() + 1);
+                // Create a rectangle and set the texture to soil.
+                SDL_Rect tacoSoilRect = { (int)(this->get_scrollX() + soiltile.at(i).at(j).get_x()), (int)(this->get_scrollY() + soiltile.at(i).at(j).get_y()), soiltile.at(i).at(j).get_w(), soiltile.at(i).at(j).get_h() };
+                SDL_RenderCopy(this->get_renderer(), this->get_soil(), NULL , &tacoSoilRect);
+                // Makes sure the collision will not be repeated.
+                tilemap.at(i).at(j) = static_cast<int>(world_map::SOIL_COLLISION);                
+            }
+
         }
     }
 
@@ -894,6 +949,7 @@ GameState::~GameState()
 {
     // Shutdown game and upload all memory
     SDL_DestroyTexture(this->get_taco());
+    SDL_DestroyTexture(this->get_taco_soil());
     SDL_DestroyTexture(this->get_spike());
     SDL_DestroyTexture(this->get_soil());
     SDL_DestroyTexture(this->get_enemy());
