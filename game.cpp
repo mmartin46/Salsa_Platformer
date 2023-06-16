@@ -272,7 +272,7 @@ void GameState::init_blocks(int level_choice)
     else if (choice >= 40)
     {
         this->get_backdrop()->set_x(-30);
-        this->get_backdrop()->set_y(-30);   
+        this->get_backdrop()->set_y(-90);   
         this->get_backdrop()->set_h(437);
         this->get_backdrop()->set_w(700); 
     }
