@@ -171,39 +171,39 @@ void GameState::loadImages()
         SDL_FreeSurface(surface);   
 
         // Loading the block's texture.
-        surface = get_surface("img\\block_1.png", "Cannot find block.png!\n\n");
+        surface = get_surface("img\\block_1.png", "Cannot find block_1.png!\n\n");
         this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface); 
 
         // Loading soil texture.
-        surface = get_surface("img\\soil_1.png", "Cannot find soil.png!\n\n");
+        surface = get_surface("img\\soil_1.png", "Cannot find soil_1.png!\n\n");
         this->set_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);    
 
         // Loading taco_soil texture.
-        surface = get_surface("img\\taco_soil_1.png", "Cannot find taco_soil.png!\n\n");
+        surface = get_surface("img\\taco_soil_1.png", "Cannot find taco_soil_1.png!\n\n");
         this->set_taco_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);  
     }
     else if (this->get_level_choice() >= 40)
     {
         // TODO: Change to the second level
-        surface = get_surface("img\\world_bg_1.png", "Cannot find world_bg_1.png!\n\n");
+        surface = get_surface("img\\world_bg_2.png", "Cannot find world_bg_1.png!\n\n");
         this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);   
 
         // Loading the block's texture.
-        surface = get_surface("img\\block_1.png", "Cannot find block.png!\n\n");
+        surface = get_surface("img\\block_2.png", "Cannot find block_2.png!\n\n");
         this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface); 
 
         // Loading soil texture.
-        surface = get_surface("img\\soil_1.png", "Cannot find soil.png!\n\n");
+        surface = get_surface("img\\soil_2.png", "Cannot find soil_2.png!\n\n");
         this->set_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);    
 
         // Loading taco_soil texture.
-        surface = get_surface("img\\taco_soil_1.png", "Cannot find taco_soil.png!\n\n");
+        surface = get_surface("img\\taco_soil_2.png", "Cannot find taco_soil_2.png!\n\n");
         this->set_taco_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);  
     }
@@ -262,12 +262,19 @@ void GameState::init_blocks(int level_choice)
         this->get_backdrop()->set_h(5000);
         this->get_backdrop()->set_w(5000);
     }
-    else if (choice >= 20)
+    else if (choice >= 20 && choice < 40)
     {
         this->get_backdrop()->set_x(-50);
         this->get_backdrop()->set_y(-200);   
         this->get_backdrop()->set_h(598);
         this->get_backdrop()->set_w(900);        
+    }
+    else if (choice >= 40)
+    {
+        this->get_backdrop()->set_x(-50);
+        this->get_backdrop()->set_y(-50);   
+        this->get_backdrop()->set_h(437);
+        this->get_backdrop()->set_w(700); 
     }
 
     // Intialize the map
@@ -336,14 +343,19 @@ void GameState::doRender(SDL_Renderer *renderer)
         // Level 1
         SDL_SetRenderDrawColor(renderer, 50, 60, 57, 255);
     }
-    else if (this->get_level_choice() >= 20)
+    else if (this->get_level_choice() >= 20 && this->get_level_choice() < 40)
     {
         // Level 2
         SDL_SetRenderDrawColor(renderer, 73, 118, 201, 255);   
     }
+    else if (this->get_level_choice() >= 40)
+    {
+        // Level 3
+        SDL_SetRenderDrawColor(renderer, 73, 118, 201, 255);           
+    }
 
     // Background
-    SDL_Rect bgRect = { (int)((this->scrollX / 17) + this->get_backdrop()->get_x()),(int)((this->scrollY / 17) + this->get_backdrop()->get_y()), this->get_backdrop()->get_w(), this->get_backdrop()->get_h() };
+    SDL_Rect bgRect = { (int)((this->scrollX / 20) + this->get_backdrop()->get_x()),(int)((this->scrollY / 30) + this->get_backdrop()->get_y()), this->get_backdrop()->get_w(), this->get_backdrop()->get_h() };
     SDL_RenderCopy(this->get_renderer(), this->get_backdrop()->get_backdrop_texture(), NULL, &bgRect);
 
     int x, y;
