@@ -163,7 +163,29 @@ void GameState::loadImages()
         this->set_taco_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);  
     }
-    else if (this->get_level_choice() >= 20)
+    else if (this->get_level_choice() >= 20 && this->get_level_choice() < 40)
+    {
+        // TODO: Change to the second level
+        surface = get_surface("img\\world_bg_1.png", "Cannot find world_bg_1.png!\n\n");
+        this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);   
+
+        // Loading the block's texture.
+        surface = get_surface("img\\block_1.png", "Cannot find block.png!\n\n");
+        this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface); 
+
+        // Loading soil texture.
+        surface = get_surface("img\\soil_1.png", "Cannot find soil.png!\n\n");
+        this->set_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);    
+
+        // Loading taco_soil texture.
+        surface = get_surface("img\\taco_soil_1.png", "Cannot find taco_soil.png!\n\n");
+        this->set_taco_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);  
+    }
+    else if (this->get_level_choice() >= 40)
     {
         // TODO: Change to the second level
         surface = get_surface("img\\world_bg_1.png", "Cannot find world_bg_1.png!\n\n");
@@ -207,11 +229,11 @@ void GameState::init_blocks(int level_choice)
         {
             for (y = 0; y < MAP_COLUMNS; ++y)
             {
-                tilemap.at(x).at(y) = world_map::map_3[x][y];
+                tilemap.at(x).at(y) = world_map::map[x][y];
             }
         }
     }
-    else if (choice >= 20)
+    else if (choice >= 20 && choice < 40)
     {   
         for (x = 0; x < MAP_ROWS; ++x)
         {
@@ -221,6 +243,17 @@ void GameState::init_blocks(int level_choice)
             }
         }
     }
+    else if (choice >= 40)
+    {
+        for (x = 0; x < MAP_ROWS; ++x)
+        {
+            for (y = 0; y < MAP_COLUMNS; ++y)
+            {
+                tilemap.at(x).at(y) = world_map::map_3[x][y];
+            }
+        }        
+    }
+
 
     if (choice < 20)
     {

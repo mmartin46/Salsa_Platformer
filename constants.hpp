@@ -43,6 +43,7 @@
 #define ENEMY_HEIGHT 20
 
 
+
 namespace world_map {
 
 // int map[MAP_ROWS][MAP_COLUMNS] {

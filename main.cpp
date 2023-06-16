@@ -8,7 +8,7 @@
 // to generate our level.
 static int generate_random_number() {
     srand((int) time(NULL));
-    int n = ((int) rand() % 40);
+    int n = ((int) rand() % 60);
     return n;
 }
 
