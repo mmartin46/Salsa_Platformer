@@ -622,6 +622,7 @@ void GameState::collisionDetect()
             {
                 collision_in_map(*this->get_player(), this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
                 collision_in_map(*this->get_comp_player(), this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
+
                 // TODO: Debug onBlock
                 if (collision_in_map(this->enemies.at(i).at(j), this->tile, i, j, ENEMY_WIDTH, ENEMY_HEIGHT))
                 {
@@ -782,46 +783,110 @@ void GameState::computer_player_movement()
         
 
         std::vector<double> states = { state_1, state_2, state_3, state_4 };
- 
+
+
+        double min_distance = minimum(states); 
+
         // If the computer player isn't moving.
         if (this->not_moving.size() > 10)
         {
-            if (this->not_moving.at(0) == this->not_moving.at(1))
-            {
-                if (this->not_moving.at(0).first == this->not_moving.at(10).first)
+            // if (this->not_moving.at(0) == this->not_moving.at(1))
+            // {
+                if (this->not_moving.at(0).first - this->not_moving.at(9).first == 0 &&
+                    this->not_moving.at(0).second - this->not_moving.at(9).second == 0)
+                {
+
+                    if (min_distance == state_1)
+                    {
+                        this->get_comp_player()->apply_left_movement(3);
+                        //state_1 += 10000;
+                        //state_3 -= 100;
+                    }
+                    if (min_distance == state_2)
+                    {
+                        state_2 += 10000;
+                    }
+                    if (min_distance == state_3)
+                    {
+                        this->get_comp_player()->apply_right_movement(3);
+                        state_3 += 10000;
+                        state_1 -= 100;
+                    }
+                    if (min_distance == state_4)
+                    {
+                        state_4 += 10000;
+                    }
+                }
+                if (this->not_moving.at(0).second == this->not_moving.at(10).second)
+                {
+                    if (this->get_time() % 100 == 0)
+                    {
+                        state_4 -= 10000;
+                    }
+                    if (min_distance == state_1)
+                    {
+                        state_1 += 200;
+                    }
+                    else
+                    {
+                        state_3 += 200;
+                    }
+                }
+                // Left
+                if (min_distance == state_1)
+                {
+                    this->get_comp_player()->apply_left_movement(3);
+                }
+                // Up
+                else if (min_distance == state_2)
                 {
                     this->get_comp_player()->apply_up_movement();
                 }
+                // Right
+                else if (min_distance == state_3)
+                {
+                    this->get_comp_player()->apply_right_movement(3);
+                }
+                // Down
+                else if (min_distance == state_4)
+                {
+                    this->get_comp_player()->apply_down_movement();
+                }
+            // }
+        }
+        else
+        {
+
+            // Left
+            if (min_distance == state_1)
+            {
+                this->get_comp_player()->apply_left_movement(3);
+            }
+            // Up
+            else if (min_distance == state_2)
+            {
+                this->get_comp_player()->apply_up_movement();
+            }
+            // Right
+            else if (min_distance == state_3)
+            {
+                this->get_comp_player()->apply_right_movement(3);
+            }
+            // Down
+            else if (min_distance == state_4)
+            {
+                this->get_comp_player()->apply_down_movement();
             }
         }
-
-        double min_distance = minimum(states); 
-        
-        // Left
-        if (min_distance == state_1)
-        {
-            this->get_comp_player()->apply_left_movement(3);
-        }
-        // Up
-        else if (min_distance == state_2)
-        {
-            this->get_comp_player()->apply_up_movement();
-        }
-        // Right
-        else if (min_distance == state_3)
-        {
-            this->get_comp_player()->apply_right_movement(3);
-        }
-        // Down
-        else if (min_distance == state_4)
-        {
-            this->get_comp_player()->apply_down_movement();
-        }
+        // std::cout << pc.x_2 << " " << pc.y_2 << std::endl;
+        // std::cout << state_1 << " " << state_2 << " " << state_3 << " " << state_4 << std::endl;
     }
     else
     {
         this->get_comp_player()->slow_movement();
     }
+
+
 }
 
 

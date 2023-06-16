@@ -17,11 +17,6 @@ class Enemy : public Player
    public:
       Enemy();
 
-      inline int get_x() { return x; } const
-      inline void set_x(int val) { x = val; }
-      inline int get_y() { return y; } const
-      inline void set_y(int val) { y = val; }
-
       inline int get_w() { return w; } const
       inline void set_w(int val) { w = val; }
       inline int get_h() { return h; } const
