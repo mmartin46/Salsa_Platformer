@@ -639,10 +639,13 @@ void GameState::collisionDetect()
                 BLOCK_WIDTH,
                 BLOCK_HEIGHT)) 
             {
+
                 this->set_tacos_eaten(this->get_tacos_eaten() + 1);
                 // Create a rectangle and set the texture to soil.
-                SDL_Rect tacoSoilRect = { (int)(this->get_scrollX() + soiltile.at(i).at(j).get_x()), (int)(this->get_scrollY() + soiltile.at(i).at(j).get_y()), soiltile.at(i).at(j).get_w(), soiltile.at(i).at(j).get_h() };
-                SDL_RenderCopy(this->get_renderer(), this->get_soil(), NULL , &tacoSoilRect);
+                soiltile.at(i).at(j).set_y((i*BLOCK_WIDTH) / 1);
+                soiltile.at(i).at(j).set_x((j*BLOCK_HEIGHT));
+                soiltile.at(i).at(j).set_w(BLOCK_WIDTH);
+                soiltile.at(i).at(j).set_h(BLOCK_HEIGHT);   
                 // Makes sure the collision will not be repeated.
                 tilemap.at(i).at(j) = static_cast<int>(world_map::SOIL_COLLISION);                
             }
@@ -658,8 +661,10 @@ void GameState::collisionDetect()
             {
                 this->set_tacos_eaten(this->get_tacos_eaten() + 1);
                 // Create a rectangle and set the texture to soil.
-                SDL_Rect tacoSoilRect = { (int)(this->get_scrollX() + soiltile.at(i).at(j).get_x()), (int)(this->get_scrollY() + soiltile.at(i).at(j).get_y()), soiltile.at(i).at(j).get_w(), soiltile.at(i).at(j).get_h() };
-                SDL_RenderCopy(this->get_renderer(), this->get_soil(), NULL , &tacoSoilRect);
+                soiltile.at(i).at(j).set_y((i*BLOCK_WIDTH) / 1);
+                soiltile.at(i).at(j).set_x((j*BLOCK_HEIGHT));
+                soiltile.at(i).at(j).set_w(BLOCK_WIDTH);
+                soiltile.at(i).at(j).set_h(BLOCK_HEIGHT);      
                 // Makes sure the collision will not be repeated.
                 tilemap.at(i).at(j) = static_cast<int>(world_map::SOIL_COLLISION);                
             }
