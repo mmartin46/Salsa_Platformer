@@ -1,10 +1,10 @@
 #include "game.hpp"
 
 // Returns the minimum in a vector.
-double minimum(const std::vector<double> &v)
+double minimum(const vector<double> &v)
 {
     double min = v.at(0);
-    typename std::vector<double>::const_pointer p, end = v.data() + v.size();
+    typename vector<double>::const_pointer p, end = v.data() + v.size();
     for (p = v.data(); p < end; ++p)
     {
         if (min > *p)
@@ -22,11 +22,11 @@ GameState::GameState()
     this->ptr = new Player;
     this->cptr = new CompPlayer;
     this->backdrop = new Backdrop;
-    this->tilemap = Matrix<int> (MAP_ROWS, std::vector<int>(MAP_COLUMNS));
-    this->tile = Matrix<Block> (MAP_ROWS, std::vector<Block>(MAP_COLUMNS));
-    this->soiltile = Matrix<Soil> (MAP_ROWS, std::vector<Soil>(MAP_COLUMNS));
-    this->enemies = Matrix<Enemy> (MAP_ROWS, std::vector<Enemy>(MAP_COLUMNS));
-    this->spikes = Matrix<Spike> (MAP_ROWS, std::vector<Spike>(MAP_COLUMNS));
+    this->tilemap = Matrix<int> (MAP_ROWS, vector<int>(MAP_COLUMNS));
+    this->tile = Matrix<Block> (MAP_ROWS, vector<Block>(MAP_COLUMNS));
+    this->soiltile = Matrix<Soil> (MAP_ROWS, vector<Soil>(MAP_COLUMNS));
+    this->enemies = Matrix<Enemy> (MAP_ROWS, vector<Enemy>(MAP_COLUMNS));
+    this->spikes = Matrix<Spike> (MAP_ROWS, vector<Spike>(MAP_COLUMNS));
     this->set_time(0);
     this->set_scrollX(0);
     this->set_scrollY(0);
@@ -644,7 +644,7 @@ void GameState::collisionDetect()
             ))
             {
                 this->set_life(this->get_life() - 1);
-                //std::cout << this->life << std::endl;
+                //cout << this->life << endl;
             }
             else if ((this->tilemap.at(i).at(j) == world_map::SPIKE_COLLISION) && collide2d(
                 this->get_player()->get_x(),
@@ -671,7 +671,7 @@ void GameState::collisionDetect()
             )))
             {
                 // DEBUG: Enemy and block collision
-                //std::cout << "EOSH" << std::endl; 
+                //cout << "EOSH" << endl; 
                 this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() - (this->enemies.at(i).at(j).get_enemySpeed()));
             }
             else if ((this->tilemap.at(i).at(j) == world_map::TACO_SOIL_COLLISION) && collide2d(
@@ -731,7 +731,7 @@ void GameState::collisionDetect()
                 // TODO: Debug onBlock
                 if (collision_in_map(this->enemies.at(i).at(j), this->tile, i, j, ENEMY_WIDTH, ENEMY_HEIGHT))
                 {
-                    //std::cout << "EOSH" << std::endl;
+                    //cout << "EOSH" << endl;
                     this->enemies.at(i).at(j).set_enemySpeed(this->enemies.at(i).at(j).get_enemySpeed() * -1);
                 }
             }
@@ -854,7 +854,7 @@ void GameState::computer_player_movement()
     double plyr_distance = this->get_distances(pc.x_1, pc.x_2, 
                                                       pc.y_1, pc.y_2);
 
-    std::pair<double, double> cp_c;
+    pair<double, double> cp_c;
     cp_c.first = pc.x_1;
     cp_c.second = pc.x_1;
     this->not_moving.push_back(cp_c);
@@ -887,7 +887,7 @@ void GameState::computer_player_movement()
         double state_4 = this->get_distances(pc.x_1, pc.x_2, pc.y_1 - 10, pc.y_2);
         
 
-        std::vector<double> states = { state_1, state_2, state_3, state_4 };
+        vector<double> states = { state_1, state_2, state_3, state_4 };
 
 
         double min_distance = minimum(states); 
@@ -983,8 +983,8 @@ void GameState::computer_player_movement()
                 this->get_comp_player()->apply_down_movement();
             }
         }
-        // std::cout << pc.x_2 << " " << pc.y_2 << std::endl;
-        // std::cout << state_1 << " " << state_2 << " " << state_3 << " " << state_4 << std::endl;
+        // cout << pc.x_2 << " " << pc.y_2 << endl;
+        // cout << state_1 << " " << state_2 << " " << state_3 << " " << state_4 << endl;
     }
     else
     {

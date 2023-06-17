@@ -22,8 +22,10 @@
 #include "enemy.hpp"
 #include "entity.hpp"
 
+using std::vector;
+using std::pair;
 template <typename T>
-using Matrix = std::vector<std::vector<T> >;
+using Matrix = vector<vector<T> >;
 
 /* Keeps track of two player coordinates.*/
 typedef struct {
@@ -139,11 +141,11 @@ class GameState
       Player *cptr = NULL;
 
       // Computer Player Tracker
-      std::vector<std::pair<double, double> > not_moving;
+      vector<pair<double, double> > not_moving;
 
       // Images
-      std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(2);
-      std::vector<SDL_Texture*> enemyFrames = std::vector<SDL_Texture*>(2);
+      vector<SDL_Texture*> plyrFrames = vector<SDL_Texture*>(2);
+      vector<SDL_Texture*> enemyFrames = vector<SDL_Texture*>(2);
    public:
 
       Player* get_player() { return ptr; };
