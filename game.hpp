@@ -22,6 +22,8 @@
 #include "enemy.hpp"
 #include "entity.hpp"
 
+template <typename T>
+using Matrix = std::vector<std::vector<T> >;
 
 /* Keeps track of two player coordinates.*/
 typedef struct {
@@ -114,11 +116,11 @@ class GameState
       int tacos_eaten = 0;
 
       // Background
-      std::vector<std::vector<int> > tilemap;
-      std::vector<std::vector<Block> > tile;
-      std::vector<std::vector<Soil> > soiltile;
-      std::vector<std::vector<Enemy> > enemies;
-      std::vector<std::vector<Spike> > spikes;
+      Matrix<int> tilemap;
+      Matrix<Block> tile;
+      Matrix<Soil> soiltile;
+      Matrix<Enemy> enemies;
+      Matrix<Spike> spikes;
 
       Label life_label;
       Label taco_label;
@@ -239,7 +241,7 @@ class GameState
       void computer_player_movement();
 
       template <typename T>
-      int collision_in_map(T &plyr, std::vector<std::vector<Block> > &, int i, int j, int, int);
+      int collision_in_map(T &plyr, Matrix<Block> &, int i, int j, int, int);
 
       friend class Enemy;    
 };

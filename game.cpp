@@ -22,11 +22,11 @@ GameState::GameState()
     this->ptr = new Player;
     this->cptr = new CompPlayer;
     this->backdrop = new Backdrop;
-    this->tilemap = std::vector<std::vector<int> >(MAP_ROWS, std::vector<int>(MAP_COLUMNS));
-    this->tile = std::vector<std::vector<Block> >(MAP_ROWS, std::vector<Block>(MAP_COLUMNS));
-    this->soiltile = std::vector<std::vector<Soil> >(MAP_ROWS, std::vector<Soil>(MAP_COLUMNS));
-    this->enemies = std::vector<std::vector<Enemy> >(MAP_ROWS, std::vector<Enemy>(MAP_COLUMNS));
-    this->spikes = std::vector<std::vector<Spike> > (MAP_ROWS, std::vector<Spike>(MAP_COLUMNS));
+    this->tilemap = Matrix<int> (MAP_ROWS, std::vector<int>(MAP_COLUMNS));
+    this->tile = Matrix<Block> (MAP_ROWS, std::vector<Block>(MAP_COLUMNS));
+    this->soiltile = Matrix<Soil> (MAP_ROWS, std::vector<Soil>(MAP_COLUMNS));
+    this->enemies = Matrix<Enemy> (MAP_ROWS, std::vector<Enemy>(MAP_COLUMNS));
+    this->spikes = Matrix<Spike> (MAP_ROWS, std::vector<Spike>(MAP_COLUMNS));
     this->set_time(0);
     this->set_scrollX(0);
     this->set_scrollY(0);
@@ -521,7 +521,7 @@ void GameState::process()
 // \param P_W represents the first rect's width
 // \param P_H represents the first rect's height
 template <typename T>
-int GameState::collision_in_map(T &plyr, std::vector<std::vector<Block> > &tile, int i, int j , int P_W, int P_H)
+int GameState::collision_in_map(T &plyr, Matrix<Block> &tile, int i, int j , int P_W, int P_H)
 {
     int touched = 0;
     float pw = P_W, ph = P_H;
