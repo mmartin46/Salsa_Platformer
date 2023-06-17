@@ -399,10 +399,10 @@ void GameState::doRender(SDL_Renderer *renderer)
 
     // draw a rectangle at plyr's position
     SDL_Rect rect = {  (int)(this->get_scrollX() + this->get_player()->get_x()), (int)(this->get_scrollY() + this->get_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
-    SDL_RenderCopyEx(renderer, this->get_player()->get_player_frame(this->get_player()->get_animFrame()), NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->get_player()->get_facingLeft() == 0));
+    SDL_RenderCopyEx(this->get_renderer(), this->get_player()->get_player_frame(this->get_player()->get_animFrame()), NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->get_player()->get_facingLeft() == 0));
 
     SDL_Rect crect = {  (int) (this->get_scrollX() + this->get_comp_player()->get_x()), (int)(this->get_scrollY() + this->get_comp_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
-    SDL_RenderCopyEx(renderer, this->get_comp_player()->get_player_frame(this->get_comp_player()->get_animFrame()), NULL, &crect, 0, NULL, (SDL_RendererFlip)(this->get_comp_player()->get_facingLeft() == 0));
+    SDL_RenderCopyEx(this->get_renderer(), this->get_comp_player()->get_player_frame(this->get_comp_player()->get_animFrame()), NULL, &crect, 0, NULL, (SDL_RendererFlip)(this->get_comp_player()->get_facingLeft() == 0));
 
 
 
