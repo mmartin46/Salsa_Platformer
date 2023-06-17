@@ -3,7 +3,6 @@
 // Returns the minimum in a vector.
 double minimum(const std::vector<double> &v)
 {
-
     double min = v.at(0);
     typename std::vector<double>::const_pointer p, end = v.data() + v.size();
     for (p = v.data(); p < end; ++p)
@@ -415,7 +414,7 @@ void GameState::doRender(SDL_Renderer *renderer)
     SDL_Rect tERect = { (int) (WINDOW_WIDTH-(WINDOW_WIDTH / 4.8)), 0, (int) (this->taco_label.get_w() / 4), (int) (this->taco_label.get_h() / 3.75) };
     SDL_RenderCopy(this->get_renderer(), this->get_taco_label_texture(), NULL, &tERect);
 
-    SDL_RenderPresent(renderer);    
+    SDL_RenderPresent(this->get_renderer());    
 }
 
 void GameState::process()
