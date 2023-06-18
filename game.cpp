@@ -18,24 +18,6 @@ GameState::GameState()
     this->set_scrollY(0);
 }
 
-// Allows the user to load a texture and returns a surface.
-//
-// Parameters:
-// \param file includes the file path
-// \param error_msg includes an error message if the file isn't found.
-SDL_Surface* get_surface(const char *file, const char *error_msg)
-{
-    SDL_Surface *surface = NULL;
-    
-    surface = IMG_Load(file);
-    if (surface == NULL)
-    {
-        printf(error_msg);
-        SDL_Quit();
-        exit(1);
-    } 
-    return surface;   
-}
 
 void GameState::init_health_texture()
 {

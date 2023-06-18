@@ -33,3 +33,22 @@ int collide2d(float x1, float y1, float x2, float y2, float ht1, float wt1, floa
 {
     return (!((x1 > (x2+wt2)) || (x2 > (x1+wt1)) || (y1 > (y2+ht2)) || (y2 > (y1+ht1))));
 }
+
+// Allows the user to load a texture and returns a surface.
+//
+// Parameters:
+// \param file includes the file path
+// \param error_msg includes an error message if the file isn't found.
+SDL_Surface* get_surface(const char *file, const char *error_msg)
+{
+    SDL_Surface *surface = NULL;
+    
+    surface = IMG_Load(file);
+    if (surface == NULL)
+    {
+        printf(error_msg);
+        SDL_Quit();
+        exit(1);
+    } 
+    return surface;   
+}
