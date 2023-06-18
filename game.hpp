@@ -8,19 +8,6 @@
 #include "src\include\SDL2\SDL_mixer.h"
 #include "src\include\SDL2\SDL_ttf.h"
 #include "cmath"
-
-#include <utility>
-#include <ctime>
-#include <time.h>
-#include <iostream>
-#include <vector>
-#include <string>
-#include <cstdlib>
-#include "constants.hpp"
-#include "player.hpp"
-#include "comp.hpp"
-#include "enemy.hpp"
-#include "entity.hpp"
 #include "utilities.cpp"
 
 using std::vector;

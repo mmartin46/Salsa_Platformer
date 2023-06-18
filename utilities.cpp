@@ -1,4 +1,15 @@
+#include <utility>
+#include <ctime>
+#include <time.h>
+#include <iostream>
 #include <vector>
+#include <string>
+#include <cstdlib>
+#include "constants.hpp"
+#include "player.hpp"
+#include "comp.hpp"
+#include "enemy.hpp"
+#include "entity.hpp"
 
 using std::vector;
 
