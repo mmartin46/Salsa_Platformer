@@ -21,6 +21,7 @@
 #include "comp.hpp"
 #include "enemy.hpp"
 #include "entity.hpp"
+#include "utilities.cpp"
 
 using std::vector;
 using std::pair;
