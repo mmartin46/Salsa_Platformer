@@ -1,7 +1,6 @@
 #include "game.hpp"
 
 
-
 /* Constructs the gamestate. */
 GameState::GameState()
 {
@@ -17,12 +16,6 @@ GameState::GameState()
     this->set_time(0);
     this->set_scrollX(0);
     this->set_scrollY(0);
-}
-
-// Are two rectangles colliding.
-int collide2d(float x1, float y1, float x2, float y2, float ht1, float wt1, float wt2, float ht2)
-{
-    return (!((x1 > (x2+wt2)) || (x2 > (x1+wt1)) || (y1 > (y2+ht2)) || (y2 > (y1+ht1))));
 }
 
 // Allows the user to load a texture and returns a surface.
