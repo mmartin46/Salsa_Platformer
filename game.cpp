@@ -354,28 +354,28 @@ void GameState::doRender(SDL_Renderer *renderer)
             {
                 // Block
                 case world_map::BLOCK_COLLISION : {
-                    SDL_Rect blockRect = { (int)(this->get_scrollX() + tile.at(x).at(y).get_x()), (int)(this->get_scrollY() + tile.at(x).at(y).get_y()), tile.at(x).at(y).get_w(), tile.at(x).at(y).get_h() };
+                    SDL_Rect blockRect = { static_cast<int>(this->get_scrollX() + tile.at(x).at(y).get_x()), static_cast<int>(this->get_scrollY() + tile.at(x).at(y).get_y()), tile.at(x).at(y).get_w(), tile.at(x).at(y).get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_block(), NULL , &blockRect);
                 } break;
                 // Taco
                 case world_map::TACO_COLLISION : {
-                    SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile.at(x).at(y).get_x()), (int)(this->get_scrollY() + tile.at(x).at(y).get_y()), tile.at(x).at(y).get_w(), tile.at(x).at(y).get_h() };
+                    SDL_Rect tacoRect = { static_cast<int>(this->get_scrollX() + tile.at(x).at(y).get_x()), static_cast<int>(this->get_scrollY() + tile.at(x).at(y).get_y()), tile.at(x).at(y).get_w(), tile.at(x).at(y).get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_taco(), NULL , &tacoRect);
                 } break;
                 case world_map::EMEMY_COLLISION : {
-                    SDL_Rect enemyRect = { (int)(this->get_scrollX() + enemies.at(x).at(y).get_x()), (int)(this->get_scrollY() + enemies.at(x).at(y).get_y()), enemies.at(x).at(y).get_w(), enemies.at(x).at(y).get_h() };
+                    SDL_Rect enemyRect = { static_cast<int>(this->get_scrollX() + enemies.at(x).at(y).get_x()), static_cast<int>(this->get_scrollY() + enemies.at(x).at(y).get_y()), enemies.at(x).at(y).get_w(), enemies.at(x).at(y).get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_enemy(), NULL , &enemyRect);              
                 } break;
                 case world_map::SOIL_COLLISION : {
-                    SDL_Rect soilRect = { (int)(this->get_scrollX() + soiltile.at(x).at(y).get_x()), (int)(this->get_scrollY() + soiltile.at(x).at(y).get_y()), soiltile.at(x).at(y).get_w(), soiltile.at(x).at(y).get_h() };
+                    SDL_Rect soilRect = { static_cast<int>(this->get_scrollX() + soiltile.at(x).at(y).get_x()), static_cast<int>(this->get_scrollY() + soiltile.at(x).at(y).get_y()), soiltile.at(x).at(y).get_w(), soiltile.at(x).at(y).get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_soil(), NULL , &soilRect);              
                 } break;
                 case world_map::SPIKE_COLLISION : {
-                    SDL_Rect spikeRect = { (int)(this->get_scrollX() + spikes.at(x).at(y).get_x()), (int)(this->get_scrollY() + spikes.at(x).at(y).get_y()), spikes.at(x).at(y).get_w(), spikes.at(x).at(y).get_h() };
+                    SDL_Rect spikeRect = { static_cast<int>(this->get_scrollX() + spikes.at(x).at(y).get_x()), static_cast<int>(this->get_scrollY() + spikes.at(x).at(y).get_y()), spikes.at(x).at(y).get_w(), spikes.at(x).at(y).get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_spike(), NULL , &spikeRect);              
                 } break;  
                 case world_map::TACO_SOIL_COLLISION : {
-                    SDL_Rect tacoSoilRect = { (int)(this->get_scrollX() + tile.at(x).at(y).get_x()), (int)(this->get_scrollY() + tile.at(x).at(y).get_y()), tile.at(x).at(y).get_w(), tile.at(x).at(y).get_h() };
+                    SDL_Rect tacoSoilRect = { static_cast<int>(this->get_scrollX() + tile.at(x).at(y).get_x()), static_cast<int>(this->get_scrollY() + tile.at(x).at(y).get_y()), tile.at(x).at(y).get_w(), tile.at(x).at(y).get_h() };
                     SDL_RenderCopy(this->get_renderer(), this->get_taco_soil(), NULL , &tacoSoilRect);
                 }   
             }
@@ -385,20 +385,20 @@ void GameState::doRender(SDL_Renderer *renderer)
     // Players
 
     // draw a rectangle at plyr's position
-    SDL_Rect rect = {  (int)(this->get_scrollX() + this->get_player()->get_x()), (int)(this->get_scrollY() + this->get_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
+    SDL_Rect rect = {  static_cast<int>(this->get_scrollX() + this->get_player()->get_x()), static_cast<int>(this->get_scrollY() + this->get_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
     SDL_RenderCopyEx(this->get_renderer(), this->get_player()->get_player_frame(this->get_player()->get_animFrame()), NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->get_player()->get_facingLeft() == 0));
 
-    SDL_Rect crect = {  (int) (this->get_scrollX() + this->get_comp_player()->get_x()), (int)(this->get_scrollY() + this->get_comp_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
+    SDL_Rect crect = {  static_cast<int> (this->get_scrollX() + this->get_comp_player()->get_x()), static_cast<int>(this->get_scrollY() + this->get_comp_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
     SDL_RenderCopyEx(this->get_renderer(), this->get_comp_player()->get_player_frame(this->get_comp_player()->get_animFrame()), NULL, &crect, 0, NULL, (SDL_RendererFlip)(this->get_comp_player()->get_facingLeft() == 0));
 
 
 
     // draw text rectangle.
-    SDL_Rect textRect = { 0, 0, (int) (this->life_label.get_w() / 4), (int) (this->life_label.get_h() / 3.75) };
+    SDL_Rect textRect = { 0, 0, static_cast<int> (this->life_label.get_w() / 4), static_cast<int> (this->life_label.get_h() / 3.75) };
     SDL_RenderCopy(this->get_renderer(), this->get_life_label_texture(), NULL, &textRect);
 
     // draw taco text rectangle
-    SDL_Rect tERect = { (int) (WINDOW_WIDTH-(WINDOW_WIDTH / 4.8)), 0, (int) (this->taco_label.get_w() / 4), (int) (this->taco_label.get_h() / 3.75) };
+    SDL_Rect tERect = { static_cast<int> (WINDOW_WIDTH-(WINDOW_WIDTH / 4.8)), 0, static_cast<int> (this->taco_label.get_w() / 4), static_cast<int> (this->taco_label.get_h() / 3.75) };
     SDL_RenderCopy(this->get_renderer(), this->get_taco_label_texture(), NULL, &tERect);
 
     SDL_RenderPresent(this->get_renderer());    
@@ -613,7 +613,7 @@ void GameState::collisionDetect()
             {
                 this->set_tacos_eaten(this->get_tacos_eaten() + 1);
                 // Create a rectangle and set the texture to null.
-                SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile.at(i).at(j).get_x()), (int)(this->get_scrollY() + tile.at(i).at(j).get_y()), tile.at(i).at(j).get_w(), tile.at(i).at(j).get_h() };
+                SDL_Rect tacoRect = { static_cast<int>(this->get_scrollX() + tile.at(i).at(j).get_x()), static_cast<int>(this->get_scrollY() + tile.at(i).at(j).get_y()), tile.at(i).at(j).get_w(), tile.at(i).at(j).get_h() };
                 SDL_RenderCopy(this->get_renderer(), NULL, NULL , &tacoRect);
                 // Makes sure the collision will not be repeated.
                 tilemap.at(i).at(j) = -1;
