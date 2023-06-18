@@ -594,7 +594,7 @@ void GameState::collisionDetect()
             {
                 this->set_tacos_eaten(this->get_tacos_eaten() + 1);
                 // Create a rectangle and set the texture to null.
-                SDL_Rect tacoRect = { (int)(this->get_scrollX() + tile.at(i).at(j).get_x()), (int)(this->get_scrollY() + tile.at(i).at(j).get_y()), tile.at(i).at(j).get_w(), tile.at(i).at(j).get_h() };
+                SDL_Rect tacoRect = { static_cast<int>(this->get_scrollX() + tile.at(i).at(j).get_x()), static_cast<int>(this->get_scrollY() + tile.at(i).at(j).get_y()), tile.at(i).at(j).get_w(), tile.at(i).at(j).get_h() };
                 SDL_RenderCopy(this->get_renderer(), NULL, NULL , &tacoRect);
                 // Makes sure the collision will not be repeated.
                 tilemap.at(i).at(j) = -1;
