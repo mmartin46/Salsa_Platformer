@@ -798,12 +798,6 @@ void GameState::enemy_movement()
    }
 }
 
-// Uses the manhattan distance formula
-double GameState::get_distances(double x_1, double x_2, double y_1, double y_2)
-{
-    double val = sqrt(pow(x_1 - x_2, 2) + pow(y_1 - y_2, 2));
-    return val;
-}
 
 void GameState::computer_player_movement()
 {
@@ -813,7 +807,7 @@ void GameState::computer_player_movement()
     pc.y_1 = this->get_player()->get_y();
     pc.y_2 = this->get_comp_player()->get_y();
 
-    double plyr_distance = this->get_distances(pc.x_1, pc.x_2, 
+    double plyr_distance = get_distances(pc.x_1, pc.x_2, 
                                                       pc.y_1, pc.y_2);
 
     pair<double, double> cp_c;
@@ -840,13 +834,13 @@ void GameState::computer_player_movement()
     if (plyr_distance > 30)
     {
         // Right
-        double state_1 = this->get_distances(pc.x_1 + 10, pc.x_2, pc.y_1, pc.y_2);
+        double state_1 = get_distances(pc.x_1 + 10, pc.x_2, pc.y_1, pc.y_2);
         // Down
-        double state_2 = this->get_distances(pc.x_1, pc.x_2, pc.y_1 + 10, pc.y_2);
+        double state_2 = get_distances(pc.x_1, pc.x_2, pc.y_1 + 10, pc.y_2);
         // Left
-        double state_3 = this->get_distances(pc.x_1 - 10, pc.x_2, pc.y_1, pc.y_2);
+        double state_3 = get_distances(pc.x_1 - 10, pc.x_2, pc.y_1, pc.y_2);
         // Up
-        double state_4 = this->get_distances(pc.x_1, pc.x_2, pc.y_1 - 10, pc.y_2);
+        double state_4 = get_distances(pc.x_1, pc.x_2, pc.y_1 - 10, pc.y_2);
         
 
         vector<double> states = { state_1, state_2, state_3, state_4 };

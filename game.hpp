@@ -224,7 +224,6 @@ class GameState
       void doRender(SDL_Renderer*);
       void enemy_movement();
       void init_health_texture();
-      double get_distances(double, double, double, double);
       inline int get_random_int() { return random_int; }
       inline void set_random_int(int rn) { random_int = rn; }
 

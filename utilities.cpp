@@ -52,3 +52,10 @@ SDL_Surface* get_surface(const char *file, const char *error_msg)
     } 
     return surface;   
 }
+
+// Uses the manhattan distance formula
+double get_distances(double x_1, double x_2, double y_1, double y_2)
+{
+    double val = sqrt(pow(x_1 - x_2, 2) + pow(y_1 - y_2, 2));
+    return val;
+}
