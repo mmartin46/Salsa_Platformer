@@ -9,9 +9,11 @@
 #include "src\include\SDL2\SDL_ttf.h"
 #include "cmath"
 #include "utilities.cpp"
+#include <memory>
 
 using std::vector;
 using std::pair;
+
 template <typename T>
 using Matrix = vector<vector<T> >;
 
@@ -115,7 +117,7 @@ class GameState
       Label life_label;
       Label taco_label;
 
-      Backdrop *backdrop = NULL;
+      std::shared_ptr<Backdrop> backdrop;
    
 
       // Level
@@ -125,8 +127,8 @@ class GameState
       int random_int;
 
       // Players
-      Player *ptr = NULL;
-      Player *cptr = NULL;
+      std::shared_ptr<Player> ptr;
+      std::shared_ptr<Player> cptr;
 
       // Computer Player Tracker
       vector<pair<double, double> > not_moving;
@@ -136,10 +138,10 @@ class GameState
       vector<SDL_Texture*> enemyFrames = vector<SDL_Texture*>(2);
    public:
 
-      Player* get_player() { return ptr; };
-      Backdrop* get_backdrop() { return backdrop; }
+      std::shared_ptr<Player> get_player() { return ptr; };
+      std::shared_ptr<Backdrop> get_backdrop() { return backdrop; }
 
-      Player* get_comp_player() { return cptr; }
+      std::shared_ptr<Player> get_comp_player() { return cptr; }
 
       
 

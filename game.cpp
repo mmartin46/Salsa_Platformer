@@ -5,9 +5,9 @@
 GameState::GameState()
 {
     this->set_maximum_y(FALL_DEATH);
-    this->ptr = new Player;
-    this->cptr = new CompPlayer;
-    this->backdrop = new Backdrop;
+    this->ptr = std::shared_ptr<Player>(new Player);
+    this->cptr = std::shared_ptr<Player>(new CompPlayer);
+    this->backdrop = std::shared_ptr<Backdrop>(new Backdrop);
     this->tilemap = Matrix<int> (MAP_ROWS, vector<int>(MAP_COLUMNS));
     this->tile = Matrix<Block> (MAP_ROWS, vector<Block>(MAP_COLUMNS));
     this->soiltile = Matrix<Soil> (MAP_ROWS, vector<Soil>(MAP_COLUMNS));
@@ -37,19 +37,19 @@ void GameState::init_health_texture()
 // Load images and create rending textures from the images
 void GameState::loadImages()
 {
-
+    using std::cout;
     // Load fonts
     set_life_font(TTF_OpenFont("img\\ka1.ttf", 48));
     if (!this->get_life_font())
     {
-        printf("Cannot find font file!\n\n");
+        cout << "Cannot find font file!\n\n";
         SDL_Quit();
         exit(1);
     }
     set_taco_font(TTF_OpenFont("img\\ka1.ttf", 48));
     if (!this->get_taco_font())
     {
-        printf("Cannot find font file!\n\n");
+        cout << "Cannot find font file!\n\n";
         SDL_Quit();
         exit(1);
     }
@@ -58,7 +58,7 @@ void GameState::loadImages()
     this->set_jump_music(Mix_LoadWAV("sounds\\jump.wav"));
     if (!this->get_jump_music())
     {
-        printf("Cannot locate sounds\\jump.wav!");
+        cout << ("Cannot locate sounds\\jump.wav!");
         SDL_Quit();
         exit(1);
     }
@@ -388,11 +388,11 @@ void GameState::process()
     computer_player_movement();
 
     // plyr movement
-    Player *plyr = this->get_player();
+    std::shared_ptr<Player> plyr = this->get_player();
     plyr->set_x(plyr->get_x() + plyr->get_dx());
     plyr->set_y(plyr->get_y() + plyr->get_dy());
 
-    Player *cplyr = this->get_comp_player();
+    std::shared_ptr<Player> cplyr = this->get_comp_player();
     cplyr->set_x(cplyr->get_x() + cplyr->get_dx());
     cplyr->set_y(cplyr->get_y() + cplyr->get_dy());
 
@@ -450,12 +450,16 @@ void GameState::process()
     // }
 
     // Scrolling
-    this->set_scrollX(-plyr->get_x() + WINDOW_WIDTH/2);
-    this->set_scrollY(-plyr->get_y() + WINDOW_HEIGHT/2);
 
-    if (this->get_scrollX() > 0)
+    if (plyr.use_count() == 2)
     {
-        this->set_scrollX(0);
+        this->set_scrollX(-plyr->get_x() + WINDOW_WIDTH/2);
+        this->set_scrollY(-plyr->get_y() + WINDOW_HEIGHT/2);
+
+        if (this->get_scrollX() > 0)
+        {
+            this->set_scrollX(0);
+        }
     }
     // if (this->get_scrollX() < -38000+320)
     // {
@@ -971,8 +975,4 @@ GameState::~GameState()
     {
         SDL_DestroyTexture(this->get_taco_label_texture());
     }
-
-    delete backdrop;
-    delete ptr;
-    delete cptr;
 }
