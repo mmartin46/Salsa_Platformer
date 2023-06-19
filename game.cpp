@@ -65,24 +65,39 @@ void GameState::loadImages()
 
     // Players
 
-    // Loading the player's first frame.
-    SDL_Surface* surface = get_surface("img\\plyr_ita.png", "Cannot find plyr_ita.png!\n\n");
+    // Player Frames
+    SDL_Surface* surface = get_surface("img\\player1.png", "Cannot find player1.png!\n\n");
     this->get_player()->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
-    // Loading the player's second frame.
-    surface = get_surface("img\\plyr_itb.png", "Cannot find plyr_itb.png!\n\n");
+    surface = get_surface("img\\player2.png", "Cannot find player2.png!\n\n");
     this->get_player()->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
-    // Loading the comp-player's first frame.
-    surface = get_surface("img\\plyr_ita_2.png", "Cannot find plyr_ita.png!\n\n");
+    surface = get_surface("img\\player3.png", "Cannot find player3.png!\n\n");
+    this->get_player()->set_player_frame(2, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);
+
+    surface = get_surface("img\\player4.png", "Cannot find player4.png!\n\n");
+    this->get_player()->set_player_frame(3, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);
+
+
+    // Computer Player Frames
+    surface = get_surface("img\\complayer1.png", "Cannot find complayer1.png!\n\n");
     this->get_comp_player()->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
-    // // // Loading the comp-player's second frame.
-    surface = get_surface("img\\plyr_itb_2.png", "Cannot find plyr_itb.png!\n\n");
+    surface = get_surface("img\\complayer2.png", "Cannot find complayer2.png!\n\n");
     this->get_comp_player()->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);
+
+    surface = get_surface("img\\complayer3.png", "Cannot find complayer3.png!\n\n");
+    this->get_comp_player()->set_player_frame(2, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);
+
+    surface = get_surface("img\\complayer4.png", "Cannot find complayer4.png!\n\n");
+    this->get_comp_player()->set_player_frame(3, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
 
@@ -408,11 +423,19 @@ void GameState::process()
 
     if (plyr->get_dx() != 0 && plyr->get_onBlock() && (plyr->get_slowingDown() == false) )
     {
-        if (this->get_time() % 8 == 0)
+        if (this->get_time() % 20 < 20)
         {
-            if (plyr->get_animFrame() == 0)
+            if ((this->get_time()) % 20 <= 5)
             {
                 plyr->set_animFrame(1);
+            }
+            else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
+            {
+                plyr->set_animFrame(2);
+            }
+            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) < 20)
+            {
+                plyr->set_animFrame(3);
             }
             else
             {
@@ -422,11 +445,19 @@ void GameState::process()
     }
     if (cplyr->get_dx() != 0 && cplyr->get_onBlock() && (cplyr->get_slowingDown() == false) )
     {
-        if (this->get_time() % 8 == 0)
+        if (this->get_time() % 20 < 20)
         {
-            if (cplyr->get_animFrame() == 0)
+            if ((this->get_time()) % 20 <= 5)
             {
                 cplyr->set_animFrame(1);
+            }
+            else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
+            {
+                cplyr->set_animFrame(2);
+            }
+            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) < 20)
+            {
+                cplyr->set_animFrame(3);
             }
             else
             {

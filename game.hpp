@@ -131,7 +131,7 @@ class GameState
       vector<pair<double, double> > not_moving;
 
       // Images
-      vector<SDL_Texture*> plyrFrames = vector<SDL_Texture*>(2);
+      vector<SDL_Texture*> plyrFrames = vector<SDL_Texture*>(4);
       vector<SDL_Texture*> enemyFrames = vector<SDL_Texture*>(2);
    public:
 
