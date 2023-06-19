@@ -7,8 +7,8 @@
 #define MAP_COLUMNS 307
 #define MAP_ROWS 142
 
-#define STRETCH_WIDTH 420
-#define STRETCH_HEIGHT 236
+#define STRETCH_WIDTH 1280
+#define STRETCH_HEIGHT 720
 
 #define WINDOW_WIDTH 420
 #define WINDOW_HEIGHT 236
@@ -28,7 +28,7 @@
 #define PLAYER_WIDTH 20 // The player width
 #define PLAYER_HEIGHT 20 // The player height
 #define PLAYER_SPEED 0.5f   // The player walking speed
-#define PLAYER_JUMP_HEIGHT -8 // The player jump height
+#define PLAYER_JUMP_HEIGHT -6 // The player jump height
 #define PLAYER_SPEED_DX 3
 
 #define FALL_DEATH 2800
