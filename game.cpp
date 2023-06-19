@@ -7,6 +7,7 @@ GameState::GameState()
     this->set_maximum_y(FALL_DEATH);
     this->ptr = shared_ptr<Player>(new Player);
     this->cptr = shared_ptr<Player>(new CompPlayer);
+    this->dim_area = new Backdrop;
     this->backdrop = shared_ptr<Backdrop>(new Backdrop);
     this->tilemap = Matrix<int> (MAP_ROWS, vector<int>(MAP_COLUMNS));
     this->tile = Matrix<Block> (MAP_ROWS, vector<Block>(MAP_COLUMNS));
@@ -63,14 +64,14 @@ void GameState::loadImages()
         exit(1);
     }
 
-    // Players
+    if (this->get_level_choice() < 20)
+    {
+        SDL_Surface *s = get_surface("img\\front_drop.png", "Cannot find front_drop.png!\n\n");
+        this->get_dim_area()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), s));
+        SDL_FreeSurface(s);
+    }
 
-    // if (this->get_level_choice() <  20)
-    // {
-    //     SDL_Surface* s = get_surface("img\\front_drop.png", "Cannot find front_drop.png!\n\n");
-    //     this->get_dim_area()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), s));
-    //     SDL_FreeSurface(s);  
-    // }
+    // Players
 
     // Player Frames
     SDL_Surface* surface = get_surface("img\\player1.png", "Cannot find player1.png!\n\n");
@@ -242,10 +243,10 @@ void GameState::init_blocks(int level_choice)
 
     if (choice < 20)
     {
-        // this->get_dim_area()->set_x(0);
-        // this->get_dim_area()->set_y(0);
-        // this->get_dim_area()->set_h(420);
-        // this->get_dim_area()->set_w(236);
+        this->get_dim_area()->set_x(0);
+        this->get_dim_area()->set_y(0);
+        this->get_dim_area()->set_h(1000);
+        this->get_dim_area()->set_w(1000);
 
         this->get_backdrop()->set_x(-300);
         this->get_backdrop()->set_y(-300);
@@ -345,11 +346,6 @@ void GameState::doRender(SDL_Renderer *renderer)
     }
 
     // Background
-    // if (this->get_level_choice() < 20)
-    // {   
-    //     SDL_Rect dimRect = { (int)(this->get_dim_area()->get_x()),(int)(this->get_dim_area()->get_y()), this->get_dim_area()->get_w(), this->get_dim_area()->get_h() };
-    //     SDL_RenderCopy(this->get_renderer(), this->get_backdrop()->get_backdrop_texture(), NULL, &dimRect);
-    // }
 
     SDL_Rect bgRect = { (int)((this->scrollX / 20) + this->get_backdrop()->get_x()),(int)((this->scrollY / 30) + this->get_backdrop()->get_y()), this->get_backdrop()->get_w(), this->get_backdrop()->get_h() };
     SDL_RenderCopy(this->get_renderer(), this->get_backdrop()->get_backdrop_texture(), NULL, &bgRect);
@@ -391,6 +387,9 @@ void GameState::doRender(SDL_Renderer *renderer)
         }
     }
 
+
+
+
     // Players
 
     // draw a rectangle at plyr's position
@@ -400,6 +399,11 @@ void GameState::doRender(SDL_Renderer *renderer)
     SDL_Rect crect = {  static_cast<int> (this->get_scrollX() + this->get_comp_player()->get_x()), static_cast<int>(this->get_scrollY() + this->get_comp_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
     SDL_RenderCopyEx(this->get_renderer(), this->get_comp_player()->get_player_frame(this->get_comp_player()->get_animFrame()), NULL, &crect, 0, NULL, (SDL_RendererFlip)(this->get_comp_player()->get_facingLeft() == 0));
 
+    if (this->get_level_choice() < 20)
+    {   
+        SDL_Rect dimRect = {  static_cast<int>((this->get_scrollX() + this->get_player()->get_x()) - 490), static_cast<int>((this->get_scrollY() + this->get_player()->get_y()) - 450), this->get_dim_area()->get_w(), this->get_dim_area()->get_h() };
+        SDL_RenderCopy(this->get_renderer(), this->get_dim_area()->get_backdrop_texture(), NULL, &dimRect);
+    }
 
 
     // draw text rectangle.
@@ -409,6 +413,9 @@ void GameState::doRender(SDL_Renderer *renderer)
     // draw taco text rectangle
     SDL_Rect tERect = { static_cast<int> (WINDOW_WIDTH-(WINDOW_WIDTH / 4.8)), 0, static_cast<int> (this->taco_label.get_w() / 4), static_cast<int> (this->taco_label.get_h() / 3.75) };
     SDL_RenderCopy(this->get_renderer(), this->get_taco_label_texture(), NULL, &tERect);
+
+
+
 
     SDL_RenderPresent(this->get_renderer());    
 }
