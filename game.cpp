@@ -910,7 +910,6 @@ void GameState::computer_player_movement()
                 {
                     this->get_comp_player()->apply_down_movement();
                 }
-            // }
         }
         else
         {
@@ -941,6 +940,8 @@ void GameState::computer_player_movement()
     }
     else
     {
+        // If the player isn't performing any of the moves
+        // slow his speed to zero.
         this->get_comp_player()->slow_movement();
     }
 
