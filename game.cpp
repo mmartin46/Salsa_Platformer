@@ -5,9 +5,9 @@
 GameState::GameState()
 {
     this->set_maximum_y(FALL_DEATH);
-    this->ptr = std::shared_ptr<Player>(new Player);
-    this->cptr = std::shared_ptr<Player>(new CompPlayer);
-    this->backdrop = std::shared_ptr<Backdrop>(new Backdrop);
+    this->ptr = shared_ptr<Player>(new Player);
+    this->cptr = shared_ptr<Player>(new CompPlayer);
+    this->backdrop = shared_ptr<Backdrop>(new Backdrop);
     this->tilemap = Matrix<int> (MAP_ROWS, vector<int>(MAP_COLUMNS));
     this->tile = Matrix<Block> (MAP_ROWS, vector<Block>(MAP_COLUMNS));
     this->soiltile = Matrix<Soil> (MAP_ROWS, vector<Soil>(MAP_COLUMNS));
@@ -388,11 +388,11 @@ void GameState::process()
     computer_player_movement();
 
     // plyr movement
-    std::shared_ptr<Player> plyr = this->get_player();
+    shared_ptr<Player> plyr = this->get_player();
     plyr->set_x(plyr->get_x() + plyr->get_dx());
     plyr->set_y(plyr->get_y() + plyr->get_dy());
 
-    std::shared_ptr<Player> cplyr = this->get_comp_player();
+    shared_ptr<Player> cplyr = this->get_comp_player();
     cplyr->set_x(cplyr->get_x() + cplyr->get_dx());
     cplyr->set_y(cplyr->get_y() + cplyr->get_dy());
 
@@ -451,6 +451,8 @@ void GameState::process()
 
     // Scrolling
 
+    // Make sure only the two pointers ptr and plyr
+    // are the only ones that point the player.
     if (plyr.use_count() == 2)
     {
         this->set_scrollX(-plyr->get_x() + WINDOW_WIDTH/2);

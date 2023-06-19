@@ -13,6 +13,7 @@
 
 using std::vector;
 using std::pair;
+using std::shared_ptr;
 
 template <typename T>
 using Matrix = vector<vector<T> >;
@@ -117,7 +118,7 @@ class GameState
       Label life_label;
       Label taco_label;
 
-      std::shared_ptr<Backdrop> backdrop;
+      shared_ptr<Backdrop> backdrop;
    
 
       // Level
@@ -127,8 +128,8 @@ class GameState
       int random_int;
 
       // Players
-      std::shared_ptr<Player> ptr;
-      std::shared_ptr<Player> cptr;
+      shared_ptr<Player> ptr;
+      shared_ptr<Player> cptr;
 
       // Computer Player Tracker
       vector<pair<double, double> > not_moving;
@@ -138,10 +139,10 @@ class GameState
       vector<SDL_Texture*> enemyFrames = vector<SDL_Texture*>(2);
    public:
 
-      std::shared_ptr<Player> get_player() { return ptr; };
-      std::shared_ptr<Backdrop> get_backdrop() { return backdrop; }
+      shared_ptr<Player> get_player() { return ptr; };
+      shared_ptr<Backdrop> get_backdrop() { return backdrop; }
 
-      std::shared_ptr<Player> get_comp_player() { return cptr; }
+      shared_ptr<Player> get_comp_player() { return cptr; }
 
       
 
