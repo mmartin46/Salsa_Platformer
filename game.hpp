@@ -83,7 +83,6 @@ class GameState
       SDL_Texture *enemy;
       SDL_Texture *soil;
       SDL_Texture *spike;
-      SDL_Texture *backdrop_texture;
       SDL_Texture *lblTexture;
       SDL_Texture *tcoTexture;
 
@@ -112,6 +111,7 @@ class GameState
       Label taco_label;
 
       shared_ptr<Backdrop> backdrop;
+      Backdrop* dim_area;
    
 
       // Level
@@ -134,6 +134,7 @@ class GameState
 
       shared_ptr<Player> get_player() { return ptr; };
       shared_ptr<Backdrop> get_backdrop() { return backdrop; }
+      Backdrop* get_dim_area() { return dim_area; }
 
       shared_ptr<Player> get_comp_player() { return cptr; }
 

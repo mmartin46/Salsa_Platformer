@@ -65,6 +65,13 @@ void GameState::loadImages()
 
     // Players
 
+    // if (this->get_level_choice() <  20)
+    // {
+    //     SDL_Surface* s = get_surface("img\\front_drop.png", "Cannot find front_drop.png!\n\n");
+    //     this->get_dim_area()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), s));
+    //     SDL_FreeSurface(s);  
+    // }
+
     // Player Frames
     SDL_Surface* surface = get_surface("img\\player1.png", "Cannot find player1.png!\n\n");
     this->get_player()->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
@@ -121,6 +128,7 @@ void GameState::loadImages()
     // Loading background texture.
     if (this->get_level_choice() < 20)
     {
+
         surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
         this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);  
@@ -234,6 +242,11 @@ void GameState::init_blocks(int level_choice)
 
     if (choice < 20)
     {
+        // this->get_dim_area()->set_x(0);
+        // this->get_dim_area()->set_y(0);
+        // this->get_dim_area()->set_h(420);
+        // this->get_dim_area()->set_w(236);
+
         this->get_backdrop()->set_x(-300);
         this->get_backdrop()->set_y(-300);
         this->get_backdrop()->set_h(5000);
@@ -332,6 +345,12 @@ void GameState::doRender(SDL_Renderer *renderer)
     }
 
     // Background
+    // if (this->get_level_choice() < 20)
+    // {   
+    //     SDL_Rect dimRect = { (int)(this->get_dim_area()->get_x()),(int)(this->get_dim_area()->get_y()), this->get_dim_area()->get_w(), this->get_dim_area()->get_h() };
+    //     SDL_RenderCopy(this->get_renderer(), this->get_backdrop()->get_backdrop_texture(), NULL, &dimRect);
+    // }
+
     SDL_Rect bgRect = { (int)((this->scrollX / 20) + this->get_backdrop()->get_x()),(int)((this->scrollY / 30) + this->get_backdrop()->get_y()), this->get_backdrop()->get_w(), this->get_backdrop()->get_h() };
     SDL_RenderCopy(this->get_renderer(), this->get_backdrop()->get_backdrop_texture(), NULL, &bgRect);
 
@@ -795,11 +814,11 @@ int GameState::processEvents(SDL_Window *window)
     // Walking
     if (state[SDL_SCANCODE_LEFT])
     {
-       this->get_player()->apply_left_movement(6);
+       this->get_player()->apply_left_movement(4);
     }
     else if (state[SDL_SCANCODE_RIGHT])
     {
-       this->get_player()->apply_right_movement(6);
+       this->get_player()->apply_right_movement(4);
     }
     else
     {
