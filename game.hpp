@@ -11,9 +11,6 @@
 #include "utilities.cpp"
 
 
-template <typename T>
-using Matrix = vector<vector<T> >;
-
 /* Keeps track of two player coordinates.*/
 typedef struct {
     double x_1;

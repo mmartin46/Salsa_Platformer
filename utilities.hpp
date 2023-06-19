@@ -19,6 +19,8 @@ using std::vector;
 using std::pair;
 using std::shared_ptr;
 using std::vector;
+template <typename T>
+using Matrix = vector<vector<T> >;
 
 // Returns the minimum in a vector.
 double minimum(const vector<double> &v);
