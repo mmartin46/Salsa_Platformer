@@ -9,11 +9,7 @@
 #include "src\include\SDL2\SDL_ttf.h"
 #include "cmath"
 #include "utilities.cpp"
-#include <memory>
 
-using std::vector;
-using std::pair;
-using std::shared_ptr;
 
 template <typename T>
 using Matrix = vector<vector<T> >;

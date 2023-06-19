@@ -440,15 +440,6 @@ void GameState::process()
     plyr->apply_gravity();
     cplyr->apply_gravity();
 
-    // // Enemy Gravity
-    // for (int i = 0; i < MAP_ROWS; ++i)
-    // {
-    //     for (int j = 0; j < MAP_COLUMNS; ++j)
-    //     {
-    //         //this->enemies.at(i).at(j).apply_gravity();
-    //     }
-    // }
-
     // Scrolling
 
     // Make sure only the two pointers ptr and plyr
