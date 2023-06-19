@@ -1,22 +1,4 @@
-#include <utility>
-#include <ctime>
-#include <time.h>
-#include <iostream>
-#include <vector>
-#include <string>
-#include <cstdlib>
-#include <memory>
-#include "constants.hpp"
-#include "player.hpp"
-#include "comp.hpp"
-#include "enemy.hpp"
-#include "entity.hpp"
-
-using std::vector;
-using std::pair;
-using std::shared_ptr;
-using std::vector;
-
+#include "utilities.hpp"
 // Returns the minimum in a vector.
 double minimum(const vector<double> &v)
 {
