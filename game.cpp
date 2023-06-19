@@ -72,27 +72,47 @@ void GameState::loadImages()
     }
 
     // Players
+    if (this->get_level_choice() < 20)
+    {
+        // Player Frames
+        SDL_Surface* surface = get_surface("img\\playerwfire1.png", "Cannot find playerwfire1.png!\n\n");
+        this->get_player()->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);
 
-    // Player Frames
-    SDL_Surface* surface = get_surface("img\\player1.png", "Cannot find player1.png!\n\n");
-    this->get_player()->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);
+        surface = get_surface("img\\playerwfire2.png", "Cannot find playerwfire2.png!\n\n");
+        this->get_player()->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);
 
-    surface = get_surface("img\\player2.png", "Cannot find player2.png!\n\n");
-    this->get_player()->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);
+        surface = get_surface("img\\playerwfire3.png", "Cannot find playerwfire3.png!\n\n");
+        this->get_player()->set_player_frame(2, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);
 
-    surface = get_surface("img\\player3.png", "Cannot find player3.png!\n\n");
-    this->get_player()->set_player_frame(2, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);
+        surface = get_surface("img\\playerwfire4.png", "Cannot find playerwfire4.png!\n\n");
+        this->get_player()->set_player_frame(3, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);
+    }
+    else
+    {
+        // Player Frames
+        SDL_Surface* surface = get_surface("img\\player1.png", "Cannot find player1.png!\n\n");
+        this->get_player()->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);
 
-    surface = get_surface("img\\player4.png", "Cannot find player4.png!\n\n");
-    this->get_player()->set_player_frame(3, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);
+        surface = get_surface("img\\player2.png", "Cannot find player2.png!\n\n");
+        this->get_player()->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);
 
+        surface = get_surface("img\\player3.png", "Cannot find player3.png!\n\n");
+        this->get_player()->set_player_frame(2, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);
+
+        surface = get_surface("img\\player4.png", "Cannot find player4.png!\n\n");
+        this->get_player()->set_player_frame(3, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);
+    }
 
     // Computer Player Frames
-    surface = get_surface("img\\complayer1.png", "Cannot find complayer1.png!\n\n");
+    SDL_Surface *surface = get_surface("img\\complayer1.png", "Cannot find complayer1.png!\n\n");
     this->get_comp_player()->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
