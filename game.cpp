@@ -607,7 +607,7 @@ int GameState::collision_in_map(T &plyr, Matrix<Block> &tile, int i, int j , int
 
             // bumped our head, stop any jump velocity
             plyr.set_dy(0);
-            plyr.set_onBlock();
+            plyr.reset_onBlock();
             touched = 1;
         }
     }
@@ -919,7 +919,6 @@ void GameState::computer_player_movement()
     pair<double, double> cp_c;
     cp_c.first = pc.x_1;
     cp_c.second = pc.x_1;
-    this->not_moving.push_back(cp_c);
 
     // Clear out the vector.
     if (this->not_moving.size() > 20)
@@ -961,8 +960,8 @@ void GameState::computer_player_movement()
         vector<double> states = { state_1, state_2, state_3, state_4, state_5, state_6,
                                  state_7, state_8 };
 
-        // using std::cout;
-        // using std::endl;
+        using std::cout;
+        using std::endl;
 
         // for (const auto &s : states) 
         // {
@@ -972,7 +971,7 @@ void GameState::computer_player_movement()
 
         double min_distance = minimum(states); 
 
-
+        cout << this->get_player()->get_onBlock() << endl;
 
         // If the computer player isn't moving.
         if (this->not_moving.size() > 10)
@@ -1040,34 +1039,34 @@ void GameState::computer_player_movement()
                 // Down
                 else if (min_distance == state_4)
                 {
-                    //cout << "DOWN\n";
+                    cout << "DOWN\n";
                     this->get_comp_player()->apply_down_movement();
                 }
                 // Up-Left
                 else if (min_distance == state_5)
                 {   
                     //cout << "UP-LEFT\n";
-                    this->get_comp_player()->apply_up_movement(COMP_PLAYER_HEIGHT);
+                    this->get_comp_player()->apply_up_movement(COMP_PLAYER_HEIGHT - (state_5 / 100));
                     this->get_comp_player()->apply_left_movement(3);
                 }
                 // Up-Right
                 else if (min_distance == state_6)
                 {   
                     //cout << "UP-RIGHT\n";
-                    this->get_comp_player()->apply_up_movement(COMP_PLAYER_HEIGHT);
+                    this->get_comp_player()->apply_up_movement(COMP_PLAYER_HEIGHT - (state_6 / 100));
                     this->get_comp_player()->apply_right_movement(3);
                 }
                 // Down-Left
                 else if (min_distance == state_7)
                 {   
-                    //cout << "DOWN-LEFT\n";
+                    cout << "DOWN-LEFT\n";
                     this->get_comp_player()->apply_down_movement();
                     this->get_comp_player()->apply_left_movement(3);
                 }
                 // Down-Right
                 else if (min_distance == state_8)
                 {   
-                    //cout << "DOWN-RIGHT\n";
+                    cout << "DOWN-RIGHT\n";
                     this->get_comp_player()->apply_down_movement();
                     this->get_comp_player()->apply_right_movement(3);
                 }
@@ -1103,20 +1102,20 @@ void GameState::computer_player_movement()
             else if (min_distance == state_5)
             {   
                 //cout << "UP-LEFT\n";
-                this->get_comp_player()->apply_up_movement(COMP_PLAYER_HEIGHT);
+                this->get_comp_player()->apply_up_movement(COMP_PLAYER_HEIGHT - (state_5 / 100));
                 this->get_comp_player()->apply_left_movement(3);
             }
             // Up-Right
             else if (min_distance == state_6)
             {   
-                //cout << "UP-RIGHT\n";
-                this->get_comp_player()->apply_up_movement(COMP_PLAYER_HEIGHT);
+                cout << "UP-RIGHT\n";
+                this->get_comp_player()->apply_up_movement(COMP_PLAYER_HEIGHT - (state_6 / 100));
                 this->get_comp_player()->apply_right_movement(3);
             }
             // Down-Left
             else if (min_distance == state_7)
             {   
-                //cout << "DOWN-LEFT\n";
+                cout << "DOWN-LEFT\n";
                 this->get_comp_player()->apply_down_movement();
                 this->get_comp_player()->apply_left_movement(3);
             }
@@ -1136,6 +1135,7 @@ void GameState::computer_player_movement()
         // If the player isn't performing any of the moves
         // slow his speed to zero.
         this->get_comp_player()->slow_movement();
+        this->not_moving.push_back(cp_c);
     }
 
 
