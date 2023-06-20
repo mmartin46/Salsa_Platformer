@@ -961,14 +961,14 @@ void GameState::computer_player_movement()
         vector<double> states = { state_1, state_2, state_3, state_4, state_5, state_6,
                                  state_7, state_8 };
 
-        using std::cout;
-        using std::endl;
+        // using std::cout;
+        // using std::endl;
 
-        for (const auto &s : states) 
-        {
-            cout << s << " ";
-        }
-        cout << endl;
+        // for (const auto &s : states) 
+        // {
+        //     cout << s << " ";
+        // }
+        // cout << endl;
 
         double min_distance = minimum(states); 
 
@@ -1022,52 +1022,52 @@ void GameState::computer_player_movement()
                 // Left
                 if (min_distance == state_1)
                 {
-                    cout << "LEFT\n";
+                    //cout << "LEFT\n";
                     this->get_comp_player()->apply_left_movement(3);
                 }
                 // Up
                 else if (min_distance == state_2)
                 {
-                    cout << "UP\n";
+                    //cout << "UP\n";
                     this->get_comp_player()->apply_up_movement(4);
                 }
                 // Right
                 else if (min_distance == state_3)
                 {
-                    cout << "RIGHT\n";
+                    //cout << "RIGHT\n";
                     this->get_comp_player()->apply_right_movement(3);
                 }
                 // Down
                 else if (min_distance == state_4)
                 {
-                    cout << "DOWN\n";
+                    //cout << "DOWN\n";
                     this->get_comp_player()->apply_down_movement();
                 }
                 // Up-Left
                 else if (min_distance == state_5)
                 {   
-                    cout << "UP-LEFT\n";
+                    //cout << "UP-LEFT\n";
                     this->get_comp_player()->apply_up_movement(COMP_PLAYER_HEIGHT);
                     this->get_comp_player()->apply_left_movement(3);
                 }
                 // Up-Right
                 else if (min_distance == state_6)
                 {   
-                    cout << "UP-RIGHT\n";
+                    //cout << "UP-RIGHT\n";
                     this->get_comp_player()->apply_up_movement(COMP_PLAYER_HEIGHT);
                     this->get_comp_player()->apply_right_movement(3);
                 }
                 // Down-Left
                 else if (min_distance == state_7)
                 {   
-                    cout << "DOWN-LEFT\n";
+                    //cout << "DOWN-LEFT\n";
                     this->get_comp_player()->apply_down_movement();
                     this->get_comp_player()->apply_left_movement(3);
                 }
                 // Down-Right
                 else if (min_distance == state_8)
                 {   
-                    cout << "DOWN-RIGHT\n";
+                    //cout << "DOWN-RIGHT\n";
                     this->get_comp_player()->apply_down_movement();
                     this->get_comp_player()->apply_right_movement(3);
                 }
@@ -1078,52 +1078,52 @@ void GameState::computer_player_movement()
             // Left
             if (min_distance == state_1)
             {
-                cout << "LEFT\n";
+                //cout << "LEFT\n";
                 this->get_comp_player()->apply_left_movement(3);
             }
             // Up
             else if (min_distance == state_2)
             {
-                cout << "UP\n";
+                //cout << "UP\n";
                 this->get_comp_player()->apply_up_movement(4);
             }
             // Right
             else if (min_distance == state_3)
             {
-                cout << "RIGHT\n";
+                //cout << "RIGHT\n";
                 this->get_comp_player()->apply_right_movement(3);
             }
             // Down
             else if (min_distance == state_4)
             {
-                cout << "DOWN\n";
+                //cout << "DOWN\n";
                 this->get_comp_player()->apply_down_movement();
             }
             // Up-Left
             else if (min_distance == state_5)
             {   
-                cout << "UP-LEFT\n";
+                //cout << "UP-LEFT\n";
                 this->get_comp_player()->apply_up_movement(COMP_PLAYER_HEIGHT);
                 this->get_comp_player()->apply_left_movement(3);
             }
             // Up-Right
             else if (min_distance == state_6)
             {   
-                cout << "UP-RIGHT\n";
+                //cout << "UP-RIGHT\n";
                 this->get_comp_player()->apply_up_movement(COMP_PLAYER_HEIGHT);
                 this->get_comp_player()->apply_right_movement(3);
             }
             // Down-Left
             else if (min_distance == state_7)
             {   
-                cout << "DOWN-LEFT\n";
+                //cout << "DOWN-LEFT\n";
                 this->get_comp_player()->apply_down_movement();
                 this->get_comp_player()->apply_left_movement(3);
             }
             // Down-Right
             else if (min_distance == state_8)
             {   
-                cout << "DOWN-RIGHT\n";
+                //cout << "DOWN-RIGHT\n";
                 this->get_comp_player()->apply_down_movement();
                 this->get_comp_player()->apply_right_movement(3);
             }
