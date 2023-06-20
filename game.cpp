@@ -971,8 +971,6 @@ void GameState::computer_player_movement()
 
         double min_distance = minimum(states); 
 
-        cout << this->get_player()->get_onBlock() << endl;
-
         // If the computer player isn't moving.
         if (this->not_moving.size() > 10)
         {
