@@ -97,8 +97,8 @@ class GameState
       Mix_Chunk *bg_music, *jump_sound;
 
       // Health
-      int life = 100;
-      int tacos_eaten = 0;
+      int life;
+      int tacos_eaten;
 
       // Background
       Matrix<int> tilemap;
@@ -111,7 +111,7 @@ class GameState
       Label taco_label;
 
       shared_ptr<Backdrop> backdrop;
-      Backdrop* dim_area;
+      shared_ptr<Backdrop> dim_area;
    
 
       // Level
@@ -134,7 +134,7 @@ class GameState
 
       shared_ptr<Player> get_player() { return ptr; };
       shared_ptr<Backdrop> get_backdrop() { return backdrop; }
-      Backdrop* get_dim_area() { return dim_area; }
+      shared_ptr<Backdrop> get_dim_area() { return dim_area; }
 
       shared_ptr<Player> get_comp_player() { return cptr; }
 
@@ -149,6 +149,7 @@ class GameState
       inline void set_maximum_y(int my) { maximum_y = my; }
       inline int get_maximum_y() { return maximum_y; }
       inline void set_maximum_x(int mx) { maximum_x = mx; }
+
 
       // Textures
       inline SDL_Texture* get_block() { return block; }

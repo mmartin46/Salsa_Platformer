@@ -4,10 +4,13 @@
 /* Constructs the gamestate. */
 GameState::GameState()
 {
+    this->set_life(100);
+    this->set_tacos_eaten(0);
+
     this->set_maximum_y(FALL_DEATH);
     this->ptr = shared_ptr<Player>(new Player);
     this->cptr = shared_ptr<Player>(new CompPlayer);
-    this->dim_area = new Backdrop;
+    this->dim_area = shared_ptr<Backdrop>(new Backdrop);
     this->backdrop = shared_ptr<Backdrop>(new Backdrop);
     this->tilemap = Matrix<int> (MAP_ROWS, vector<int>(MAP_COLUMNS));
     this->tile = Matrix<Block> (MAP_ROWS, vector<Block>(MAP_COLUMNS));
@@ -90,6 +93,10 @@ void GameState::loadImages()
         surface = get_surface("img\\playerwfire4.png", "Cannot find playerwfire4.png!\n\n");
         this->get_player()->set_player_frame(3, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);
+
+        surface = get_surface("img\\playerwfire6.png", "Cannot find playerwfire6.png!\n\n");
+        this->get_player()->set_player_frame(4, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);       
     }
     else
     {
@@ -109,6 +116,10 @@ void GameState::loadImages()
         surface = get_surface("img\\player4.png", "Cannot find player4.png!\n\n");
         this->get_player()->set_player_frame(3, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);
+
+        surface = get_surface("img\\player6.png", "Cannot find player6.png!\n\n");
+        this->get_player()->set_player_frame(4, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);     
     }
 
     // Computer Player Frames
@@ -128,7 +139,9 @@ void GameState::loadImages()
     this->get_comp_player()->set_player_frame(3, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
-
+    surface = get_surface("img\\complayer5.png", "Cannot find complayer5.png!\n\n");
+    this->get_comp_player()->set_player_frame(4, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+    SDL_FreeSurface(surface);
 
     // Loading the taco texture.
     surface = get_surface("img\\taco.png", "Cannot find block.png!\n\n");
@@ -511,6 +524,20 @@ void GameState::process()
             }
         }
     }
+    else
+    {
+        cplyr->set_animFrame(0);
+    }
+
+    // Jumping animations
+    if (!plyr->get_onBlock())
+    {
+        plyr->set_animFrame(4);
+    }
+    if (!cplyr->get_onBlock())
+    {
+        cplyr->set_animFrame(4);
+    }
 
 
     // Player Gravity    
@@ -547,6 +574,11 @@ void GameState::process()
         cplyr->set_y(plyr->get_y() - 20);       
     }
 
+
+    if (this->tacos_eaten == 100)
+    {
+        this->set_life(this->get_life() + 20);
+    }
 }
 
 // Represents a collision within the map
@@ -975,7 +1007,7 @@ void GameState::computer_player_movement()
                 // Up
                 else if (min_distance == state_2)
                 {
-                    this->get_comp_player()->apply_up_movement();
+                    this->get_comp_player()->apply_up_movement(4);
                 }
                 // Right
                 else if (min_distance == state_3)
@@ -999,7 +1031,7 @@ void GameState::computer_player_movement()
             // Up
             else if (min_distance == state_2)
             {
-                this->get_comp_player()->apply_up_movement();
+                this->get_comp_player()->apply_up_movement(4);
             }
             // Right
             else if (min_distance == state_3)

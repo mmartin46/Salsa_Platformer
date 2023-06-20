@@ -78,11 +78,11 @@ void Player::apply_down_movement()
 }
 
 // Allows the player to move up.
-void Player::apply_up_movement()
+void Player::apply_up_movement(int addition = 0)
 {
    if (this->get_onBlock())
    {
-      this->set_dy(PLAYER_JUMP_HEIGHT);
+      this->set_dy(PLAYER_JUMP_HEIGHT + 0);
       this->reset_onBlock();
    }
 }

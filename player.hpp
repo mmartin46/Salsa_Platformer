@@ -12,7 +12,7 @@ class Player
       int animFrame;
       bool slowingDown, facingLeft;
       // Images
-      std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(4);
+      std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(5);
    public:
       Player();
       Player(int, int);
@@ -53,7 +53,7 @@ class Player
       virtual void apply_right_movement(int);
       inline virtual void apply_jump() { dy -= 0.3f; }
 
-      virtual void apply_up_movement();
+      virtual void apply_up_movement(int);
       virtual void apply_down_movement();
 
 
