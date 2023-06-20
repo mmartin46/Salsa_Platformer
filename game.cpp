@@ -207,7 +207,7 @@ void GameState::loadImages()
     else if (this->get_level_choice() >= 40)
     {
         // TODO: Change to the second level
-        surface = get_surface("img\\world_bg_2.png", "Cannot find world_bg_1.png!\n\n");
+        surface = get_surface("img\\world_bg_2.png", "Cannot find world_bg_2.png!\n\n");
         this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);   
 
@@ -297,8 +297,8 @@ void GameState::init_blocks(int level_choice)
     {
         this->get_backdrop()->set_x(-30);
         this->get_backdrop()->set_y(-90);   
-        this->get_backdrop()->set_h(437);
-        this->get_backdrop()->set_w(700); 
+        this->get_backdrop()->set_h(380);
+        this->get_backdrop()->set_w(640); 
     }
 
     // Intialize the map
