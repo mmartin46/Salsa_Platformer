@@ -11,6 +11,7 @@ class CompPlayer : public Player
       int animFrame;
       bool slowingDown, facingLeft;
       // Images
+      std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(COMP_PLAYER_FRAMES + 1);
    public:
       CompPlayer();
 };

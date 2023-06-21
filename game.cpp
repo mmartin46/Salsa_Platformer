@@ -41,7 +41,11 @@ void GameState::init_health_texture()
 // Load images and create rending textures from the images
 void GameState::loadImages()
 {
+    using std::string;
+    using std::to_string;
+    using std::endl;
     using std::cout;
+
     // Load fonts
     set_life_font(TTF_OpenFont("img\\ka1.ttf", 48));
     if (!this->get_life_font())
@@ -78,25 +82,17 @@ void GameState::loadImages()
     if (this->get_level_choice() < 20)
     {
         // Player Frames
-        SDL_Surface* surface = get_surface("img\\playerwfire1.png", "Cannot find playerwfire1.png!\n\n");
-        this->get_player()->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);
+        SDL_Surface* surface;
 
-        surface = get_surface("img\\playerwfire2.png", "Cannot find playerwfire2.png!\n\n");
-        this->get_player()->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);
+        for (int i = 0; i < PLAYER_WITH_FIRE_FRAMES; ++i)
+        {
+            string req = "img\\playerwfire" + to_string(i + 1) + ".png";
+            string err = "Cannot find playerwfire" + to_string(i + 1) + ".png!\n\n";
 
-        surface = get_surface("img\\playerwfire3.png", "Cannot find playerwfire3.png!\n\n");
-        this->get_player()->set_player_frame(2, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);
-
-        surface = get_surface("img\\playerwfire4.png", "Cannot find playerwfire4.png!\n\n");
-        this->get_player()->set_player_frame(3, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);
-
-        surface = get_surface("img\\playerwfire6.png", "Cannot find playerwfire6.png!\n\n");
-        this->get_player()->set_player_frame(4, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);       
+            surface = get_surface(req.c_str(), err.c_str());
+            this->get_player()->set_player_frame(i, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+            SDL_FreeSurface(surface);  
+        }         
     }
     else
     {
@@ -105,10 +101,6 @@ void GameState::loadImages()
 
         for (int i = 0; i < PLAYER_FRAMES; ++i)
         {
-            using std::string;
-            using std::to_string;
-            using std::endl;
-
             string req = "img\\player" + to_string(i + 1) + ".png";
             string err = "Cannot find player" + to_string(i) + ".png!\n\n";
 
@@ -119,25 +111,17 @@ void GameState::loadImages()
     }
 
     // Computer Player Frames
-    SDL_Surface *surface = get_surface("img\\complayer1.png", "Cannot find complayer1.png!\n\n");
-    this->get_comp_player()->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);
+    SDL_Surface* surface;
+    for (int i = 0; i < COMP_PLAYER_FRAMES; ++i)
+    {
+        string req = "img\\complayer" + to_string(i + 1) + ".png";
+        string err = "Cannot find complayer" + to_string(i + 1) + ".png!\n\n";
 
-    surface = get_surface("img\\complayer2.png", "Cannot find complayer2.png!\n\n");
-    this->get_comp_player()->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);
 
-    surface = get_surface("img\\complayer3.png", "Cannot find complayer3.png!\n\n");
-    this->get_comp_player()->set_player_frame(2, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);
-
-    surface = get_surface("img\\complayer4.png", "Cannot find complayer4.png!\n\n");
-    this->get_comp_player()->set_player_frame(3, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);
-
-    surface = get_surface("img\\complayer5.png", "Cannot find complayer5.png!\n\n");
-    this->get_comp_player()->set_player_frame(4, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);
+        surface = get_surface(req.c_str(), err.c_str());
+        this->get_comp_player()->set_player_frame(i, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);
+    }
 
     // Loading the taco texture.
     surface = get_surface("img\\taco.png", "Cannot find block.png!\n\n");
@@ -483,19 +467,69 @@ void GameState::process()
         {
             if ((this->get_time()) % 20 <= 5)
             {
-                plyr->set_animFrame(7);
+                if (this->get_level_choice() < 20)
+                {
+                    plyr->set_animFrame(6);
+                }
+                else
+                {
+                    plyr->set_animFrame(7);
+                }
             }
             else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
             {
-                plyr->set_animFrame(8);
+                if (this->get_level_choice() < 20)
+                {
+                    plyr->set_animFrame(7);
+                }
+                else
+                {
+                    plyr->set_animFrame(8);
+                }
             }
             else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) < 20)
             {
-                plyr->set_animFrame(9);
+                if (this->get_level_choice() < 20)
+                {
+                    plyr->set_animFrame(8);
+                }
+                else
+                {
+                    plyr->set_animFrame(9);
+                }
             }
             else
             {
-                plyr->set_animFrame(7);
+                if (this->get_level_choice() < 20)
+                {
+                    plyr->set_animFrame(6);
+                }
+                else
+                {
+                    plyr->set_animFrame(7);
+                }
+            }
+        }
+    }
+    if (cplyr->get_dx() == 0 && cplyr->get_dy() == 0)
+    {
+        if (this->get_time() % 20 < 20)
+        {
+            if ((this->get_time()) % 20 <= 5)
+            {
+                cplyr->set_animFrame(7);
+            }
+            else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
+            {
+                cplyr->set_animFrame(8);
+            }
+            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) < 20)
+            {
+                cplyr->set_animFrame(9);
+            }
+            else
+            {
+                cplyr->set_animFrame(7);
             }
         }
     }

@@ -31,8 +31,10 @@
 #define PLAYER_JUMP_HEIGHT -6 // The player jump height
 #define PLAYER_SPEED_DX 3
 #define PLAYER_FRAMES 10
+#define PLAYER_WITH_FIRE_FRAMES 9
 
 #define COMP_PLAYER_HEIGHT -7
+#define COMP_PLAYER_FRAMES 9
 
 #define FALL_DEATH 2800
 
