@@ -1,5 +1,15 @@
 #include "game.hpp"
 
+/*
+
+collision.cpp
+
+The file consists of functions dedicating
+how the entities react when a collision occurs.
+
+*/
+
+
 
 // Represents a collision within the map
 // \param plyr represents the first rect
