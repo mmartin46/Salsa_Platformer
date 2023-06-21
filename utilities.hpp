@@ -48,4 +48,20 @@ double get_distances(double x_1, double x_2, double y_1, double y_2);
 // \param idx - the index you want to add to select the level.
 void modify_block_textures(vector<pair<string,string> > &surface_args, string idx);
 
+void modify_player_textures(shared_ptr<Player> plyr, SDL_Renderer *r, const char *s1, const char *s2, int size, SDL_Surface *surface)
+{
+   string req, err;
+   using std::to_string;
+
+   for (int i = 0; i < size; ++i)
+   {
+       req = s1 + to_string(i + 1) + ".png";
+       err = s2 + to_string(i + 1) + ".png!\n\n";
+
+       surface = get_surface(req.c_str(), err.c_str());
+       plyr->set_player_frame(i, SDL_CreateTextureFromSurface(r, surface));
+       SDL_FreeSurface(surface);  
+   }     
+}
+
 #endif

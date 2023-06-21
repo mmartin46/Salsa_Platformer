@@ -71,57 +71,35 @@ void GameState::loadImages()
         exit(1);
     }
 
+    SDL_Surface* surface;
+
     if (this->get_level_choice() < 20)
     {
-        SDL_Surface *s = get_surface("img\\front_drop.png", "Cannot find front_drop.png!\n\n");
-        this->get_dim_area()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), s));
-        SDL_FreeSurface(s);
+        surface = get_surface("img\\front_drop.png", "Cannot find front_drop.png!\n\n");
+        this->get_dim_area()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);
     }
 
     // Players
     if (this->get_level_choice() < 20)
     {
         // Player Frames
-        SDL_Surface* surface;
-
-        for (int i = 0; i < PLAYER_WITH_FIRE_FRAMES; ++i)
-        {
-            string req = "img\\playerwfire" + to_string(i + 1) + ".png";
-            string err = "Cannot find playerwfire" + to_string(i + 1) + ".png!\n\n";
-
-            surface = get_surface(req.c_str(), err.c_str());
-            this->get_player()->set_player_frame(i, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-            SDL_FreeSurface(surface);  
-        }         
+        modify_player_textures(this->get_player(), this->get_renderer(), "img\\playerwfire", 
+                              "Cannot find playerwfire", PLAYER_WITH_FIRE_FRAMES, surface);        
     }
     else
     {
         // Player Frames
-        SDL_Surface* surface;
-
-        for (int i = 0; i < PLAYER_FRAMES; ++i)
-        {
-            string req = "img\\player" + to_string(i + 1) + ".png";
-            string err = "Cannot find player" + to_string(i) + ".png!\n\n";
-
-            surface = get_surface(req.c_str(), err.c_str());
-            this->get_player()->set_player_frame(i, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-            SDL_FreeSurface(surface);  
-        }   
+        modify_player_textures(this->get_player(), this->get_renderer(), "img\\player",
+                              "Cannot find player", PLAYER_FRAMES, surface);
     }
 
     // Computer Player Frames
-    SDL_Surface* surface;
-    for (int i = 0; i < COMP_PLAYER_FRAMES; ++i)
-    {
-        string req = "img\\complayer" + to_string(i + 1) + ".png";
-        string err = "Cannot find complayer" + to_string(i + 1) + ".png!\n\n";
+    modify_player_textures(this->get_comp_player(), this->get_renderer(), "img\\complayer",
+                           "Cannot find complayer", COMP_PLAYER_FRAMES, surface);
 
 
-        surface = get_surface(req.c_str(), err.c_str());
-        this->get_comp_player()->set_player_frame(i, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);
-    }
+
 
     // Loading the taco texture.
     surface = get_surface("img\\taco.png", "Cannot find block.png!\n\n");
