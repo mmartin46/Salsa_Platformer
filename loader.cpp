@@ -1,5 +1,15 @@
 #include "game.hpp"
 
+/*
+
+loader.cpp
+
+The file consists of the uploaded textures
+of the entities.
+
+*/
+
+
 // Creates block textures for the blocks
 // within the surface_args vector.
 void GameState::create_block_textures(SDL_Surface *surface)
@@ -10,27 +20,6 @@ void GameState::create_block_textures(SDL_Surface *surface)
         (*this.*spriteVec[i])(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);
     }
-}
-
-/* Constructs the gamestate. */
-GameState::GameState()
-{
-    this->set_life(100);
-    this->set_tacos_eaten(0);
-
-    this->set_maximum_y(FALL_DEATH);
-    this->ptr = shared_ptr<Player>(new Player);
-    this->cptr = shared_ptr<Player>(new CompPlayer);
-    this->dim_area = shared_ptr<Backdrop>(new Backdrop);
-    this->backdrop = shared_ptr<Backdrop>(new Backdrop);
-    this->tilemap = Matrix<int> (MAP_ROWS, vector<int>(MAP_COLUMNS));
-    this->tile = Matrix<Block> (MAP_ROWS, vector<Block>(MAP_COLUMNS));
-    this->soiltile = Matrix<Soil> (MAP_ROWS, vector<Soil>(MAP_COLUMNS));
-    this->enemies = Matrix<Enemy> (MAP_ROWS, vector<Enemy>(MAP_COLUMNS));
-    this->spikes = Matrix<Spike> (MAP_ROWS, vector<Spike>(MAP_COLUMNS));
-    this->set_time(0);
-    this->set_scrollX(0);
-    this->set_scrollY(0);
 }
 
 

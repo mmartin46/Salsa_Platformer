@@ -1,5 +1,15 @@
 #include "game.hpp"
 
+/*
+
+animation.cpp
+
+The file consists of the controlled animation
+of the entities.
+
+*/
+
+
 // Allows the players to move
 void GameState::process()
 {

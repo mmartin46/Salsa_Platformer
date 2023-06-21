@@ -4,11 +4,29 @@
 #include "collisions.cpp"
 #include "animation.cpp"
 
+/* Constructs the gamestate. */
+GameState::GameState()
+{
+    this->set_life(100);
+    this->set_tacos_eaten(0);
+
+    this->set_maximum_y(FALL_DEATH);
+    this->ptr = shared_ptr<Player>(new Player);
+    this->cptr = shared_ptr<Player>(new CompPlayer);
+    this->dim_area = shared_ptr<Backdrop>(new Backdrop);
+    this->backdrop = shared_ptr<Backdrop>(new Backdrop);
+    this->tilemap = Matrix<int> (MAP_ROWS, vector<int>(MAP_COLUMNS));
+    this->tile = Matrix<Block> (MAP_ROWS, vector<Block>(MAP_COLUMNS));
+    this->soiltile = Matrix<Soil> (MAP_ROWS, vector<Soil>(MAP_COLUMNS));
+    this->enemies = Matrix<Enemy> (MAP_ROWS, vector<Enemy>(MAP_COLUMNS));
+    this->spikes = Matrix<Spike> (MAP_ROWS, vector<Spike>(MAP_COLUMNS));
+    this->set_time(0);
+    this->set_scrollX(0);
+    this->set_scrollY(0);
+}
 
 void GameState::doRender(SDL_Renderer *renderer)
 {
-    // set the drawing color to blue
-    //SDL_SetRenderDrawColor(renderer, 50, 60, 57, 255);
 
     // clear the screen (to blue)
     SDL_RenderClear(renderer);
@@ -31,10 +49,10 @@ void GameState::doRender(SDL_Renderer *renderer)
     }
 
     // Background
-
     SDL_Rect bgRect = { (int)((this->scrollX / 20) + this->get_backdrop()->get_x()),(int)((this->scrollY / 30) + this->get_backdrop()->get_y()), this->get_backdrop()->get_w(), this->get_backdrop()->get_h() };
     SDL_RenderCopy(this->get_renderer(), this->get_backdrop()->get_backdrop_texture(), NULL, &bgRect);
 
+    // Block Rendering
     int x, y;
     for (x = 0; x < MAP_ROWS; ++x)
     {
