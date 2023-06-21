@@ -56,7 +56,8 @@ void modify_block_textures(vector<pair<string,string> > &surface_args, string id
             break;
         }
 
-
+        // If the string doesn't contain any of the dont_include
+        // elements, proceed.
         if ( starter.find(dont_include.at(0)) == string::npos &&
              starter.find(dont_include.at(1)) == string::npos &&
              starter.find(dont_include.at(2)) == string::npos )
