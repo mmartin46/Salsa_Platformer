@@ -433,6 +433,7 @@ void GameState::doRender(SDL_Renderer *renderer)
     SDL_RenderPresent(this->get_renderer());    
 }
 
+// Allows the players to move
 void GameState::process()
 {
     // add time
@@ -554,9 +555,13 @@ void GameState::process()
             {
                 plyr->set_animFrame(2);
             }
-            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) < 20)
+            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
             {
                 plyr->set_animFrame(3);
+            }
+            else if ((this->get_time() % 20) > 15 && (this->get_time() % 20) <= 20)
+            {
+                plyr->set_animFrame(4);
             }
             else
             {
@@ -576,9 +581,13 @@ void GameState::process()
             {
                 cplyr->set_animFrame(2);
             }
-            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) < 20)
+            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
             {
                 cplyr->set_animFrame(3);
+            }
+            else if ((this->get_time() % 20) > 15 && (this->get_time() % 20) <= 20)
+            {
+                cplyr->set_animFrame(4);
             }
             else
             {
