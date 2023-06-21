@@ -174,7 +174,7 @@ class GameState
 
       inline void set_taco_texture(SDL_Texture *t) { tcoTexture = t; }
       inline SDL_Texture* get_taco_texture(SDL_Texture *t) { return tcoTexture; }
-      void allocate_block_textures(SDL_Surface *);
+      void create_block_textures(SDL_Surface *);
 
 
       inline void set_life_label_texture(SDL_Texture *t) { lblTexture = t; }
