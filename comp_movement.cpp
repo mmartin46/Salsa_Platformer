@@ -1,5 +1,15 @@
 #include "game.hpp"
 
+/*
+
+comp_movement.cpp
+
+The file consists of functions/methods dedicating how 
+the computer player is supposed to move.
+
+*/
+
+
 void GameState::computer_player_movement()
 {
     Coordinates pc;

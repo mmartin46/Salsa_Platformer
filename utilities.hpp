@@ -24,6 +24,9 @@ using std::vector;
 template <typename T>
 using Matrix = vector<vector<T> >;
 
+
+
+
 // Returns the minimum in a vector.
 double minimum(const vector<double> &v);
 
@@ -36,6 +39,7 @@ int collide2d(float x1, float y1, float x2, float y2, float ht1, float wt1, floa
 // \param file includes the file path
 // \param error_msg includes an error message if the file isn't found.
 SDL_Surface* get_surface(const char *file, const char *error_msg);
+
 // Uses the manhattan distance formula
 double get_distances(double x_1, double x_2, double y_1, double y_2);
 
