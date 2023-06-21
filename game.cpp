@@ -141,13 +141,13 @@ void GameState::loadImages()
     this->spriteVec.push_back(set_soil);
     this->spriteVec.push_back(set_taco_soil);
 
+    surface_args.push_back({"img\\block.png", "Cannot find block.png!\n\n"});
+    surface_args.push_back({"img\\soil.png", "Cannot find soil.png!\n\n"});
+    surface_args.push_back({"img\\taco_soil.png", "Cannot find taco_soil.png!\n\n"});
 
     // Loading background texture.
     if (this->get_level_choice() < 20)
     {
-        surface_args.push_back({"img\\block.png", "Cannot find block.png!\n\n"});
-        surface_args.push_back({"img\\soil.png", "Cannot find soil.png!\n\n"});
-        surface_args.push_back({"img\\taco_soil.png", "Cannot find taco_soil.png!\n\n"});
 
         for (int i = 0; i < this->spriteVec.size(); ++i)
         {
@@ -163,9 +163,20 @@ void GameState::loadImages()
     else if (this->get_level_choice() >= 20 && this->get_level_choice() < 40)
     {
 
-        surface_args.push_back({"img\\block_1.png", "Cannot find block_1.png!\n\n"});
-        surface_args.push_back({"img\\soil_1.png", "Cannot find soil_1.png!\n\n"});
-        surface_args.push_back({"img\\taco_soil_1.png", "Cannot find taco_soil_1.png!\n\n"});
+        for (int i = 0; i < this->surface_args.size(); ++i)
+        {
+            string request = surface_args.at(i).first;
+            string period = {"."};
+            std::size_t index = request.find(period);
+            request.insert(index, "_1");
+            surface_args.at(i).first = request;
+
+            request = surface_args.at(i).second;
+            index = request.find(period);
+            request.insert(index, "_1");
+            surface_args.at(i).second = request;
+        }
+
 
         for (int i = 0; i < this->spriteVec.size(); ++i)
         {
@@ -173,7 +184,7 @@ void GameState::loadImages()
             (*this.*spriteVec[i])(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
             SDL_FreeSurface(surface);
         }
-        // TODO: Change to the second level
+
         surface = get_surface("img\\world_bg_1.png", "Cannot find world_bg_1.png!\n\n");
         this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);   
@@ -181,25 +192,30 @@ void GameState::loadImages()
     }
     else if (this->get_level_choice() >= 40)
     {
-        // TODO: Change to the second level
+        for (int i = 0; i < this->surface_args.size(); ++i)
+        {
+            string request = surface_args.at(i).first;
+            string period = {"."};
+            std::size_t index = request.find(period);
+            request.insert(index, "_1");
+            surface_args.at(i).first = request;
+
+            request = surface_args.at(i).second;
+            index = request.find(period);
+            request.insert(index, "_1");
+            surface_args.at(i).second = request;
+        }
+
+        for (int i = 0; i < this->spriteVec.size(); ++i)
+        {
+            surface = get_surface(surface_args.at(i).first.c_str(), surface_args.at(i).second.c_str());
+            (*this.*spriteVec[i])(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+            SDL_FreeSurface(surface);
+        }
+
         surface = get_surface("img\\world_bg_2.png", "Cannot find world_bg_2.png!\n\n");
         this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);   
-
-        // Loading the block's texture.
-        surface = get_surface("img\\block_2.png", "Cannot find block_2.png!\n\n");
-        this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface); 
-
-        // Loading soil texture.
-        surface = get_surface("img\\soil_2.png", "Cannot find soil_2.png!\n\n");
-        this->set_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);    
-
-        // Loading taco_soil texture.
-        surface = get_surface("img\\taco_soil_2.png", "Cannot find taco_soil_2.png!\n\n");
-        this->set_taco_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);  
     }
 }
 
