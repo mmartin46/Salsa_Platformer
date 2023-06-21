@@ -1,6 +1,16 @@
 #include "game.hpp"
 
 
+void GameState::allocate_block_textures(SDL_Surface *surface)
+{
+    for (int i = 0; i < this->spriteVec.size(); ++i)
+    {
+        surface = get_surface(surface_args.at(i).first.c_str(), surface_args.at(i).second.c_str());
+        (*this.*spriteVec[i])(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);
+    }
+}
+
 /* Constructs the gamestate. */
 GameState::GameState()
 {
@@ -150,14 +160,7 @@ void GameState::loadImages()
     // Loading background texture.
     if (this->get_level_choice() < 20)
     {
-
-        for (int i = 0; i < this->spriteVec.size(); ++i)
-        {
-            surface = get_surface(surface_args.at(i).first.c_str(), surface_args.at(i).second.c_str());
-            (*this.*spriteVec[i])(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-            SDL_FreeSurface(surface);
-        }
-
+        allocate_block_textures(surface);
         surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
         this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);  
@@ -165,12 +168,7 @@ void GameState::loadImages()
     else if (this->get_level_choice() >= 20 && this->get_level_choice() < 40)
     {
         modify_block_textures(this->surface_args, "_1");
-        for (int i = 0; i < this->spriteVec.size(); ++i)
-        {
-            surface = get_surface(surface_args.at(i).first.c_str(), surface_args.at(i).second.c_str());
-            (*this.*spriteVec[i])(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-            SDL_FreeSurface(surface);
-        }
+        allocate_block_textures(surface);
 
         surface = get_surface("img\\world_bg_1.png", "Cannot find world_bg_1.png!\n\n");
         this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
@@ -180,12 +178,7 @@ void GameState::loadImages()
     else if (this->get_level_choice() >= 40)
     {
         modify_block_textures(this->surface_args, "_2");
-        for (int i = 0; i < this->spriteVec.size(); ++i)
-        {
-            surface = get_surface(surface_args.at(i).first.c_str(), surface_args.at(i).second.c_str());
-            (*this.*spriteVec[i])(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-            SDL_FreeSurface(surface);
-        }
+        allocate_block_textures(surface);
 
         surface = get_surface("img\\world_bg_2.png", "Cannot find world_bg_2.png!\n\n");
         this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
