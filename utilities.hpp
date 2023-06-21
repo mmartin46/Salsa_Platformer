@@ -39,5 +39,9 @@ SDL_Surface* get_surface(const char *file, const char *error_msg);
 // Uses the manhattan distance formula
 double get_distances(double x_1, double x_2, double y_1, double y_2);
 
+// Modify the block texture textures depending on the level.
+// \param surface_args - the file and error arguments for get_surface()
+// \param idx - the index you want to add to select the level.
+void modify_block_textures(vector<pair<string,string> > &surface_args, string idx);
 
 #endif

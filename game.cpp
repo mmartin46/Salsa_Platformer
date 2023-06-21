@@ -162,22 +162,7 @@ void GameState::loadImages()
     }
     else if (this->get_level_choice() >= 20 && this->get_level_choice() < 40)
     {
-
-        for (int i = 0; i < this->surface_args.size(); ++i)
-        {
-            string request = surface_args.at(i).first;
-            string period = {"."};
-            std::size_t index = request.find(period);
-            request.insert(index, "_1");
-            surface_args.at(i).first = request;
-
-            request = surface_args.at(i).second;
-            index = request.find(period);
-            request.insert(index, "_1");
-            surface_args.at(i).second = request;
-        }
-
-
+        modify_block_textures(this->surface_args, "_1");
         for (int i = 0; i < this->spriteVec.size(); ++i)
         {
             surface = get_surface(surface_args.at(i).first.c_str(), surface_args.at(i).second.c_str());
@@ -192,20 +177,7 @@ void GameState::loadImages()
     }
     else if (this->get_level_choice() >= 40)
     {
-        for (int i = 0; i < this->surface_args.size(); ++i)
-        {
-            string request = surface_args.at(i).first;
-            string period = {"."};
-            std::size_t index = request.find(period);
-            request.insert(index, "_1");
-            surface_args.at(i).first = request;
-
-            request = surface_args.at(i).second;
-            index = request.find(period);
-            request.insert(index, "_1");
-            surface_args.at(i).second = request;
-        }
-
+        modify_block_textures(this->surface_args, "_2");
         for (int i = 0; i < this->spriteVec.size(); ++i)
         {
             surface = get_surface(surface_args.at(i).first.c_str(), surface_args.at(i).second.c_str());

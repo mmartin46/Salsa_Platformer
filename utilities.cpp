@@ -40,3 +40,20 @@ double get_distances(double x_1, double x_2, double y_1, double y_2)
     double val = sqrt(pow(x_1 - x_2, 2) + pow(y_1 - y_2, 2));
     return val;
 }
+
+void modify_block_textures(vector<pair<string,string> > &surface_args, string idx)
+{
+  for (int i = 0; i < surface_args.size(); ++i)
+  {
+      string request = surface_args.at(i).first;
+      string period = {"."};
+      std::size_t index = request.find(period);
+      request.insert(index, idx);
+      surface_args.at(i).first = request;
+
+      request = surface_args.at(i).second;
+      index = request.find(period);
+      request.insert(index, idx);
+      surface_args.at(i).second = request;
+  }   
+}
