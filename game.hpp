@@ -112,6 +112,9 @@ class GameState
 
       shared_ptr<Backdrop> backdrop;
       shared_ptr<Backdrop> dim_area;
+
+      vector<void (GameState::*)(SDL_Texture *)> spriteVec;
+      vector<pair<string, string> > surface_args;
    
 
       // Level

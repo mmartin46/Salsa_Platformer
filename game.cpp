@@ -137,52 +137,47 @@ void GameState::loadImages()
     this->set_spike(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
+    this->spriteVec.push_back(set_block);
+    this->spriteVec.push_back(set_soil);
+    this->spriteVec.push_back(set_taco_soil);
 
 
     // Loading background texture.
     if (this->get_level_choice() < 20)
     {
+        surface_args.push_back({"img\\block.png", "Cannot find block.png!\n\n"});
+        surface_args.push_back({"img\\soil.png", "Cannot find soil.png!\n\n"});
+        surface_args.push_back({"img\\taco_soil.png", "Cannot find taco_soil.png!\n\n"});
+
+        for (int i = 0; i < this->spriteVec.size(); ++i)
+        {
+            surface = get_surface(surface_args.at(i).first.c_str(), surface_args.at(i).second.c_str());
+            (*this.*spriteVec[i])(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+            SDL_FreeSurface(surface);
+        }
 
         surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
         this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);  
-
-        // Loading the block's texture.
-        surface = get_surface("img\\block.png", "Cannot find block.png!\n\n");
-        this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);  
-
-        // Loading soil texture.
-        surface = get_surface("img\\soil.png", "Cannot find soil.png!\n\n");
-        this->set_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);  
-
-        // Loading taco_soil texture.
-        surface = get_surface("img\\taco_soil.png", "Cannot find taco_soil.png!\n\n");
-        this->set_taco_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);  
     }
     else if (this->get_level_choice() >= 20 && this->get_level_choice() < 40)
     {
+
+        surface_args.push_back({"img\\block_1.png", "Cannot find block_1.png!\n\n"});
+        surface_args.push_back({"img\\soil_1.png", "Cannot find soil_1.png!\n\n"});
+        surface_args.push_back({"img\\taco_soil_1.png", "Cannot find taco_soil_1.png!\n\n"});
+
+        for (int i = 0; i < this->spriteVec.size(); ++i)
+        {
+            surface = get_surface(surface_args.at(i).first.c_str(), surface_args.at(i).second.c_str());
+            (*this.*spriteVec[i])(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+            SDL_FreeSurface(surface);
+        }
         // TODO: Change to the second level
         surface = get_surface("img\\world_bg_1.png", "Cannot find world_bg_1.png!\n\n");
         this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);   
 
-        // Loading the block's texture.
-        surface = get_surface("img\\block_1.png", "Cannot find block_1.png!\n\n");
-        this->set_block(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface); 
-
-        // Loading soil texture.
-        surface = get_surface("img\\soil_1.png", "Cannot find soil_1.png!\n\n");
-        this->set_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);    
-
-        // Loading taco_soil texture.
-        surface = get_surface("img\\taco_soil_1.png", "Cannot find taco_soil_1.png!\n\n");
-        this->set_taco_soil(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);  
     }
     else if (this->get_level_choice() >= 40)
     {

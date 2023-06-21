@@ -9,6 +9,7 @@
 #include <string>
 #include <cstdlib>
 #include <memory>
+#include <functional>
 #include "constants.hpp"
 #include "player.hpp"
 #include "comp.hpp"
@@ -18,6 +19,7 @@
 using std::vector;
 using std::pair;
 using std::shared_ptr;
+using std::string;
 using std::vector;
 template <typename T>
 using Matrix = vector<vector<T> >;
