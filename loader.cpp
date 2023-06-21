@@ -98,33 +98,23 @@ void GameState::loadImages()
     modify_player_textures(this->get_comp_player(), this->get_renderer(), "img\\complayer",
                            "Cannot find complayer", COMP_PLAYER_FRAMES, surface);
 
-
-
-
-    // Loading the taco texture.
-    surface = get_surface("img\\taco.png", "Cannot find block.png!\n\n");
-    this->set_taco(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);
-
-    // Loading enemy texture.
-    surface = get_surface("img\\enemy.png", "Cannot find enemy.png!\n\n");
-    this->set_enemy(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-
-    //Loading spike texture.
-    surface = get_surface("img\\spike.png", "Cannot find spike.png!\n\n");
-    this->set_spike(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-    SDL_FreeSurface(surface);
+    this->spriteVec.clear();
+    this->surface_args.clear();
 
     // Defualt block textures
     this->spriteVec.push_back(set_block);
     this->spriteVec.push_back(set_soil);
     this->spriteVec.push_back(set_taco_soil);
-
+    this->spriteVec.push_back(set_taco);
+    this->spriteVec.push_back(set_enemy);
+    this->spriteVec.push_back(set_spike);
     // Default file arguments for get_surface()
     surface_args.push_back({"img\\block.png", "Cannot find block.png!\n\n"});
     surface_args.push_back({"img\\soil.png", "Cannot find soil.png!\n\n"});
     surface_args.push_back({"img\\taco_soil.png", "Cannot find taco_soil.png!\n\n"});
-
+    surface_args.push_back({"img\\taco.png", "Cannot find block.png!\n\n"});
+    surface_args.push_back({"img\\enemy.png", "Cannot find enemy.png!\n\n"});
+    surface_args.push_back({"img\\spike.png", "Cannot find spike.png!\n\n"});
     // Loading background texture.
     if (this->get_level_choice() < 20)
     {
