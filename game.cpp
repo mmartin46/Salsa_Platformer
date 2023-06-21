@@ -476,9 +476,28 @@ void GameState::process()
         }
     }    
 
+    // Idle Animation
     if (plyr->get_dx() == 0 && plyr->get_dy() == 0)
     {
-
+        if (this->get_time() % 100 < 20)
+        {
+            if ((this->get_time()) % 20 <= 5)
+            {
+                plyr->set_animFrame(8);
+            }
+            else if ((this->get_time() % 20) > 20 && (this->get_time() % 20) <= 40)
+            {
+                plyr->set_animFrame(9);
+            }
+            else if ((this->get_time() % 20) > 60 && (this->get_time() % 20) < 80)
+            {
+                plyr->set_animFrame(10);
+            }
+            else
+            {
+                plyr->set_animFrame(0);
+            }
+        }
     }
 
     if (plyr->get_dx() != 0 && plyr->get_onBlock() && (plyr->get_slowingDown() == false) )
