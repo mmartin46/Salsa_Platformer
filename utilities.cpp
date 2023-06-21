@@ -46,11 +46,11 @@ void modify_block_textures(vector<pair<string,string> > &surface_args, string id
     for (int i = 0; i < surface_args.size(); ++i)
     {
         string starter = surface_args.at(i).first;
-        vector<string> strs = {"taco", "enemy", "spike"};
+        vector<string> dont_include = {"taco", "enemy", "spike"};
 
-        if ( starter.find(strs.at(0)) == string::npos &&
-             starter.find(strs.at(1)) == string::npos &&
-             starter.find(strs.at(2)) == string::npos )
+        if ( starter.find(dont_include.at(0)) == string::npos &&
+             starter.find(dont_include.at(1)) == string::npos &&
+             starter.find(dont_include.at(2)) == string::npos )
         {
             string request = surface_args.at(i).first;
             string period = {"."};
