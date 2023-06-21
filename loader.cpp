@@ -98,8 +98,10 @@ void GameState::loadImages()
     modify_player_textures(this->get_comp_player(), this->get_renderer(), "img\\complayer",
                            "Cannot find complayer", COMP_PLAYER_FRAMES, surface);
 
+    // Clear just in case there are any sprites within our vectors.
     this->spriteVec.clear();
     this->surface_args.clear();
+
 
     // Defualt block textures
     this->spriteVec.push_back(set_block);
@@ -108,6 +110,8 @@ void GameState::loadImages()
     this->spriteVec.push_back(set_taco);
     this->spriteVec.push_back(set_enemy);
     this->spriteVec.push_back(set_spike);
+
+
     // Default file arguments for get_surface()
     surface_args.push_back({"img\\block.png", "Cannot find block.png!\n\n"});
     surface_args.push_back({"img\\soil.png", "Cannot find soil.png!\n\n"});
