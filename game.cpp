@@ -101,25 +101,21 @@ void GameState::loadImages()
     else
     {
         // Player Frames
-        SDL_Surface* surface = get_surface("img\\player1.png", "Cannot find player1.png!\n\n");
-        this->get_player()->set_player_frame(0, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);
+        SDL_Surface* surface;
 
-        surface = get_surface("img\\player2.png", "Cannot find player2.png!\n\n");
-        this->get_player()->set_player_frame(1, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);
+        for (int i = 0; i < PLAYER_FRAMES; ++i)
+        {
+            using std::string;
+            using std::to_string;
+            using std::endl;
 
-        surface = get_surface("img\\player3.png", "Cannot find player3.png!\n\n");
-        this->get_player()->set_player_frame(2, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);
+            string req = "img\\player" + to_string(i + 1) + ".png";
+            string err = "Cannot find player" + to_string(i) + ".png!\n\n";
 
-        surface = get_surface("img\\player4.png", "Cannot find player4.png!\n\n");
-        this->get_player()->set_player_frame(3, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);
-
-        surface = get_surface("img\\player6.png", "Cannot find player6.png!\n\n");
-        this->get_player()->set_player_frame(4, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);     
+            surface = get_surface(req.c_str(), err.c_str());
+            this->get_player()->set_player_frame(i, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+            SDL_FreeSurface(surface);  
+        }   
     }
 
     // Computer Player Frames
@@ -479,6 +475,11 @@ void GameState::process()
             this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() + this->enemies.at(i).at(j).get_dy());
         }
     }    
+
+    if (plyr->get_dx() == 0 && plyr->get_dy() == 0)
+    {
+
+    }
 
     if (plyr->get_dx() != 0 && plyr->get_onBlock() && (plyr->get_slowingDown() == false) )
     {

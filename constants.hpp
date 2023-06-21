@@ -30,6 +30,7 @@
 #define PLAYER_SPEED 0.5f   // The player walking speed
 #define PLAYER_JUMP_HEIGHT -6 // The player jump height
 #define PLAYER_SPEED_DX 3
+#define PLAYER_FRAMES 11
 
 #define COMP_PLAYER_HEIGHT -7
 
