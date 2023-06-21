@@ -479,23 +479,23 @@ void GameState::process()
     // Idle Animation
     if (plyr->get_dx() == 0 && plyr->get_dy() == 0)
     {
-        if (this->get_time() % 100 < 20)
+        if (this->get_time() % 20 < 20)
         {
             if ((this->get_time()) % 20 <= 5)
             {
+                plyr->set_animFrame(7);
+            }
+            else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
+            {
                 plyr->set_animFrame(8);
             }
-            else if ((this->get_time() % 20) > 20 && (this->get_time() % 20) <= 40)
+            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) < 20)
             {
                 plyr->set_animFrame(9);
             }
-            else if ((this->get_time() % 20) > 60 && (this->get_time() % 20) < 80)
-            {
-                plyr->set_animFrame(10);
-            }
             else
             {
-                plyr->set_animFrame(0);
+                plyr->set_animFrame(7);
             }
         }
     }
