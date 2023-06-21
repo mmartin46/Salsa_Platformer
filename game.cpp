@@ -137,10 +137,12 @@ void GameState::loadImages()
     this->set_spike(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     SDL_FreeSurface(surface);
 
+    // Defualt block textures
     this->spriteVec.push_back(set_block);
     this->spriteVec.push_back(set_soil);
     this->spriteVec.push_back(set_taco_soil);
 
+    // Default file arguments for get_surface()
     surface_args.push_back({"img\\block.png", "Cannot find block.png!\n\n"});
     surface_args.push_back({"img\\soil.png", "Cannot find soil.png!\n\n"});
     surface_args.push_back({"img\\taco_soil.png", "Cannot find taco_soil.png!\n\n"});
