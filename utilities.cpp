@@ -48,10 +48,12 @@ void modify_block_textures(vector<pair<string,string> > &surface_args, string id
         string starter = surface_args.at(i).first;
         vector<string> dont_include = {"taco", "enemy", "spike"};
 
+        // If the file contains taco_soil, break.
         if ( starter.find("taco_soil") != string::npos )
         {
             surface_args.at(i).first = "img\\taco_soil" + idx + ".png";
             surface_args.at(i).second = "Cannot find taco_soil" + idx + ".png!\n\n";
+            break;
         }
 
 
