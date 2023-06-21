@@ -30,7 +30,7 @@ class Player
 
       // Player Textures
       void set_player_frame(int n, SDL_Texture* t);
-      inline SDL_Texture* get_player_frame(int n) { return plyrFrames.at(n); }
+      inline virtual SDL_Texture* get_player_frame(int n) { return plyrFrames.at(n); }
 
 
       // Player Physics 

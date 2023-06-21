@@ -511,29 +511,37 @@ void GameState::process()
             }
         }
     }
+
     if (cplyr->get_dx() == 0 && cplyr->get_dy() == 0)
     {
         if (this->get_time() % 20 < 20)
         {
             if ((this->get_time()) % 20 <= 5)
             {
+                cplyr->set_animFrame(5);
+            }
+            else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 7.5)
+            {
+                cplyr->set_animFrame(6);
+            }
+            else if ((this->get_time() % 20) > 7.5 && (this->get_time() % 20) <= 10)
+            {
                 cplyr->set_animFrame(7);
             }
-            else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
+            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
             {
                 cplyr->set_animFrame(8);
             }
-            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) < 20)
-            {
-                cplyr->set_animFrame(9);
-            }
             else
             {
-                cplyr->set_animFrame(7);
+                cplyr->set_animFrame(6);
             }
         }
     }
 
+
+
+    // Movement Animation
     if (plyr->get_dx() != 0 && plyr->get_onBlock() && (plyr->get_slowingDown() == false) )
     {
         if (this->get_time() % 20 < 20)
@@ -578,10 +586,7 @@ void GameState::process()
             }
         }
     }
-    else
-    {
-        cplyr->set_animFrame(0);
-    }
+
 
     // Jumping animations
     if (!plyr->get_onBlock())
