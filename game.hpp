@@ -220,7 +220,7 @@ class GameState
 
       // Functions
       void init_blocks(int);
-      void process();
+      void animate();
       void collisionDetect();
       int processEvents(SDL_Window*);
       void loadImages();

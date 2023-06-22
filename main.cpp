@@ -60,7 +60,7 @@ int main(int argc, char *argv[] )
         // Check for events
         done = gameState.processEvents(window);
 
-        gameState.process();
+        gameState.animate();
         gameState.collisionDetect();
 
         // Render display

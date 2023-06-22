@@ -11,7 +11,7 @@ of the entities.
 
 
 // Allows the players to move
-void GameState::process()
+void GameState::animate()
 {
     // add time
     this->set_time(this->get_time() + 1);
