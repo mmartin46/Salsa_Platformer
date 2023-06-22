@@ -227,7 +227,7 @@ void GameState::animate()
 }
 
 
-int GameState::processEvents(SDL_Window *window)
+int GameState::event_handler(SDL_Window *window)
 {
     SDL_Event event;
     int done = 0;

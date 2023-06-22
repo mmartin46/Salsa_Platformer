@@ -58,13 +58,13 @@ int main(int argc, char *argv[] )
 
 
         // Check for events
-        done = gameState.processEvents(window);
+        done = gameState.event_handler(window);
 
         gameState.animate();
         gameState.collisionDetect();
 
         // Render display
-        gameState.doRender(renderer);
+        gameState.render(renderer);
 
         // don't burn up the CPU
         // SDL_Delay(100);

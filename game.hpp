@@ -222,10 +222,10 @@ class GameState
       void init_blocks(int);
       void animate();
       void collisionDetect();
-      int processEvents(SDL_Window*);
+      int event_handler(SDL_Window*);
       void loadImages();
       void loadGame();
-      void doRender(SDL_Renderer*);
+      void render(SDL_Renderer*);
       void enemy_movement();
       void init_health_texture();
       inline int get_random_int() { return random_int; }

@@ -25,7 +25,7 @@ GameState::GameState()
     this->set_scrollY(0);
 }
 
-void GameState::doRender(SDL_Renderer *renderer)
+void GameState::render(SDL_Renderer *renderer)
 {
 
     // clear the screen (to blue)
