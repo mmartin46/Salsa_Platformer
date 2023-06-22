@@ -14,11 +14,23 @@ of the entities.
 // within the surface_args vector.
 void GameState::create_block_textures(SDL_Surface *surface)
 {
-    for (int i = 0; i < this->spriteVec.size(); ++i)
+    if (spriteVec.size() != surface_args.size())
     {
-        surface = get_surface(surface_args.at(i).first.c_str(), surface_args.at(i).second.c_str());
-        (*this.*spriteVec[i])(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);
+        using std::cout;
+
+        cout << "spriteVec size = " << spriteVec.size() << "\n";
+        cout << "surface_args size = " << surface_args.size() << "\n";
+        cout << "ERROR: Vector sizes not equal!";
+        exit(1);
+    }
+    
+    spriteEnd = spriteVec.data() + spriteVec.size();
+    vector<pair<string, string> >::pointer surfPtr = surface_args.data();
+
+    for (spritePtr = spriteVec.data(); spritePtr < spriteEnd; ++spritePtr, ++surfPtr)
+    {
+        surface = get_surface(surfPtr->first.c_str(), surfPtr->second.c_str());
+        (*this.**spritePtr)(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
     }
 }
 

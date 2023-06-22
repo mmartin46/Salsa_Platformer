@@ -117,7 +117,7 @@ class GameState
       // Handles a majority of the textures
       vector<void (GameState::*)(SDL_Texture *)> spriteVec;
       vector<pair<string, string> > surface_args;
-   
+ vector<void (GameState::*)(SDL_Texture *)>::pointer spritePtr, spriteEnd;   
 
       // Level
       int level_choice;
