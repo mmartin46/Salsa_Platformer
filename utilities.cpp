@@ -43,16 +43,18 @@ double get_distances(double x_1, double x_2, double y_1, double y_2)
 
 void modify_block_textures(vector<pair<string,string> > &surface_args, string idx)
 {
-    for (int i = 0; i < surface_args.size(); ++i)
+    vector<pair<string,string> >::pointer ptr, end = surface_args.data() + surface_args.size();
+
+    for (ptr = surface_args.data(); ptr < end; ++ptr)
     {
-        string starter = surface_args.at(i).first;
+        string starter = ptr->first;
         vector<string> dont_include = {"taco", "enemy", "spike"};
 
         // If the file contains taco_soil, break.
         if ( starter.find("taco_soil") != string::npos )
         {
-            surface_args.at(i).first = "img\\taco_soil" + idx + ".png";
-            surface_args.at(i).second = "Cannot find taco_soil" + idx + ".png!\n\n";
+            ptr->first = "img\\taco_soil" + idx + ".png";
+            ptr->second = "Cannot find taco_soil" + idx + ".png!\n\n";
             break;
         }
 
@@ -62,18 +64,19 @@ void modify_block_textures(vector<pair<string,string> > &surface_args, string id
              starter.find(dont_include.at(1)) == string::npos &&
              starter.find(dont_include.at(2)) == string::npos )
         {
-            string request = surface_args.at(i).first;
+            string request = ptr->first;
             string period = {"."};
             std::size_t index = request.find(period);
             request.insert(index, idx);
-            surface_args.at(i).first = request;
+            ptr->first = request;
 
-            request = surface_args.at(i).second;
+            request = ptr->second;
             index = request.find(period);
             request.insert(index, idx);
-            surface_args.at(i).second = request;
+            ptr->second = request;
         }
     }
+
 }
 
 void modify_player_textures(shared_ptr<Player> plyr, SDL_Renderer *r, const char *s1, const char *s2, int size, SDL_Surface *surface)
