@@ -37,6 +37,35 @@ void GameState::create_block_textures(SDL_Surface *surface)
     }
 }
 
+void GameState::set_landing_frame(int n, SDL_Texture *t)
+{
+    using std::cout;
+    
+    if (n >= this->landingFrames.size() || n < 0) 
+    {
+        cout << "landingFrames size: " << this->landingFrames.size() << "\n"; 
+        cout << "landingFrames: argument is out of bounds\n";
+        exit(1);
+    }
+    this->landingFrames.at(n) = t;
+}
+
+void GameState::load_landing_textures()
+{
+    SDL_Surface *surface;
+    string req, err;
+    using std::to_string;
+    for (int i = 0; i < 6; ++i)
+    {
+        req = "img\\landing" + to_string(i + 1) + ".png";
+    
+        surface = get_surface(req.c_str(), err.c_str());
+        this->set_landing_frame(i, SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);
+    }
+}
+
+
 
 void GameState::init_health_texture()
 {
@@ -88,6 +117,7 @@ void GameState::loadImages()
 
     SDL_Surface* surface;
 
+    load_landing_textures();
     if (this->get_level_choice() < 20)
     {
         surface = get_surface("img\\front_drop.png", "Cannot find front_drop.png!\n\n");

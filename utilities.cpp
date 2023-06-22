@@ -100,3 +100,5 @@ void modify_player_textures(shared_ptr<Player> plyr, SDL_Renderer *r, const char
        SDL_FreeSurface(surface);  
    }     
 }
+
+

@@ -133,6 +133,8 @@ class GameState
       vector<pair<double, double> > not_moving;
 
       // Images
+      vector<SDL_Texture*> landingFrames = vector<SDL_Texture*>(6);
+
       vector<SDL_Texture*> plyrFrames = vector<SDL_Texture*>(4);
       vector<SDL_Texture*> enemyFrames = vector<SDL_Texture*>(2);
    public:
@@ -232,6 +234,9 @@ class GameState
       inline void set_random_int(int rn) { random_int = rn; }
 
       void computer_player_movement();
+      void set_landing_frame(int n, SDL_Texture *t);
+      inline SDL_Texture* get_landing_frame(int n) { return landingFrames.at(n); } ;
+      void load_landing_textures();
 
       template <typename T>
       int collision_in_map(T &plyr, Matrix<Block> &, int i, int j, int, int);
