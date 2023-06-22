@@ -221,7 +221,7 @@ class GameState
       // Functions
       void init_blocks(int);
       void animate();
-      void collisionDetect();
+      void collision_handler();
       int event_handler(SDL_Window*);
       void loadImages();
       void loadGame();

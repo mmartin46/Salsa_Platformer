@@ -83,8 +83,8 @@ int GameState::collision_in_map(T &plyr, Matrix<Block> &tile, int i, int j , int
 }
 
 
-// DEBUG: Collision detect works properly
-void GameState::collisionDetect()
+// Handles the collisions within the game.
+void GameState::collision_handler()
 {
     // Check for collision with any tacos
     for (int i = 0; i < MAP_ROWS; i++)

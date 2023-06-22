@@ -61,7 +61,7 @@ int main(int argc, char *argv[] )
         done = gameState.event_handler(window);
 
         gameState.animate();
-        gameState.collisionDetect();
+        gameState.collision_handler();
 
         // Render display
         gameState.render(renderer);
