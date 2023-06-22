@@ -41,14 +41,20 @@ double get_distances(double x_1, double x_2, double y_1, double y_2)
     return val;
 }
 
-void modify_block_textures(vector<pair<string,string> > &surface_args, string idx)
-{
-    vector<pair<string,string> >::pointer ptr, end = surface_args.data() + surface_args.size();
+void modify_block_textures(vector<pair<string,string> > &surface_args, string idx, vector<string>& dont_include)
+{    
+    // Converts the strings in the dont_include
+    // vector to lowercase.
+    for (auto &it : dont_include)
+    {
+        std::transform(it.begin(), it.end(), it.begin(), ::tolower);
+    }
 
+    // Modifies the file names and error messages.
+    vector<pair<string,string> >::pointer ptr, end = surface_args.data() + surface_args.size();
     for (ptr = surface_args.data(); ptr < end; ++ptr)
     {
         string starter = ptr->first;
-        vector<string> dont_include = {"taco", "enemy", "spike"};
 
         // If the file contains taco_soil, break.
         if ( starter.find("taco_soil") != string::npos )

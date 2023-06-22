@@ -23,7 +23,7 @@ void GameState::create_block_textures(SDL_Surface *surface)
         cout << "ERROR: Vector sizes not equal!";
         exit(1);
     }
-    
+
     spriteEnd = spriteVec.data() + spriteVec.size();
     vector<pair<string, string> >::pointer surfPtr = surface_args.data();
 
@@ -131,6 +131,8 @@ void GameState::loadImages()
     surface_args.push_back({"img\\taco.png", "Cannot find block.png!\n\n"});
     surface_args.push_back({"img\\enemy.png", "Cannot find enemy.png!\n\n"});
     surface_args.push_back({"img\\spike.png", "Cannot find spike.png!\n\n"});
+
+    vector<string> dont_use  = {"taco", "enemy", "spike"};
     // Loading background texture.
     if (this->get_level_choice() < 20)
     {
@@ -141,7 +143,7 @@ void GameState::loadImages()
     }
     else if (this->get_level_choice() >= 20 && this->get_level_choice() < 40)
     {
-        modify_block_textures(this->surface_args, "_1");
+        modify_block_textures(this->surface_args, "_1", dont_use);
         create_block_textures(surface);
 
         surface = get_surface("img\\world_bg_1.png", "Cannot find world_bg_1.png!\n\n");
@@ -151,7 +153,7 @@ void GameState::loadImages()
     }
     else if (this->get_level_choice() >= 40)
     {
-        modify_block_textures(this->surface_args, "_2");
+        modify_block_textures(this->surface_args, "_2", dont_use);
         create_block_textures(surface);
 
         surface = get_surface("img\\world_bg_2.png", "Cannot find world_bg_2.png!\n\n");

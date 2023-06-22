@@ -9,6 +9,7 @@
 #include <string>
 #include <cstdlib>
 #include <memory>
+#include <algorithm>
 #include <functional>
 #include "constants.hpp"
 #include "player.hpp"
