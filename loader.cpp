@@ -14,6 +14,7 @@ of the entities.
 // within the surface_args vector.
 void GameState::create_block_textures(SDL_Surface *surface)
 {
+    // Checking if the vector sizes are equal.
     if (spriteVec.size() != surface_args.size())
     {
         using std::cout;
@@ -27,10 +28,12 @@ void GameState::create_block_textures(SDL_Surface *surface)
     spriteEnd = spriteVec.data() + spriteVec.size();
     vector<pair<string, string> >::pointer surfPtr = surface_args.data();
 
+    // Sets the surfaces.
     for (spritePtr = spriteVec.data(); spritePtr < spriteEnd; ++spritePtr, ++surfPtr)
     {
         surface = get_surface(surfPtr->first.c_str(), surfPtr->second.c_str());
         (*this.**spritePtr)(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+        SDL_FreeSurface(surface);
     }
 }
 
