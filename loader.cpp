@@ -98,6 +98,8 @@ void GameState::loadImages()
     this->get_player()->load_running_textures(this->get_renderer());
     this->get_comp_player()->load_running_textures(this->get_renderer());
 
+
+    // Level Choice
     if (this->get_level_choice() < 20)
     {
         surface = get_surface("img\\front_drop.png", "Cannot find front_drop.png!\n\n");
