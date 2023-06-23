@@ -28,6 +28,7 @@ void GameState::animate()
     cplyr->set_x(cplyr->get_x() + cplyr->get_dx());
     cplyr->set_y(cplyr->get_y() + cplyr->get_dy());
 
+    // Landing Animation
     if (!plyr->get_onBlock())
     {
         plyr->set_landed(0);
@@ -38,6 +39,7 @@ void GameState::animate()
         cplyr->set_landed(0);
         cplyr->set_landFrame(0);
     }
+
 
     // enemy movement
     for (int i = 0; i < MAP_ROWS; ++i)
@@ -364,4 +366,36 @@ void GameState::land_animation(Player *plyr)
             plyr->set_landed(1);
         }
     }
+}
+
+
+void GameState::run_animation(Player *plyr)
+{
+    SDL_Surface *surface;
+
+    if ((this->get_time() % 20 < 20))
+    {
+        if ((((this->get_time()) % 20 <= 5)))
+        {
+            plyr->set_runFrame(0);
+        }
+        else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 7.5)
+        {
+            plyr->set_runFrame(2);
+        }
+        else if ((this->get_time() % 20) > 7.5 && (this->get_time() % 20) <= 10)
+        {
+            plyr->set_runFrame(3);
+        }
+        else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
+        {
+            plyr->set_runFrame(4);
+        }
+        else
+        {
+            plyr->set_runFrame(5);
+        }
+    }
+
+    std::cout << plyr << ": " << plyr->get_runFrame() << std::endl;
 }

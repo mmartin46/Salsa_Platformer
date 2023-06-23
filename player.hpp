@@ -10,12 +10,13 @@ class Player
       int onBlock;
       bool landed;
       int animFrame;
-      int landFrame = 0;
+      int landFrame;
+      int runFrame;
       bool slowingDown, facingLeft;
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(PLAYER_FRAMES + 1);
       std::vector<SDL_Texture*> landingFrames = std::vector<SDL_Texture*>(6);
-
+      std::vector<SDL_Texture*> runningFrames = std::vector<SDL_Texture*>(6);
    public:
       Player();
       Player(int, int);
@@ -64,8 +65,15 @@ class Player
       inline SDL_Texture* get_landing_frame(int n) { return landingFrames.at(n); } ;
       void load_landing_textures(SDL_Renderer *);
 
+      void set_running_frame(int n, SDL_Texture *t);
+      inline SDL_Texture* get_running_frame(int n) { return runningFrames.at(n); } ;
+      void load_running_textures(SDL_Renderer *);
+
       inline virtual bool get_landed() { return landed; } const
       inline virtual void set_landed(bool l) { landed = l; }
+      
+      inline virtual void set_runFrame(int f) { runFrame = f; }
+      inline virtual int get_runFrame() { return runFrame; }
 
 
       // Player Animation 
@@ -116,6 +124,41 @@ void Player::set_landing_frame(int n, SDL_Texture *t)
         exit(1);
     }
     this->landingFrames.at(n) = t;
+}
+
+void Player::set_running_frame(int n, SDL_Texture *t)
+{
+    using std::cout;
+    
+    if (n >= this->runningFrames.size() || n < 0) 
+    {
+        cout << "runningFrames size: " << this->runningFrames.size() << "\n"; 
+        cout << "runningFrames: argument is out of bounds\n";
+        exit(1);
+    }
+    this->runningFrames.at(n) = t;
+}
+
+
+void Player::load_running_textures(SDL_Renderer *renderer)
+{
+    SDL_Surface *surface;
+    std::string req, err;
+    using std::to_string;
+    for (int i = 0; i < 6; ++i)
+    {
+        req = "img\\running" + to_string(i + 1) + ".png";
+    
+        surface = IMG_Load(req.c_str());
+        if (surface == NULL)
+        {
+            printf(err.c_str());
+            SDL_Quit();
+            exit(1);
+        }
+        this->set_running_frame(i, SDL_CreateTextureFromSurface(renderer, surface));
+        SDL_FreeSurface(surface);
+    }  
 }
 
 

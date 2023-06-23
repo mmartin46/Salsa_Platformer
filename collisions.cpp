@@ -55,6 +55,11 @@ int GameState::collision_in_map(T &plyr, Matrix<Block> &tile, int i, int j , int
             plyr.set_onBlock();
             touched = 2;
 
+            if (plyr.get_onBlock() && (plyr.get_dx() != 0))
+            {
+                this->run_animation(&plyr);
+            }
+
             this->land_animation(&plyr);
         }
     }

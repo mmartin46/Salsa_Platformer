@@ -90,8 +90,14 @@ void GameState::loadImages()
 
     SDL_Surface* surface;
 
+    // Landing landing textures
     this->get_player()->load_landing_textures(this->get_renderer());
     this->get_comp_player()->load_landing_textures(this->get_renderer());
+
+    // Loading running textures
+    this->get_player()->load_landing_textures(this->get_renderer());
+    this->get_comp_player()->load_running_textures(this->get_renderer());
+
     if (this->get_level_choice() < 20)
     {
         surface = get_surface("img\\front_drop.png", "Cannot find front_drop.png!\n\n");

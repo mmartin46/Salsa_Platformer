@@ -117,7 +117,7 @@ class GameState
       // Handles a majority of the textures
       vector<void (GameState::*)(SDL_Texture *)> spriteVec;
       vector<pair<string, string> > surface_args;
- vector<void (GameState::*)(SDL_Texture *)>::pointer spritePtr, spriteEnd;   
+      vector<void (GameState::*)(SDL_Texture *)>::pointer spritePtr, spriteEnd;   
 
       // Level
       int level_choice;
@@ -145,6 +145,7 @@ class GameState
       shared_ptr<Player> get_comp_player() { return cptr; }
 
       void init_landing_rect(Player &);
+      void init_running_rect(Player &);
 
 
       GameState();
@@ -235,6 +236,7 @@ class GameState
       void computer_player_movement();
 
       void land_animation(Player *plyr);
+      void run_animation(Player *plyr);
 
       template <typename T>
       int collision_in_map(T &plyr, Matrix<Block> &, int i, int j, int, int);
