@@ -86,3 +86,73 @@ void Player::apply_up_movement(int addition)
       this->reset_onBlock();
    }
 }
+
+
+void Player::load_landing_textures(SDL_Renderer *renderer)
+{
+    SDL_Surface *surface;
+    std::string req, err;
+    using std::to_string;
+    for (int i = 0; i < 6; ++i)
+    {
+        req = "img\\landing" + to_string(i + 1) + ".png";
+    
+        surface = IMG_Load(req.c_str());
+        if (surface == NULL)
+        {
+            printf(err.c_str());
+            SDL_Quit();
+            exit(1);
+        }
+        this->set_landing_frame(i, SDL_CreateTextureFromSurface(renderer, surface));
+        SDL_FreeSurface(surface);
+    }
+}
+
+void Player::set_landing_frame(int n, SDL_Texture *t)
+{
+    using std::cout;
+    
+    if (n >= this->landingFrames.size() || n < 0) 
+    {
+        cout << "landingFrames size: " << this->landingFrames.size() << "\n"; 
+        cout << "landingFrames: argument is out of bounds\n";
+        exit(1);
+    }
+    this->landingFrames.at(n) = t;
+}
+
+void Player::set_running_frame(int n, SDL_Texture *t)
+{
+    using std::cout;
+    
+    if (n >= this->runningFrames.size() || n < 0) 
+    {
+        cout << "runningFrames size: " << this->runningFrames.size() << "\n"; 
+        cout << "runningFrames: argument is out of bounds\n";
+        exit(1);
+    }
+    this->runningFrames.at(n) = t;
+}
+
+
+void Player::load_running_textures(SDL_Renderer *renderer)
+{
+    SDL_Surface *surface;
+    std::string req, err;
+    using std::to_string;
+    for (int i = 0; i < 6; ++i)
+    {
+        req = "img\\running" + to_string(i + 1) + ".png";
+    
+        surface = IMG_Load(req.c_str());
+        if (surface == NULL)
+        {
+            printf(err.c_str());
+            SDL_Quit();
+            exit(1);
+        }
+        this->set_running_frame(i, SDL_CreateTextureFromSurface(renderer, surface));
+        SDL_FreeSurface(surface);
+    }  
+}

@@ -123,7 +123,7 @@ void GameState::render(SDL_Renderer *renderer)
 
     // initializing running animations
     init_running_rect(*this->get_player());
-    init_landing_rect(*this->get_comp_player());
+    init_running_rect(*this->get_comp_player());
 
 
 
@@ -139,7 +139,12 @@ void GameState::init_landing_rect(Player &plyr)
 
 void GameState::init_running_rect(Player &plyr)
 {
-    SDL_Rect runRect = {  static_cast<int>((this->get_scrollX() + plyr.get_x()) - 1), static_cast<int>(this->get_scrollY() + plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
+    int distance = -13;
+    if (plyr.get_facingLeft() == 0)
+    {
+        distance *= -1;
+    }
+    SDL_Rect runRect = {  static_cast<int>((this->get_scrollX() + plyr.get_x()) - distance), static_cast<int>(this->get_scrollY() + plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
     SDL_RenderCopyEx(this->get_renderer(), plyr.get_running_frame(plyr.get_runFrame()), NULL, &runRect, 0, NULL, (SDL_RendererFlip)(plyr.get_facingLeft() == 0));      
 }
 

@@ -40,6 +40,14 @@ void GameState::animate()
         cplyr->set_landFrame(0);
     }
 
+    if (!plyr->get_dx() == 0)
+    {
+        plyr->set_runFrame(0);
+    }
+    if (!cplyr->get_dx() == 0)
+    {
+        cplyr->set_runFrame(0);
+    }
 
     // enemy movement
     for (int i = 0; i < MAP_ROWS; ++i)
