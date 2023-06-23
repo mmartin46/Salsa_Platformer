@@ -384,19 +384,23 @@ void GameState::run_animation(Player *plyr)
 
     if ((this->get_time() % 20 < 20))
     {
-        if ((((this->get_time()) % 20 <= 5)))
+        if ((((this->get_time()) % 20) <= 3.5))
         {
             plyr->set_runFrame(0);
         }
-        else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 7.5)
+        else if (((this->get_time() % 20) > 3.5) && ((this->get_time() % 20) <= 7.5))
+        {
+            plyr->set_runFrame(1);
+        }
+        else if (((this->get_time() % 20) > 7.5) && ((this->get_time() % 20) <= 10))
         {
             plyr->set_runFrame(2);
         }
-        else if ((this->get_time() % 20) > 7.5 && (this->get_time() % 20) <= 10)
+        else if (((this->get_time() % 20) > 10) && ((this->get_time() % 20) <= 13.5))
         {
             plyr->set_runFrame(3);
         }
-        else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
+        else if (((this->get_time() % 20) > 13.5) && ((this->get_time() % 20) <= 17))
         {
             plyr->set_runFrame(4);
         }
@@ -406,5 +410,5 @@ void GameState::run_animation(Player *plyr)
         }
     }
 
-    std::cout << plyr << ": " << plyr->get_runFrame() << std::endl;
+    //std::cout << plyr << ": " << plyr->get_runFrame() << std::endl;
 }
