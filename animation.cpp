@@ -42,11 +42,11 @@ void GameState::animate()
 
 
     // Running Animation
-    if (!plyr->get_dx() && (plyr->get_dy() != 0))
+    if (!plyr->get_dx() || (plyr->get_dy() != 0))
     {
         plyr->set_runFrame(0);
     }
-    if (!cplyr->get_dx() && (plyr->get_dy() != 0))
+    if (!cplyr->get_dx() || (plyr->get_dy() != 0))
     {
         cplyr->set_runFrame(0);
     }
