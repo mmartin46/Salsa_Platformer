@@ -131,12 +131,16 @@ void GameState::render(SDL_Renderer *renderer)
 }
 
 
+// Initializes the SDL_Rect for the landing
+// animation texture.
 void GameState::init_landing_rect(Player &plyr)
 {
     SDL_Rect landRect = {  static_cast<int>((this->get_scrollX() + plyr.get_x()) - 1), static_cast<int>(this->get_scrollY() + plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
     SDL_RenderCopyEx(this->get_renderer(), plyr.get_landing_frame(plyr.get_landFrame()), NULL, &landRect, 0, NULL, (SDL_RendererFlip)(plyr.get_facingLeft() == 0));    
 }
 
+// Initializes the SDL_Rect for the running
+// animation texture.
 void GameState::init_running_rect(Player &plyr)
 {
     int distance = -13;

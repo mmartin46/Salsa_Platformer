@@ -40,6 +40,7 @@ void GameState::animate()
         cplyr->set_landFrame(0);
     }
 
+    // Running Animation
     if (!plyr->get_dx() == 0)
     {
         plyr->set_runFrame(0);
