@@ -95,7 +95,7 @@ void GameState::loadImages()
     this->get_comp_player()->load_landing_textures(this->get_renderer());
 
     // Loading running textures
-    this->get_player()->load_landing_textures(this->get_renderer());
+    this->get_player()->load_running_textures(this->get_renderer());
     this->get_comp_player()->load_running_textures(this->get_renderer());
 
     if (this->get_level_choice() < 20)
