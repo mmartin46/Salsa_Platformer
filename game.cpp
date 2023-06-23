@@ -167,6 +167,7 @@ GameState::~GameState()
     SDL_DestroyTexture(this->get_player()->get_player_frame(0));
     SDL_DestroyTexture(this->get_player()->get_player_frame(1));
     SDL_DestroyTexture(this->get_block());
+    Mix_FreeChunk(this->get_jump_music());
 
     if (this->get_life_label_texture() != NULL)
     {

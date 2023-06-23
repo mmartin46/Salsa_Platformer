@@ -40,15 +40,18 @@ void GameState::animate()
         cplyr->set_landFrame(0);
     }
 
+
     // Running Animation
-    if (!plyr->get_dx() == 0)
+    if (!plyr->get_dx() && (plyr->get_dy() != 0))
     {
         plyr->set_runFrame(0);
     }
-    if (!cplyr->get_dx() == 0)
+    if (!cplyr->get_dx() && (plyr->get_dy() != 0))
     {
         cplyr->set_runFrame(0);
     }
+
+
 
     // enemy movement
     for (int i = 0; i < MAP_ROWS; ++i)
@@ -347,6 +350,7 @@ void GameState::enemy_movement()
    }
 }
 
+// Controls the landing animation.
 void GameState::land_animation(Player *plyr)
 {
     SDL_Surface *surface;
@@ -377,32 +381,41 @@ void GameState::land_animation(Player *plyr)
     }
 }
 
-
+// Controls the running aniamtion.
 void GameState::run_animation(Player *plyr)
 {
     SDL_Surface *surface;
 
-    if ((this->get_time() % 17 < 17))
+    if (plyr->get_onBlock() && (plyr->get_dy() == 0))
     {
-        if ((((this->get_time()) % 17) <= 3.5))
+
+        if ((this->get_time() % 17 < 17))
         {
-            plyr->set_runFrame(0);
-        }
-        else if (((this->get_time() % 17) > 3.5) && ((this->get_time() % 17) <= 7.5))
-        {
-            plyr->set_runFrame(1);
-        }
-        else if (((this->get_time() % 17) > 7.5) && ((this->get_time() % 17) <= 10))
-        {
-            plyr->set_runFrame(2);
-        }
-        else if (((this->get_time() % 17) > 10) && ((this->get_time() % 17) <= 13.5))
-        {
-            plyr->set_runFrame(3);
-        }
-        else if (((this->get_time() % 17) > 13.5) && ((this->get_time() % 17) < 17))
-        {
-            plyr->set_runFrame(4);
+            if ((((this->get_time()) % 17) <= 3.5))
+            {
+                plyr->set_runFrame(0);
+            }
+            else if (((this->get_time() % 17) > 3.5) && ((this->get_time() % 17) <= 7.5))
+            {
+                plyr->set_runFrame(1);
+            }
+            else if (((this->get_time() % 17) > 7.5) && ((this->get_time() % 17) <= 10))
+            {
+                plyr->set_runFrame(2);
+            }
+            else if (((this->get_time() % 17) > 10) && ((this->get_time() % 17) <= 13.5))
+            {
+                plyr->set_runFrame(3);
+            }
+            else if (((this->get_time() % 17) > 13.5) && ((this->get_time() % 17) < 17))
+            {
+                plyr->set_runFrame(4);
+            }
         }
     }
+    else
+    {
+        plyr->set_runFrame(0);
+    }
+
 }

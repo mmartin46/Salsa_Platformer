@@ -76,6 +76,9 @@ int main(int argc, char *argv[] )
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
 
+    // Close Music
+    Mix_CloseAudio();
+
     // Clean up
     SDL_Quit();
     return 0;
