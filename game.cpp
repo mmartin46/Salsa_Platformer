@@ -104,6 +104,7 @@ void GameState::render(SDL_Renderer *renderer)
     SDL_Rect crect = {  static_cast<int> (this->get_scrollX() + this->get_comp_player()->get_x()), static_cast<int>(this->get_scrollY() + this->get_comp_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
     SDL_RenderCopyEx(this->get_renderer(), this->get_comp_player()->get_player_frame(this->get_comp_player()->get_animFrame()), NULL, &crect, 0, NULL, (SDL_RendererFlip)(this->get_comp_player()->get_facingLeft() == 0));
 
+
     // intializing landing animations
     init_landing_rect(*this->get_player());
     init_landing_rect(*this->get_comp_player());

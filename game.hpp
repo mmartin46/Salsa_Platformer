@@ -71,8 +71,8 @@ class GameState
 {
    private:
       int time;
-      float scrollX;
-      float scrollY;
+      int scrollX;
+      int scrollY;
       // Renderer
       SDL_Renderer *renderer;
       // Images

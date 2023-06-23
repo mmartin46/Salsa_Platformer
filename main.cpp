@@ -14,6 +14,11 @@ static int generate_random_number() {
 
 int main(int argc, char *argv[] )
 {
+    // 0 - A level can be generated
+    // 1 - A level shouldn't be generated.
+    int generate = 0;
+
+
     GameState gameState;
     SDL_Window *window = NULL;             // Declare a window
     SDL_Renderer *renderer = NULL;         // Declare a renderer
@@ -22,7 +27,12 @@ int main(int argc, char *argv[] )
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);       // Intialize SDL2
 
 
-    gameState.init_blocks(generate_random_number());
+    gameState.set_level_choice(generate_random_number());
+
+
+
+    gameState.init_blocks(generate);
+
     //gameState.init_blocks(19);
     // Create an application window with the following settings:
     window = SDL_CreateWindow("Salsa Platformer",            // window title
@@ -52,7 +62,6 @@ int main(int argc, char *argv[] )
     // Event loop
     while (!done)
     {
-
         // Displays the x and y position of the player
         //std::cout << gameState.plyr.get_x() << " " << gameState.plyr.get_y() << std::endl;
 
@@ -60,7 +69,11 @@ int main(int argc, char *argv[] )
         // Check for events
         done = gameState.event_handler(window);
 
-        gameState.animate();
+        if (!generate)
+        {
+            gameState.animate();
+        }
+
         gameState.collision_handler();
 
         // Render display

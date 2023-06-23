@@ -184,115 +184,117 @@ void GameState::loadGame()
 }
 
 
-void GameState::init_blocks(int level_choice)
+void GameState::init_blocks(int generated)
 {
-    
-    int x, y;
-
-    int choice = level_choice;
-    set_level_choice(choice);
-    if (choice < 20)
+    if (!generated)
     {
-        for (x = 0; x < MAP_ROWS; ++x)
+        int x, y;
+
+        int choice = this->get_level_choice();
+
+        if (choice < 20)
         {
-            for (y = 0; y < MAP_COLUMNS; ++y)
+            for (x = 0; x < MAP_ROWS; ++x)
             {
-                tilemap.at(x).at(y) = world_map::map[x][y];
+                for (y = 0; y < MAP_COLUMNS; ++y)
+                {
+                    tilemap.at(x).at(y) = world_map::map[x][y];
+                }
             }
         }
-    }
-    else if (choice >= 20 && choice < 40)
-    {   
-        for (x = 0; x < MAP_ROWS; ++x)
-        {
-            for (y = 0; y < MAP_COLUMNS; ++y)
+        else if (choice >= 20 && choice < 40)
+        {   
+            for (x = 0; x < MAP_ROWS; ++x)
             {
-                tilemap.at(x).at(y) = world_map::map_2[x][y];
+                for (y = 0; y < MAP_COLUMNS; ++y)
+                {
+                    tilemap.at(x).at(y) = world_map::map_2[x][y];
+                }
             }
         }
-    }
-    else if (choice >= 40)
-    {
+        else if (choice >= 40)
+        {
+            for (x = 0; x < MAP_ROWS; ++x)
+            {
+                for (y = 0; y < MAP_COLUMNS; ++y)
+                {
+                    tilemap.at(x).at(y) = world_map::map_3[x][y];
+                }
+            }        
+        }
+
+
+        if (choice < 20)
+        {
+            this->get_dim_area()->set_x(0);
+            this->get_dim_area()->set_y(0);
+            this->get_dim_area()->set_h(1000);
+            this->get_dim_area()->set_w(1000);
+
+            this->get_backdrop()->set_x(-300);
+            this->get_backdrop()->set_y(-300);
+            this->get_backdrop()->set_h(5000);
+            this->get_backdrop()->set_w(5000);
+        }
+        else if (choice >= 20 && choice < 40)
+        {
+            this->get_backdrop()->set_x(-50);
+            this->get_backdrop()->set_y(-200);   
+            this->get_backdrop()->set_h(598);
+            this->get_backdrop()->set_w(900);        
+        }
+        else if (choice >= 40)
+        {
+            this->get_backdrop()->set_x(-30);
+            this->get_backdrop()->set_y(-90);   
+            this->get_backdrop()->set_h(380);
+            this->get_backdrop()->set_w(640); 
+        }
+
+        // Intialize the map
         for (x = 0; x < MAP_ROWS; ++x)
         {
             for (y = 0; y < MAP_COLUMNS; ++y)
             {
-                tilemap.at(x).at(y) = world_map::map_3[x][y];
-            }
-        }        
-    }
-
-
-    if (choice < 20)
-    {
-        this->get_dim_area()->set_x(0);
-        this->get_dim_area()->set_y(0);
-        this->get_dim_area()->set_h(1000);
-        this->get_dim_area()->set_w(1000);
-
-        this->get_backdrop()->set_x(-300);
-        this->get_backdrop()->set_y(-300);
-        this->get_backdrop()->set_h(5000);
-        this->get_backdrop()->set_w(5000);
-    }
-    else if (choice >= 20 && choice < 40)
-    {
-        this->get_backdrop()->set_x(-50);
-        this->get_backdrop()->set_y(-200);   
-        this->get_backdrop()->set_h(598);
-        this->get_backdrop()->set_w(900);        
-    }
-    else if (choice >= 40)
-    {
-        this->get_backdrop()->set_x(-30);
-        this->get_backdrop()->set_y(-90);   
-        this->get_backdrop()->set_h(380);
-        this->get_backdrop()->set_w(640); 
-    }
-
-    // Intialize the map
-    for (x = 0; x < MAP_ROWS; ++x)
-    {
-        for (y = 0; y < MAP_COLUMNS; ++y)
-        {
-            // DEBUG
-            switch (tilemap.at(x).at(y)) 
-            {
-                case world_map::BLOCK_COLLISION : {
-                    tile.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
-                    tile.at(x).at(y).set_x((y*BLOCK_HEIGHT));
-                    tile.at(x).at(y).set_w(BLOCK_WIDTH);
-                    tile.at(x).at(y).set_h(BLOCK_HEIGHT);
-                } break;
-                case world_map::TACO_COLLISION : {
-                    tile.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
-                    tile.at(x).at(y).set_x((y*BLOCK_HEIGHT));
-                    tile.at(x).at(y).set_w(BLOCK_WIDTH);
-                    tile.at(x).at(y).set_h(BLOCK_HEIGHT);
-                } break;
-                case world_map::EMEMY_COLLISION : {
-                    enemies.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
-                    enemies.at(x).at(y).set_x((y*BLOCK_HEIGHT));
-                    enemies.at(x).at(y).set_w(BLOCK_WIDTH);
-                    enemies.at(x).at(y).set_h(BLOCK_HEIGHT);
-                } break;
-                case world_map::SOIL_COLLISION : {
-                    soiltile.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
-                    soiltile.at(x).at(y).set_x((y*BLOCK_HEIGHT));
-                    soiltile.at(x).at(y).set_w(BLOCK_WIDTH);
-                    soiltile.at(x).at(y).set_h(BLOCK_HEIGHT);
-                } break;
-                case world_map::SPIKE_COLLISION : {
-                    spikes.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
-                    spikes.at(x).at(y).set_x((y*BLOCK_HEIGHT));
-                    spikes.at(x).at(y).set_w(BLOCK_WIDTH);
-                    spikes.at(x).at(y).set_h(BLOCK_HEIGHT);                   
-                } break;
-                case world_map::TACO_SOIL_COLLISION : {
-                    tile.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
-                    tile.at(x).at(y).set_x((y*BLOCK_HEIGHT));
-                    tile.at(x).at(y).set_w(BLOCK_WIDTH);
-                    tile.at(x).at(y).set_h(BLOCK_HEIGHT);                   
+                // DEBUG
+                switch (tilemap.at(x).at(y)) 
+                {
+                    case world_map::BLOCK_COLLISION : {
+                        tile.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
+                        tile.at(x).at(y).set_x((y*BLOCK_HEIGHT));
+                        tile.at(x).at(y).set_w(BLOCK_WIDTH);
+                        tile.at(x).at(y).set_h(BLOCK_HEIGHT);
+                    } break;
+                    case world_map::TACO_COLLISION : {
+                        tile.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
+                        tile.at(x).at(y).set_x((y*BLOCK_HEIGHT));
+                        tile.at(x).at(y).set_w(BLOCK_WIDTH);
+                        tile.at(x).at(y).set_h(BLOCK_HEIGHT);
+                    } break;
+                    case world_map::EMEMY_COLLISION : {
+                        enemies.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
+                        enemies.at(x).at(y).set_x((y*BLOCK_HEIGHT));
+                        enemies.at(x).at(y).set_w(BLOCK_WIDTH);
+                        enemies.at(x).at(y).set_h(BLOCK_HEIGHT);
+                    } break;
+                    case world_map::SOIL_COLLISION : {
+                        soiltile.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
+                        soiltile.at(x).at(y).set_x((y*BLOCK_HEIGHT));
+                        soiltile.at(x).at(y).set_w(BLOCK_WIDTH);
+                        soiltile.at(x).at(y).set_h(BLOCK_HEIGHT);
+                    } break;
+                    case world_map::SPIKE_COLLISION : {
+                        spikes.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
+                        spikes.at(x).at(y).set_x((y*BLOCK_HEIGHT));
+                        spikes.at(x).at(y).set_w(BLOCK_WIDTH);
+                        spikes.at(x).at(y).set_h(BLOCK_HEIGHT);                   
+                    } break;
+                    case world_map::TACO_SOIL_COLLISION : {
+                        tile.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);
+                        tile.at(x).at(y).set_x((y*BLOCK_HEIGHT));
+                        tile.at(x).at(y).set_w(BLOCK_WIDTH);
+                        tile.at(x).at(y).set_h(BLOCK_HEIGHT);                   
+                    }
                 }
             }
         }
