@@ -117,7 +117,9 @@ void GameState::render(SDL_Renderer *renderer)
     SDL_Rect tERect = { static_cast<int> (WINDOW_WIDTH-(WINDOW_WIDTH / 4.8)), 0, static_cast<int> (this->taco_label.get_w() / 4), static_cast<int> (this->taco_label.get_h() / 3.75) };
     SDL_RenderCopy(this->get_renderer(), this->get_taco_label_texture(), NULL, &tERect);
 
-
+    SDL_Rect landRect = {  static_cast<int>((this->get_scrollX() + this->get_player()->get_x()) - 1), static_cast<int>(this->get_scrollY() + this->get_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
+    SDL_RenderCopyEx(this->get_renderer(), this->get_player()->get_landing_frame(this->get_player()->get_landFrame()), NULL, &landRect, 0, NULL, (SDL_RendererFlip)(this->get_player()->get_facingLeft() == 0));
+    
 
 
     SDL_RenderPresent(this->get_renderer());    

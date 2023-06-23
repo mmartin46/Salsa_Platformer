@@ -1,7 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#include "game.hpp"
-
+#include "utilities.hpp"
 class Player
 {
    private:
@@ -9,10 +8,14 @@ class Player
       float x, y;
       float dx, dy;
       int onBlock;
+      bool landed;
       int animFrame;
+      int landFrame;
       bool slowingDown, facingLeft;
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(PLAYER_FRAMES + 1);
+      std::vector<SDL_Texture*> landingFrames = std::vector<SDL_Texture*>(6);
+
    public:
       Player();
       Player(int, int);
@@ -57,18 +60,63 @@ class Player
       virtual void apply_down_movement();
 
 
+      void set_landing_frame(int n, SDL_Texture *t);
+      inline SDL_Texture* get_landing_frame(int n) { return landingFrames.at(n); } ;
+      void load_landing_textures(SDL_Renderer *);
+
+      inline virtual bool get_landed() { return landed; } const
+      inline virtual void set_landed(bool l) { landed = l; }
+
+
       // Player Animation 
       inline virtual int get_animFrame() { return animFrame; } const
       inline virtual void set_animFrame(int af) { animFrame = af; }
+
+      inline virtual int get_landFrame() { return landFrame; } const
+      inline virtual void set_landFrame(int lf) { landFrame = lf; }
+
       inline virtual int get_facingLeft() { return facingLeft; } const
       inline virtual void set_facingLeft(int v) { facingLeft = v; }
       inline virtual bool get_slowingDown() { return slowingDown; } const
       inline virtual void set_slowingDown(bool s) { slowingDown = s; }
 
       
-      friend class GameState;
+      //friend class GameState;
 };
 
+void Player::load_landing_textures(SDL_Renderer *renderer)
+{
+    SDL_Surface *surface;
+    std::string req, err;
+    using std::to_string;
+    for (int i = 0; i < 6; ++i)
+    {
+        req = "img\\landing" + to_string(i + 1) + ".png";
+    
+        surface = IMG_Load(req.c_str());
+        if (surface == NULL)
+        {
+            printf(err.c_str());
+            SDL_Quit();
+            exit(1);
+        }
+        this->set_landing_frame(i, SDL_CreateTextureFromSurface(renderer, surface));
+        SDL_FreeSurface(surface);
+    }
+}
+
+void Player::set_landing_frame(int n, SDL_Texture *t)
+{
+    using std::cout;
+    
+    if (n >= this->landingFrames.size() || n < 0) 
+    {
+        cout << "landingFrames size: " << this->landingFrames.size() << "\n"; 
+        cout << "landingFrames: argument is out of bounds\n";
+        exit(1);
+    }
+    this->landingFrames.at(n) = t;
+}
 
 
 #endif

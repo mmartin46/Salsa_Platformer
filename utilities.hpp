@@ -16,6 +16,7 @@
 #include "comp.hpp"
 #include "enemy.hpp"
 #include "entity.hpp"
+#include "game.hpp"
 
 using std::vector;
 using std::pair;

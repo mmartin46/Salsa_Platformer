@@ -12,6 +12,7 @@ class Enemy : public Player
       float dx, dy;
       int onBlock;
       int animFrame;
+      int landFrame;
       int enemySpeed = 1;
       bool slowingDown, facingLeft;
    public:
@@ -23,6 +24,8 @@ class Enemy : public Player
       inline void set_h(int val) { h = val; }    
       inline void set_enemySpeed(int s) { enemySpeed = s; }
       inline int get_enemySpeed() { return enemySpeed; }
+
+      std::vector<SDL_Texture*> landingFrames = std::vector<SDL_Texture*>(6);
 };
 
 // Defaults the enemy's position

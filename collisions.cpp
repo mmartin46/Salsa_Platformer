@@ -54,8 +54,11 @@ int GameState::collision_in_map(T &plyr, Matrix<Block> &tile, int i, int j , int
             plyr.set_dy(0);
             plyr.set_onBlock();
             touched = 2;
+
+            this->land_animation(&plyr);
         }
     }
+
     if (py+ph > by && py<by+bh)
     {
         // Rubbing against right edge
@@ -226,12 +229,12 @@ void GameState::collision_handler()
                 collision_in_map(*this->get_player(), this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
                 collision_in_map(*this->get_comp_player(), this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
 
-                // TODO: Debug onBlock
-                if (collision_in_map(this->enemies.at(i).at(j), this->tile, i, j, ENEMY_WIDTH, ENEMY_HEIGHT))
-                {
-                    //cout << "EOSH" << endl;
-                    this->enemies.at(i).at(j).set_enemySpeed(this->enemies.at(i).at(j).get_enemySpeed() * -1);
-                }
+                // // TODO: Debug onBlock
+                // if (collision_in_map(this->enemies.at(i).at(j), this->tile, i, j, ENEMY_WIDTH, ENEMY_HEIGHT))
+                // {
+                //     //cout << "EOSH" << endl;
+                //     this->enemies.at(i).at(j).set_enemySpeed(this->enemies.at(i).at(j).get_enemySpeed() * -1);
+                // }
             }
         }
     }

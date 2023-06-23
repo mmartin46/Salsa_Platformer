@@ -324,3 +324,36 @@ void GameState::enemy_movement()
       }
    }
 }
+
+void GameState::land_animation(Player *plyr)
+{
+    SDL_Surface *surface;
+
+    if ((this->get_time() % 20 < 20) && !plyr->get_landed())
+    {
+        if ((((this->get_time()) % 20 <= 5)))
+        {
+            plyr->set_landFrame(0);
+        }
+        else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 7.5)
+        {
+            plyr->set_landFrame(1);
+        }
+        else if ((this->get_time() % 20) > 7.5 && (this->get_time() % 20) <= 10)
+        {
+            plyr->set_landFrame(2);
+        }
+        else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
+        {
+            plyr->set_landFrame(3);
+        }
+        else
+        {
+            plyr->set_landFrame(5);
+            plyr->set_landed(1);
+        }
+    }
+
+
+    std::cout << plyr->get_landFrame() << std::endl;
+}
