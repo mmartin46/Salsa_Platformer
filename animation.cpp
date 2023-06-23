@@ -331,7 +331,7 @@ void GameState::land_animation(Player *plyr)
 
     if ((this->get_time() % 20 < 20) && !plyr->get_landed())
     {
-        if ((((this->get_time()) % 20 <= 5)))
+        if ((((this->get_time()) % 20 <= 5) && (plyr->get_landFrame() != 5)))
         {
             plyr->set_landFrame(0);
         }

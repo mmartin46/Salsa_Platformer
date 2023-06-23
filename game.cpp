@@ -117,12 +117,17 @@ void GameState::render(SDL_Renderer *renderer)
     SDL_Rect tERect = { static_cast<int> (WINDOW_WIDTH-(WINDOW_WIDTH / 4.8)), 0, static_cast<int> (this->taco_label.get_w() / 4), static_cast<int> (this->taco_label.get_h() / 3.75) };
     SDL_RenderCopy(this->get_renderer(), this->get_taco_label_texture(), NULL, &tERect);
 
-    SDL_Rect landRect = {  static_cast<int>((this->get_scrollX() + this->get_player()->get_x()) - 1), static_cast<int>(this->get_scrollY() + this->get_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
-    SDL_RenderCopyEx(this->get_renderer(), this->get_player()->get_landing_frame(this->get_player()->get_landFrame()), NULL, &landRect, 0, NULL, (SDL_RendererFlip)(this->get_player()->get_facingLeft() == 0));
-    
-
+    init_landing_rect(*this->get_player());
+    init_landing_rect(*this->get_comp_player());
 
     SDL_RenderPresent(this->get_renderer());    
+}
+
+
+void GameState::init_landing_rect(Player &plyr)
+{
+    SDL_Rect landRect = {  static_cast<int>((this->get_scrollX() + plyr.get_x()) - 1), static_cast<int>(this->get_scrollY() + plyr.get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
+    SDL_RenderCopyEx(this->get_renderer(), plyr.get_landing_frame(plyr.get_landFrame()), NULL, &landRect, 0, NULL, (SDL_RendererFlip)(plyr.get_facingLeft() == 0));    
 }
 
 

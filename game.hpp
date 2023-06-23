@@ -144,7 +144,7 @@ class GameState
 
       shared_ptr<Player> get_comp_player() { return cptr; }
 
-      
+      void init_landing_rect(Player &);
 
 
       GameState();

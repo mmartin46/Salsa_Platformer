@@ -10,7 +10,7 @@ class Player
       int onBlock;
       bool landed;
       int animFrame;
-      int landFrame;
+      int landFrame = 0;
       bool slowingDown, facingLeft;
       // Images
       std::vector<SDL_Texture*> plyrFrames = std::vector<SDL_Texture*>(PLAYER_FRAMES + 1);
