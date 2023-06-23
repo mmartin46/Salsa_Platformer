@@ -382,33 +382,27 @@ void GameState::run_animation(Player *plyr)
 {
     SDL_Surface *surface;
 
-    if ((this->get_time() % 20 < 20))
+    if ((this->get_time() % 17 < 17))
     {
-        if ((((this->get_time()) % 20) <= 3.5))
+        if ((((this->get_time()) % 17) <= 3.5))
         {
             plyr->set_runFrame(0);
         }
-        else if (((this->get_time() % 20) > 3.5) && ((this->get_time() % 20) <= 7.5))
+        else if (((this->get_time() % 17) > 3.5) && ((this->get_time() % 17) <= 7.5))
         {
             plyr->set_runFrame(1);
         }
-        else if (((this->get_time() % 20) > 7.5) && ((this->get_time() % 20) <= 10))
+        else if (((this->get_time() % 17) > 7.5) && ((this->get_time() % 17) <= 10))
         {
             plyr->set_runFrame(2);
         }
-        else if (((this->get_time() % 20) > 10) && ((this->get_time() % 20) <= 13.5))
+        else if (((this->get_time() % 17) > 10) && ((this->get_time() % 17) <= 13.5))
         {
             plyr->set_runFrame(3);
         }
-        else if (((this->get_time() % 20) > 13.5) && ((this->get_time() % 20) <= 17))
+        else if (((this->get_time() % 17) > 13.5) && ((this->get_time() % 17) < 17))
         {
             plyr->set_runFrame(4);
         }
-        else
-        {
-            plyr->set_runFrame(5);
-        }
     }
-
-    //std::cout << plyr << ": " << plyr->get_runFrame() << std::endl;
 }
