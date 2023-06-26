@@ -192,6 +192,8 @@ class GameState
       inline SDL_Texture* get_life_label_texture() { return lblTexture; } 
       inline void set_taco_label_texture(SDL_Texture *t) { lblTexture = t; }
       inline SDL_Texture* get_taco_label_texture() { return lblTexture; } 
+ 
+      void level_transition();
 
       // Life
       inline int get_life(){ return life; }

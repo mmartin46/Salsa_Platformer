@@ -16,6 +16,8 @@
 #include "comp.hpp"
 #include "enemy.hpp"
 #include "entity.hpp"
+#include <thread>
+#include <chrono>
 #include "game.hpp"
 
 using std::vector;

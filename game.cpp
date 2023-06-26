@@ -33,8 +33,9 @@ GameState::GameState()
 
 void GameState::init(int level_choice)
 {
+    this->set_generation(0);
     this->set_level_choice(level_choice);
-    
+
     this->get_player()->set_x(210-PLAYER_WIDTH);
     this->get_player()->set_y(0-PLAYER_HEIGHT);
     this->get_player()->set_dx(0);
@@ -46,14 +47,13 @@ void GameState::init(int level_choice)
     this->get_comp_player()->set_dx(0);
     this->get_comp_player()->set_dy(0);
 
-
     this->set_tacos_eaten(0);
-    this->set_generation(0);
     this->loadImages();
     this->init_blocks(this->get_generation());
     this->render(this->get_renderer());
     this->set_life(100);
     this->set_time(0);
+    this->level_transition();
 }
 
 void GameState::render(SDL_Renderer *renderer)

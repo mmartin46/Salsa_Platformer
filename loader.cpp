@@ -54,6 +54,30 @@ void GameState::init_health_texture()
     SDL_FreeSurface(tmp);
 }
 
+void GameState::level_transition()
+{
+    using namespace std::this_thread;
+    using namespace std::chrono_literals;
+
+    SDL_SetRenderDrawColor(this->get_renderer(), 0, 0, 0, 255);
+
+    char str[128] = "";
+    sprintf(str, "Stage %u", (int) this->get_level_choice());
+
+    SDL_Color white = { 255, 255, 255, 255 };
+
+    SDL_Surface *tmp = TTF_RenderText_Blended(this->get_life_font(), str, white);
+    this->life_label.set_w(tmp->w);
+    this->life_label.set_h(tmp->h);
+    this->life_label.set_x(WINDOW_WIDTH / 2);
+    this->life_label.set_y(WINDOW_HEIGHT / 2);
+    this->set_life_label_texture(SDL_CreateTextureFromSurface(this->get_renderer(), tmp));
+    SDL_FreeSurface(tmp);
+
+
+    sleep_for(3s);
+}
+
 
 // Load images and create rending textures from the images
 void GameState::loadImages()
