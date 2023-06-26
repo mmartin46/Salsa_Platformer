@@ -13,6 +13,9 @@ GameState::GameState()
     this->set_maximum_y(FALL_DEATH);
     this->ptr = shared_ptr<Player>(new Player);
     this->cptr = shared_ptr<Player>(new CompPlayer);
+
+    this->players = { this->ptr, this->cptr };
+
     this->dim_area = shared_ptr<Backdrop>(new Backdrop);
     this->backdrop = shared_ptr<Backdrop>(new Backdrop);
     this->tilemap = Matrix<int> (MAP_ROWS, vector<int>(MAP_COLUMNS));
@@ -131,21 +134,17 @@ void GameState::render(SDL_Renderer *renderer)
 
     // Players
 
-    // draw a rectangle at player's position.
-    SDL_Rect rect = {  static_cast<int>(this->get_scrollX() + this->get_player()->get_x()), static_cast<int>(this->get_scrollY() + this->get_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
-    SDL_RenderCopyEx(this->get_renderer(), this->get_player()->get_player_frame(this->get_player()->get_animFrame()), NULL, &rect, 0, NULL, (SDL_RendererFlip)(this->get_player()->get_facingLeft() == 0));
-    // draw a rectangle at the computer player's position.
-    SDL_Rect crect = {  static_cast<int> (this->get_scrollX() + this->get_comp_player()->get_x()), static_cast<int>(this->get_scrollY() + this->get_comp_player()->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
-    SDL_RenderCopyEx(this->get_renderer(), this->get_comp_player()->get_player_frame(this->get_comp_player()->get_animFrame()), NULL, &crect, 0, NULL, (SDL_RendererFlip)(this->get_comp_player()->get_facingLeft() == 0));
+    // draw a rectangle at he player's position.
+    for (auto &p : players)
+    {
+        SDL_Rect prect = {  static_cast<int> (this->get_scrollX() + p->get_x()), static_cast<int>(this->get_scrollY() + p->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
+        SDL_RenderCopyEx(this->get_renderer(), p->get_player_frame(p->get_animFrame()), NULL, &prect, 0, NULL, (SDL_RendererFlip)(p->get_facingLeft() == 0));
+        // intializing landing animations
+        init_landing_rect(*p);
+        // initializing running animations
+        init_running_rect(*p);
+    }
 
-
-    // intializing landing animations
-    init_landing_rect(*this->get_player());
-    init_landing_rect(*this->get_comp_player());
-
-    // initializing running animations
-    init_running_rect(*this->get_player());
-    init_running_rect(*this->get_comp_player());
 
     if (this->get_level_choice() < 1)
     {   

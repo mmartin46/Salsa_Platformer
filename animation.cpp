@@ -220,7 +220,7 @@ void GameState::animate()
 
         // Make sure only the two pointers ptr and plyr
         // are the only ones that point the player.
-        if (plyr.use_count() == 2)
+        if (plyr.use_count() >= 2)
         {
             this->set_scrollX(-plyr->get_x() + WINDOW_WIDTH/2);
             this->set_scrollY(-plyr->get_y() + WINDOW_HEIGHT/2);

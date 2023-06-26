@@ -137,6 +137,9 @@ class GameState
       shared_ptr<Player> ptr;
       shared_ptr<Player> cptr;
 
+      // All players
+      vector<shared_ptr<Player> > players;
+
       // Computer Player Tracker
       vector<pair<double, double> > not_moving;
 
