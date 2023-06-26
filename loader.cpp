@@ -43,7 +43,7 @@ void GameState::create_block_textures(SDL_Surface *surface)
 void GameState::init_health_texture()
 {
     char str[128] = "";
-    sprintf(str, "Health: %u                      Tacos Eaten: %u", (int) this->get_life(), (int) this->get_tacos_eaten());
+    sprintf(str, "Health: %u                      Tacos Eaten: %u                Time: %u", (int) this->get_life(), (int) this->get_tacos_eaten(), (int) (this->get_time()));
 
     SDL_Color white = { 255, 255, 255, 255 };
 

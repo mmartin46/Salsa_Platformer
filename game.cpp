@@ -52,6 +52,8 @@ void GameState::init(int level_choice)
     this->loadImages();
     this->init_blocks(this->get_generation());
     this->render(this->get_renderer());
+    this->set_life(100);
+    this->set_time(0);
 }
 
 void GameState::render(SDL_Renderer *renderer)

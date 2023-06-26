@@ -249,7 +249,7 @@ void GameState::animate()
 
         // If the tacos eaten modulus 100 is equal
         // to zero set the life to 100.
-        if ((this->tacos_eaten % 100) == 0)
+        if ((this->get_tacos_eaten() % 100) == 0)
         {
             this->set_life(100);
         }
