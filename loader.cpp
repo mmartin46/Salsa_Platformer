@@ -59,23 +59,8 @@ void GameState::level_transition()
     using namespace std::this_thread;
     using namespace std::chrono_literals;
 
-    SDL_SetRenderDrawColor(this->get_renderer(), 0, 0, 0, 0);
-    SDL_RenderClear(this->get_renderer());
-
-
     char str[128] = "";
     sprintf(str, "Stage %u", (int) this->get_level_choice());
-
-    SDL_Color white = { 255, 255, 255, 255 };
-
-    SDL_Surface *tmp = TTF_RenderText_Blended(this->get_life_font(), str, white);
-    this->life_label.set_w(tmp->w);
-    this->life_label.set_h(tmp->h);
-    this->life_label.set_x(WINDOW_WIDTH / 2);
-    this->life_label.set_y(WINDOW_HEIGHT / 2);
-    this->set_life_label_texture(SDL_CreateTextureFromSurface(this->get_renderer(), tmp));
-    SDL_FreeSurface(tmp);
-
 
     sleep_for(3s);
 }
@@ -158,6 +143,7 @@ void GameState::loadImages()
     this->spriteVec.push_back(set_taco);
     this->spriteVec.push_back(set_enemy);
     this->spriteVec.push_back(set_spike);
+    this->spriteVec.push_back(set_transition_texture);
 
 
     // Default file arguments for get_surface()
@@ -167,6 +153,7 @@ void GameState::loadImages()
     surface_args.push_back({"img\\taco.png", "Cannot find block.png!\n\n"});
     surface_args.push_back({"img\\enemy.png", "Cannot find enemy.png!\n\n"});
     surface_args.push_back({"img\\spike.png", "Cannot find spike.png!\n\n"});
+    surface_args.push_back({"img\\transition_backdrop.png", "Cannot find transition_backdrop.png!\n\n"});
 
     vector<string> dont_use  = {"taco", "enemy", "spike"};
     // Loading background texture.
