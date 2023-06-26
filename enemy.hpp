@@ -52,5 +52,4 @@ class Spike : public Enemy
       bool slowingDown, facingLeft;   
 };
 
-
 #endif
