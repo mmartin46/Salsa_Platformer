@@ -231,9 +231,11 @@ void GameState::collision_handler()
         {
             if (this->tilemap.at(i).at(j) == world_map::BLOCK_COLLISION)
             {
-                collision_in_map(*this->get_player(), this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
-                collision_in_map(*this->get_comp_player(), this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
 
+                for (auto &p : players)
+                {
+                    collision_in_map(*p, this->tile, i, j, PLAYER_WIDTH, PLAYER_HEIGHT);
+                }
                 // // TODO: Debug onBlock
                 // if (collision_in_map(this->enemies.at(i).at(j), this->tile, i, j, ENEMY_WIDTH, ENEMY_HEIGHT))
                 // {
