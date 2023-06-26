@@ -255,7 +255,7 @@ void GameState::animate()
         }
 
         // Completing the level
-        if (this->tacos_eaten == 20)
+        if (this->get_tacos_eaten() > 20)
         {
             this->set_generation(1);
             std::cout << "TODO: Level Completed!\n";

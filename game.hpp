@@ -169,7 +169,6 @@ class GameState
       inline int get_generation() { return generate; }
       inline void set_generation(int n) { generate = n; }
 
-
       // Textures
       inline SDL_Texture* get_block() { return block; }
       inline void set_block(SDL_Texture* b) { block = b; }

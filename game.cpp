@@ -47,7 +47,7 @@ void GameState::init(int level_choice)
     this->get_comp_player()->set_dy(0);
 
 
-    this->tacos_eaten = 0;
+    this->set_tacos_eaten(0);
     this->set_generation(0);
     this->loadImages();
     this->init_blocks(this->get_generation());
