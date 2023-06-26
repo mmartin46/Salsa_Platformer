@@ -59,7 +59,9 @@ void GameState::level_transition()
     using namespace std::this_thread;
     using namespace std::chrono_literals;
 
-    SDL_SetRenderDrawColor(this->get_renderer(), 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(this->get_renderer(), 0, 0, 0, 0);
+    SDL_RenderClear(this->get_renderer());
+
 
     char str[128] = "";
     sprintf(str, "Stage %u", (int) this->get_level_choice());

@@ -85,7 +85,7 @@ class GameState
       SDL_Texture *spike;
       SDL_Texture *lblTexture;
       SDL_Texture *tcoTexture;
-
+      SDL_Texture *transition_texture;
 
       
       // Fonts
@@ -193,7 +193,11 @@ class GameState
       inline void set_taco_label_texture(SDL_Texture *t) { lblTexture = t; }
       inline SDL_Texture* get_taco_label_texture() { return lblTexture; } 
  
+
+      // Level Transition
       void level_transition();
+      inline SDL_Texture* get_transition_texture() { return transition_texture; }
+      inline void set_transition_texture(SDL_Texture *t) { transition_texture; }
 
       // Life
       inline int get_life(){ return life; }
