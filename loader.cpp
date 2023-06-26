@@ -90,15 +90,12 @@ void GameState::loadImages()
 
     SDL_Surface* surface;
 
-    // Landing landing textures
-    this->get_player()->load_landing_textures(this->get_renderer());
-    this->get_comp_player()->load_landing_textures(this->get_renderer());
-
-    // Loading running textures
-    this->get_player()->load_running_textures(this->get_renderer());
-    this->get_comp_player()->load_running_textures(this->get_renderer());
-
-
+    // Loading textures
+    for (auto &p : players)
+    {
+        p->load_landing_textures(this->get_renderer());
+        p->load_running_textures(this->get_renderer());
+    }
 
     // Players
     if (this->get_level_choice() < 1)
