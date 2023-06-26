@@ -30,6 +30,15 @@ void GameState::animate()
         cplyr->set_x(cplyr->get_x() + cplyr->get_dx());
         cplyr->set_y(cplyr->get_y() + cplyr->get_dy());
 
+        for (auto &p : players)
+        {
+            if (!p->get_onBlock())
+            {
+                p->set_landed(0);
+                p->set_landFrame(0);
+            }
+        }
+
         // Landing Animation
         if (!plyr->get_onBlock())
         {
