@@ -150,6 +150,7 @@ class GameState
 
 
       GameState();
+      void init(int);
       virtual ~GameState();
       // Level Generation
       inline void set_level_choice(int val) { level_choice = val; }
