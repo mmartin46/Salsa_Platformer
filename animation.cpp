@@ -26,7 +26,7 @@ void GameState::animate()
         shared_ptr<Player> cplyr = this->get_comp_player();
 
 
-        for (auto &p : players)
+        for (auto &p : *this->get_players())
         {
             p->set_x(p->get_x() + p->get_dx());
             p->set_y(p->get_y() + p->get_dy());
@@ -143,7 +143,7 @@ void GameState::animate()
         }
 
 
-        for (auto &p : players)
+        for (auto &p : *this->get_players())
         {
             // Movement Animation
             if (p->get_dx() != 0 && p->get_onBlock() && (p->get_slowingDown() == false) )
