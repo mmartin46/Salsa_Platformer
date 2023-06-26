@@ -25,9 +25,6 @@ GameState::GameState()
     this->spikes = Matrix<Spike> (MAP_ROWS, vector<Spike>(MAP_COLUMNS));
 
 
-
-
-
     this->set_time(0);
     this->set_scrollX(0);
     this->set_scrollY(0);

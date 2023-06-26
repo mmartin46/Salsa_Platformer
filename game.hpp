@@ -10,13 +10,6 @@
 #include "cmath"
 #include "utilities.cpp"
 
-/* Holds dimensions to something*/
-typedef struct {
-   int x;
-   int y;
-   int h;
-   int w;
-} Dimensions;
 
 /* Keeps track of two player coordinates.*/
 typedef struct {
@@ -148,12 +141,14 @@ class GameState
       vector<SDL_Texture*> plyrFrames = vector<SDL_Texture*>(4);
       vector<SDL_Texture*> enemyFrames = vector<SDL_Texture*>(2);
    public:
-
-      shared_ptr<Player> get_player() { return ptr; };
+      // Backdrop
       shared_ptr<Backdrop> get_backdrop() { return backdrop; }
       shared_ptr<Backdrop> get_dim_area() { return dim_area; }
 
+      // Players
+      shared_ptr<Player> get_player() { return ptr; };
       shared_ptr<Player> get_comp_player() { return cptr; }
+      vector<shared_ptr<Player> > get_players() {return players; };
 
       void init_landing_rect(Player &);
       void init_running_rect(Player &);
