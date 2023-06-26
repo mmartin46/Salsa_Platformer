@@ -16,7 +16,6 @@ int main(int argc, char *argv[] )
 {
     // 0 - A level can be generated
     // 1 - A level shouldn't be generated.
-    int generate = 0;
 
 
     GameState gameState;
@@ -26,12 +25,9 @@ int main(int argc, char *argv[] )
 
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);       // Intialize SDL2
 
-
+    gameState.set_generation(0);
     gameState.set_level_choice(generate_random_number());
-
-
-
-    gameState.init_blocks(generate);
+    gameState.init_blocks(gameState.get_generation());
 
     //gameState.init_blocks(19);
     // Create an application window with the following settings:
@@ -69,7 +65,7 @@ int main(int argc, char *argv[] )
         // Check for events
         done = gameState.event_handler(window);
 
-        if (!generate)
+        if (gameState.get_generation() == 0)
         {
             gameState.animate();
         }

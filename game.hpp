@@ -124,6 +124,7 @@ class GameState
       int maximum_y;
       int maximum_x;
       int random_int;
+      int generate;
 
       // Players
       shared_ptr<Player> ptr;
@@ -156,6 +157,9 @@ class GameState
       inline void set_maximum_y(int my) { maximum_y = my; }
       inline int get_maximum_y() { return maximum_y; }
       inline void set_maximum_x(int mx) { maximum_x = mx; }
+
+      inline int get_generation() { return generate; }
+      inline void set_generation(int n) { generate = n; }
 
 
       // Textures
