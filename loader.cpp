@@ -99,17 +99,15 @@ void GameState::loadImages()
     this->get_comp_player()->load_running_textures(this->get_renderer());
 
 
-    // Level Choice
-    if (this->get_level_choice() < 20)
+
+    // Players
+    if (this->get_level_choice() < 1)
     {
+        // Level Choice
         surface = get_surface("img\\front_drop.png", "Cannot find front_drop.png!\n\n");
         this->get_dim_area()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
         SDL_FreeSurface(surface);
-    }
 
-    // Players
-    if (this->get_level_choice() < 20)
-    {
         // Player Frames
         modify_player_textures(this->get_player(), this->get_renderer(), "img\\playerwfire", 
                               "Cannot find playerwfire", PLAYER_WITH_FIRE_FRAMES, surface);        
@@ -149,32 +147,38 @@ void GameState::loadImages()
 
     vector<string> dont_use  = {"taco", "enemy", "spike"};
     // Loading background texture.
-    if (this->get_level_choice() < 20)
-    {
-        create_block_textures(surface);
-        surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
-        this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);  
-    }
-    else if (this->get_level_choice() >= 20 && this->get_level_choice() < 40)
-    {
-        modify_block_textures(this->surface_args, "_1", dont_use);
-        create_block_textures(surface);
 
-        surface = get_surface("img\\world_bg_1.png", "Cannot find world_bg_1.png!\n\n");
-        this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);   
 
-    }
-    else if (this->get_level_choice() >= 40)
+    switch (this->get_level_choice())
     {
-        modify_block_textures(this->surface_args, "_2", dont_use);
-        create_block_textures(surface);
+        case 0:
+            create_block_textures(surface);
+            surface = get_surface("img\\build_block.png", "Cannot find build_block.png!\n\n");
+            this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+            SDL_FreeSurface(surface);  
+            break;
+        case 1:
+            modify_block_textures(this->surface_args, "_1", dont_use);
+            create_block_textures(surface);
 
-        surface = get_surface("img\\world_bg_2.png", "Cannot find world_bg_2.png!\n\n");
-        this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
-        SDL_FreeSurface(surface);   
+            surface = get_surface("img\\world_bg_1.png", "Cannot find world_bg_1.png!\n\n");
+            this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+            SDL_FreeSurface(surface);  
+            break;
+        case 2:
+            modify_block_textures(this->surface_args, "_2", dont_use);
+            create_block_textures(surface);
+
+            surface = get_surface("img\\world_bg_2.png", "Cannot find world_bg_2.png!\n\n");
+            this->get_backdrop()->set_backdrop_texture(SDL_CreateTextureFromSurface(this->get_renderer(), surface));
+            SDL_FreeSurface(surface);  
+            break;
+        default:
+            std::cout << "loadImages(): Level out of range.\n";
+            exit(0);
+            break;
     }
+
 }
 
 void GameState::loadGame()
@@ -191,65 +195,63 @@ void GameState::init_blocks(int generated)
         int x, y;
 
         int choice = this->get_level_choice();
-
-        if (choice < 20)
+        for (x = 0; x < MAP_ROWS; ++x)
         {
-            for (x = 0; x < MAP_ROWS; ++x)
+            for (y = 0; y < MAP_COLUMNS; ++y)
             {
-                for (y = 0; y < MAP_COLUMNS; ++y)
+                if (choice == 0)
                 {
                     tilemap.at(x).at(y) = world_map::map[x][y];
                 }
-            }
-        }
-        else if (choice >= 20 && choice < 40)
-        {   
-            for (x = 0; x < MAP_ROWS; ++x)
-            {
-                for (y = 0; y < MAP_COLUMNS; ++y)
+                else if (choice == 1)
                 {
                     tilemap.at(x).at(y) = world_map::map_2[x][y];
                 }
-            }
-        }
-        else if (choice >= 40)
-        {
-            for (x = 0; x < MAP_ROWS; ++x)
-            {
-                for (y = 0; y < MAP_COLUMNS; ++y)
+                else if (choice == 2)
                 {
                     tilemap.at(x).at(y) = world_map::map_3[x][y];
                 }
-            }        
+            }
+        }
+
+        Entity dim;
+
+        // Set the backdrop dimensions
+        switch (choice)
+        {
+            case 0:
+                dim.set_x(-300);
+                dim.set_y(-300);
+                dim.set_h(5000);
+                dim.set_w(5000);
+
+                this->get_dim_area()->set_x(0);
+                this->get_dim_area()->set_y(0);
+                this->get_dim_area()->set_h(1000);
+                this->get_dim_area()->set_w(1000);
+                break;
+            case 1:
+                dim.set_x(-50);
+                dim.set_y(-200);
+                dim.set_h(598);
+                dim.set_w(900);
+                break;
+            case 2:
+                dim.set_x(-30);
+                dim.set_y(-90);
+                dim.set_h(380);
+                dim.set_w(640);
+                break;
+            default:
+                std::cout << "init_blocks(): Level out of range!";
+                exit(1);
         }
 
 
-        if (choice < 20)
-        {
-            this->get_dim_area()->set_x(0);
-            this->get_dim_area()->set_y(0);
-            this->get_dim_area()->set_h(1000);
-            this->get_dim_area()->set_w(1000);
-
-            this->get_backdrop()->set_x(-300);
-            this->get_backdrop()->set_y(-300);
-            this->get_backdrop()->set_h(5000);
-            this->get_backdrop()->set_w(5000);
-        }
-        else if (choice >= 20 && choice < 40)
-        {
-            this->get_backdrop()->set_x(-50);
-            this->get_backdrop()->set_y(-200);   
-            this->get_backdrop()->set_h(598);
-            this->get_backdrop()->set_w(900);        
-        }
-        else if (choice >= 40)
-        {
-            this->get_backdrop()->set_x(-30);
-            this->get_backdrop()->set_y(-90);   
-            this->get_backdrop()->set_h(380);
-            this->get_backdrop()->set_w(640); 
-        }
+        this->get_backdrop()->set_x(dim.get_x());
+        this->get_backdrop()->set_y(dim.get_y());
+        this->get_backdrop()->set_h(dim.get_h());
+        this->get_backdrop()->set_w(dim.get_w());
 
         // Intialize the map
         for (x = 0; x < MAP_ROWS; ++x)

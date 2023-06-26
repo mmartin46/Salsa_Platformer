@@ -72,7 +72,7 @@ void GameState::animate()
             {
                 if ((this->get_time()) % 20 <= 5)
                 {
-                    if (this->get_level_choice() < 20)
+                    if (this->get_level_choice() < 1)
                     {
                         plyr->set_animFrame(6);
                     }
@@ -83,7 +83,7 @@ void GameState::animate()
                 }
                 else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
                 {
-                    if (this->get_level_choice() < 20)
+                    if (this->get_level_choice() < 1)
                     {
                         plyr->set_animFrame(7);
                     }
@@ -94,7 +94,7 @@ void GameState::animate()
                 }
                 else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) < 20)
                 {
-                    if (this->get_level_choice() < 20)
+                    if (this->get_level_choice() < 1)
                     {
                         plyr->set_animFrame(8);
                     }
@@ -105,7 +105,7 @@ void GameState::animate()
                 }
                 else
                 {
-                    if (this->get_level_choice() < 20)
+                    if (this->get_level_choice() < 1)
                     {
                         plyr->set_animFrame(6);
                     }
@@ -259,7 +259,9 @@ void GameState::animate()
         {
             this->set_generation(1);
             std::cout << "TODO: Level Completed!\n";
-            this->init(1);
+            ++level_choice;
+            std::cout << level_choice << std::endl;
+            this->init(level_choice);
         }
     }
 }

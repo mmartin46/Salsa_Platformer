@@ -26,7 +26,7 @@ int main(int argc, char *argv[] )
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);       // Intialize SDL2
 
     gameState.set_generation(0);
-    gameState.set_level_choice(generate_random_number());
+    gameState.set_level_choice(0);
     gameState.init_blocks(gameState.get_generation());
 
     //gameState.init_blocks(19);

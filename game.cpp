@@ -20,6 +20,11 @@ GameState::GameState()
     this->soiltile = Matrix<Soil> (MAP_ROWS, vector<Soil>(MAP_COLUMNS));
     this->enemies = Matrix<Enemy> (MAP_ROWS, vector<Enemy>(MAP_COLUMNS));
     this->spikes = Matrix<Spike> (MAP_ROWS, vector<Spike>(MAP_COLUMNS));
+
+
+
+
+
     this->set_time(0);
     this->set_scrollX(0);
     this->set_scrollY(0);
@@ -56,21 +61,24 @@ void GameState::render(SDL_Renderer *renderer)
     SDL_RenderClear(renderer);
 
     // Level color
-    if (this->get_level_choice() < 20)
+    switch (this->get_level_choice())
     {
-        // Level 1
-        SDL_SetRenderDrawColor(renderer, 50, 60, 57, 255);
+        case 0:
+            SDL_SetRenderDrawColor(renderer, 50, 60, 57, 255);
+            break;
+        case 1:
+            SDL_SetRenderDrawColor(renderer, 50, 60, 57, 255);
+            break;
+        case 2:
+            SDL_SetRenderDrawColor(renderer, 73, 118, 201, 255);
+            break;
+        default:
+            std::cout << "render(): Level out of bounds\n";
+            exit(1);
     }
-    else if (this->get_level_choice() >= 20 && this->get_level_choice() < 40)
-    {
-        // Level 2
-        SDL_SetRenderDrawColor(renderer, 73, 118, 201, 255);   
-    }
-    else if (this->get_level_choice() >= 40)
-    {
-        // Level 3
-        SDL_SetRenderDrawColor(renderer, 73, 118, 201, 255);           
-    }
+
+
+
 
     // Background
     SDL_Rect bgRect = { (int)((this->scrollX / 20) + this->get_backdrop()->get_x()),(int)((this->scrollY / 30) + this->get_backdrop()->get_y()), this->get_backdrop()->get_w(), this->get_backdrop()->get_h() };
@@ -137,7 +145,7 @@ void GameState::render(SDL_Renderer *renderer)
     init_running_rect(*this->get_player());
     init_running_rect(*this->get_comp_player());
 
-    if (this->get_level_choice() < 20)
+    if (this->get_level_choice() < 1)
     {   
         SDL_Rect dimRect = {  static_cast<int>((this->get_scrollX() + this->get_player()->get_x()) - 490), static_cast<int>((this->get_scrollY() + this->get_player()->get_y()) - 450), this->get_dim_area()->get_w(), this->get_dim_area()->get_h() };
         SDL_RenderCopy(this->get_renderer(), this->get_dim_area()->get_backdrop_texture(), NULL, &dimRect);

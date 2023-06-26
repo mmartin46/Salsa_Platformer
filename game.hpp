@@ -10,6 +10,13 @@
 #include "cmath"
 #include "utilities.cpp"
 
+/* Holds dimensions to something*/
+typedef struct {
+   int x;
+   int y;
+   int h;
+   int w;
+} Dimensions;
 
 /* Keeps track of two player coordinates.*/
 typedef struct {
