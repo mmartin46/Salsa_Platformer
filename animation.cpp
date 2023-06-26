@@ -172,24 +172,19 @@ void GameState::animate()
                     }
                 }
             }
+
+            // Jumping animations
+            if (!p->get_onBlock())
+            {
+                p->set_animFrame(4);
+            }
+
+            // Player Gravity    
+            p->apply_gravity();
         }
 
 
 
-        // Jumping animations
-        if (!plyr->get_onBlock())
-        {
-            plyr->set_animFrame(4);
-        }
-        if (!cplyr->get_onBlock())
-        {
-            cplyr->set_animFrame(4);
-        }
-
-
-        // Player Gravity    
-        plyr->apply_gravity();
-        cplyr->apply_gravity();
 
         // Scrolling
 
