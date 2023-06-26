@@ -23,45 +23,34 @@ void GameState::animate()
 
         // plyr movement
         shared_ptr<Player> plyr = this->get_player();
-        plyr->set_x(plyr->get_x() + plyr->get_dx());
-        plyr->set_y(plyr->get_y() + plyr->get_dy());
-
         shared_ptr<Player> cplyr = this->get_comp_player();
-        cplyr->set_x(cplyr->get_x() + cplyr->get_dx());
-        cplyr->set_y(cplyr->get_y() + cplyr->get_dy());
+
 
         for (auto &p : players)
         {
+            p->set_x(p->get_x() + p->get_dx());
+            p->set_y(p->get_y() + p->get_dy());
+
             if (!p->get_onBlock())
             {
                 p->set_landed(0);
                 p->set_landFrame(0);
             }
-        }
+ 
+            // Landing Animation
+            if (!p->get_onBlock())
+            {
+                p->set_landed(0);
+                p->set_landFrame(0);
+            }
 
-        // Landing Animation
-        if (!plyr->get_onBlock())
-        {
-            plyr->set_landed(0);
-            plyr->set_landFrame(0);
+            // Running Animation
+            if (!p->get_dx() || (p->get_dy() != 0))
+            {
+                p->set_runFrame(0);
+            }
+ 
         }
-        if (!cplyr->get_onBlock())
-        {
-            cplyr->set_landed(0);
-            cplyr->set_landFrame(0);
-        }
-
-
-        // Running Animation
-        if (!plyr->get_dx() || (plyr->get_dy() != 0))
-        {
-            plyr->set_runFrame(0);
-        }
-        if (!cplyr->get_dx() || (plyr->get_dy() != 0))
-        {
-            cplyr->set_runFrame(0);
-        }
-
 
 
         // enemy movement
@@ -154,60 +143,37 @@ void GameState::animate()
         }
 
 
+        for (auto &p : players)
+        {
+            // Movement Animation
+            if (p->get_dx() != 0 && p->get_onBlock() && (p->get_slowingDown() == false) )
+            {
+                if (this->get_time() % 20 < 20)
+                {
+                    if ((this->get_time()) % 20 <= 5)
+                    {
+                        p->set_animFrame(1);
+                    }
+                    else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
+                    {
+                        p->set_animFrame(2);
+                    }
+                    else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
+                    {
+                        p->set_animFrame(3);
+                    }
+                    else if ((this->get_time() % 20) > 15 && (this->get_time() % 20) <= 20)
+                    {
+                        p->set_animFrame(4);
+                    }
+                    else
+                    {
+                        p->set_animFrame(0);
+                    }
+                }
+            }
+        }
 
-        // Movement Animation
-        if (plyr->get_dx() != 0 && plyr->get_onBlock() && (plyr->get_slowingDown() == false) )
-        {
-            if (this->get_time() % 20 < 20)
-            {
-                if ((this->get_time()) % 20 <= 5)
-                {
-                    plyr->set_animFrame(1);
-                }
-                else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
-                {
-                    plyr->set_animFrame(2);
-                }
-                else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
-                {
-                    plyr->set_animFrame(3);
-                }
-                else if ((this->get_time() % 20) > 15 && (this->get_time() % 20) <= 20)
-                {
-                    plyr->set_animFrame(4);
-                }
-                else
-                {
-                    plyr->set_animFrame(0);
-                }
-            }
-        }
-        if (cplyr->get_dx() != 0 && cplyr->get_onBlock() && (cplyr->get_slowingDown() == false) )
-        {
-            if (this->get_time() % 20 < 20)
-            {
-                if ((this->get_time()) % 20 <= 5)
-                {
-                    cplyr->set_animFrame(1);
-                }
-                else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
-                {
-                    cplyr->set_animFrame(2);
-                }
-                else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
-                {
-                    cplyr->set_animFrame(3);
-                }
-                else if ((this->get_time() % 20) > 15 && (this->get_time() % 20) <= 20)
-                {
-                    cplyr->set_animFrame(4);
-                }
-                else
-                {
-                    cplyr->set_animFrame(0);
-                }
-            }
-        }
 
 
         // Jumping animations
