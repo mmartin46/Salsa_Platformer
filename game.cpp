@@ -132,7 +132,7 @@ void GameState::render(SDL_Renderer *renderer)
     // Players
 
     // draw a rectangle at he player's position.
-    for (auto &p : players)
+    for (auto &p : *this->get_players())
     {
         SDL_Rect prect = {  static_cast<int> (this->get_scrollX() + p->get_x()), static_cast<int>(this->get_scrollY() + p->get_y()), PLAYER_WIDTH, PLAYER_HEIGHT };
         SDL_RenderCopyEx(this->get_renderer(), p->get_player_frame(p->get_animFrame()), NULL, &prect, 0, NULL, (SDL_RendererFlip)(p->get_facingLeft() == 0));

@@ -148,7 +148,7 @@ class GameState
       // Players
       shared_ptr<Player> get_player() { return ptr; };
       shared_ptr<Player> get_comp_player() { return cptr; }
-      vector<shared_ptr<Player> > get_players() {return players; };
+      vector<shared_ptr<Player> >* get_players() { return &players; };
 
       void init_landing_rect(Player &);
       void init_running_rect(Player &);
