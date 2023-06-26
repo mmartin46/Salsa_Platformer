@@ -13,243 +13,254 @@ of the entities.
 // Allows the players to move
 void GameState::animate()
 {
-    // add time
-    this->set_time(this->get_time() + 1);
-
-    enemy_movement();
-    computer_player_movement();
-
-    // plyr movement
-    shared_ptr<Player> plyr = this->get_player();
-    plyr->set_x(plyr->get_x() + plyr->get_dx());
-    plyr->set_y(plyr->get_y() + plyr->get_dy());
-
-    shared_ptr<Player> cplyr = this->get_comp_player();
-    cplyr->set_x(cplyr->get_x() + cplyr->get_dx());
-    cplyr->set_y(cplyr->get_y() + cplyr->get_dy());
-
-    // Landing Animation
-    if (!plyr->get_onBlock())
+    if (this->get_generation() == 0)
     {
-        plyr->set_landed(0);
-        plyr->set_landFrame(0);
-    }
-    if (!cplyr->get_onBlock())
-    {
-        cplyr->set_landed(0);
-        cplyr->set_landFrame(0);
-    }
+        // add time
+        this->set_time(this->get_time() + 1);
 
+        enemy_movement();
+        computer_player_movement();
 
-    // Running Animation
-    if (!plyr->get_dx() || (plyr->get_dy() != 0))
-    {
-        plyr->set_runFrame(0);
-    }
-    if (!cplyr->get_dx() || (plyr->get_dy() != 0))
-    {
-        cplyr->set_runFrame(0);
-    }
+        // plyr movement
+        shared_ptr<Player> plyr = this->get_player();
+        plyr->set_x(plyr->get_x() + plyr->get_dx());
+        plyr->set_y(plyr->get_y() + plyr->get_dy());
 
+        shared_ptr<Player> cplyr = this->get_comp_player();
+        cplyr->set_x(cplyr->get_x() + cplyr->get_dx());
+        cplyr->set_y(cplyr->get_y() + cplyr->get_dy());
 
-
-    // enemy movement
-    for (int i = 0; i < MAP_ROWS; ++i)
-    {
-        for (int j = 0; j < MAP_COLUMNS; ++j)
+        // Landing Animation
+        if (!plyr->get_onBlock())
         {
-            this->enemies.at(i).at(j).set_x(this->enemies.at(i).at(j).get_x() + this->enemies.at(i).at(j).get_dx());
-            this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() + this->enemies.at(i).at(j).get_dy());
+            plyr->set_landed(0);
+            plyr->set_landFrame(0);
         }
-    }    
-
-    // Idle Animation
-    if (plyr->get_dx() == 0 && plyr->get_dy() == 0)
-    {
-        if (this->get_time() % 20 < 20)
+        if (!cplyr->get_onBlock())
         {
-            if ((this->get_time()) % 20 <= 5)
+            cplyr->set_landed(0);
+            cplyr->set_landFrame(0);
+        }
+
+
+        // Running Animation
+        if (!plyr->get_dx() || (plyr->get_dy() != 0))
+        {
+            plyr->set_runFrame(0);
+        }
+        if (!cplyr->get_dx() || (plyr->get_dy() != 0))
+        {
+            cplyr->set_runFrame(0);
+        }
+
+
+
+        // enemy movement
+        for (int i = 0; i < MAP_ROWS; ++i)
+        {
+            for (int j = 0; j < MAP_COLUMNS; ++j)
             {
-                if (this->get_level_choice() < 20)
+                this->enemies.at(i).at(j).set_x(this->enemies.at(i).at(j).get_x() + this->enemies.at(i).at(j).get_dx());
+                this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() + this->enemies.at(i).at(j).get_dy());
+            }
+        }    
+
+        // Idle Animation
+        if (plyr->get_dx() == 0 && plyr->get_dy() == 0)
+        {
+            if (this->get_time() % 20 < 20)
+            {
+                if ((this->get_time()) % 20 <= 5)
                 {
-                    plyr->set_animFrame(6);
+                    if (this->get_level_choice() < 20)
+                    {
+                        plyr->set_animFrame(6);
+                    }
+                    else
+                    {
+                        plyr->set_animFrame(7);
+                    }
+                }
+                else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
+                {
+                    if (this->get_level_choice() < 20)
+                    {
+                        plyr->set_animFrame(7);
+                    }
+                    else
+                    {
+                        plyr->set_animFrame(8);
+                    }
+                }
+                else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) < 20)
+                {
+                    if (this->get_level_choice() < 20)
+                    {
+                        plyr->set_animFrame(8);
+                    }
+                    else
+                    {
+                        plyr->set_animFrame(9);
+                    }
                 }
                 else
                 {
-                    plyr->set_animFrame(7);
+                    if (this->get_level_choice() < 20)
+                    {
+                        plyr->set_animFrame(6);
+                    }
+                    else
+                    {
+                        plyr->set_animFrame(7);
+                    }
                 }
             }
-            else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
+        }
+
+        if (cplyr->get_dx() == 0 && cplyr->get_dy() == 0)
+        {
+            if (this->get_time() % 20 < 20)
             {
-                if (this->get_level_choice() < 20)
+                if ((this->get_time()) % 20 <= 5)
                 {
-                    plyr->set_animFrame(7);
+                    cplyr->set_animFrame(5);
+                }
+                else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 7.5)
+                {
+                    cplyr->set_animFrame(6);
+                }
+                else if ((this->get_time() % 20) > 7.5 && (this->get_time() % 20) <= 10)
+                {
+                    cplyr->set_animFrame(7);
+                }
+                else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
+                {
+                    cplyr->set_animFrame(8);
                 }
                 else
                 {
-                    plyr->set_animFrame(8);
+                    cplyr->set_animFrame(6);
                 }
             }
-            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) < 20)
+        }
+
+
+
+        // Movement Animation
+        if (plyr->get_dx() != 0 && plyr->get_onBlock() && (plyr->get_slowingDown() == false) )
+        {
+            if (this->get_time() % 20 < 20)
             {
-                if (this->get_level_choice() < 20)
+                if ((this->get_time()) % 20 <= 5)
                 {
-                    plyr->set_animFrame(8);
+                    plyr->set_animFrame(1);
+                }
+                else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
+                {
+                    plyr->set_animFrame(2);
+                }
+                else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
+                {
+                    plyr->set_animFrame(3);
+                }
+                else if ((this->get_time() % 20) > 15 && (this->get_time() % 20) <= 20)
+                {
+                    plyr->set_animFrame(4);
                 }
                 else
                 {
-                    plyr->set_animFrame(9);
+                    plyr->set_animFrame(0);
                 }
             }
-            else
+        }
+        if (cplyr->get_dx() != 0 && cplyr->get_onBlock() && (cplyr->get_slowingDown() == false) )
+        {
+            if (this->get_time() % 20 < 20)
             {
-                if (this->get_level_choice() < 20)
+                if ((this->get_time()) % 20 <= 5)
                 {
-                    plyr->set_animFrame(6);
+                    cplyr->set_animFrame(1);
+                }
+                else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
+                {
+                    cplyr->set_animFrame(2);
+                }
+                else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
+                {
+                    cplyr->set_animFrame(3);
+                }
+                else if ((this->get_time() % 20) > 15 && (this->get_time() % 20) <= 20)
+                {
+                    cplyr->set_animFrame(4);
                 }
                 else
                 {
-                    plyr->set_animFrame(7);
+                    cplyr->set_animFrame(0);
                 }
             }
         }
-    }
 
-    if (cplyr->get_dx() == 0 && cplyr->get_dy() == 0)
-    {
-        if (this->get_time() % 20 < 20)
+
+        // Jumping animations
+        if (!plyr->get_onBlock())
         {
-            if ((this->get_time()) % 20 <= 5)
+            plyr->set_animFrame(4);
+        }
+        if (!cplyr->get_onBlock())
+        {
+            cplyr->set_animFrame(4);
+        }
+
+
+        // Player Gravity    
+        plyr->apply_gravity();
+        cplyr->apply_gravity();
+
+        // Scrolling
+
+        // Make sure only the two pointers ptr and plyr
+        // are the only ones that point the player.
+        if (plyr.use_count() == 2)
+        {
+            this->set_scrollX(-plyr->get_x() + WINDOW_WIDTH/2);
+            this->set_scrollY(-plyr->get_y() + WINDOW_HEIGHT/2);
+
+            if (this->get_scrollX() > 0)
             {
-                cplyr->set_animFrame(5);
-            }
-            else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 7.5)
-            {
-                cplyr->set_animFrame(6);
-            }
-            else if ((this->get_time() % 20) > 7.5 && (this->get_time() % 20) <= 10)
-            {
-                cplyr->set_animFrame(7);
-            }
-            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
-            {
-                cplyr->set_animFrame(8);
-            }
-            else
-            {
-                cplyr->set_animFrame(6);
+                this->set_scrollX(0);
             }
         }
-    }
+        // if (this->get_scrollX() < -38000+320)
+        // {
+        //     this->set_scrollX(-38000+320);
+        // }
 
-
-
-    // Movement Animation
-    if (plyr->get_dx() != 0 && plyr->get_onBlock() && (plyr->get_slowingDown() == false) )
-    {
-        if (this->get_time() % 20 < 20)
+        // Player falls off screen
+        if (plyr->get_y() >= this->get_maximum_y())
         {
-            if ((this->get_time()) % 20 <= 5)
-            {
-                plyr->set_animFrame(1);
-            }
-            else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
-            {
-                plyr->set_animFrame(2);
-            }
-            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
-            {
-                plyr->set_animFrame(3);
-            }
-            else if ((this->get_time() % 20) > 15 && (this->get_time() % 20) <= 20)
-            {
-                plyr->set_animFrame(4);
-            }
-            else
-            {
-                plyr->set_animFrame(0);
-            }
+            exit(0);        
         }
-    }
-    if (cplyr->get_dx() != 0 && cplyr->get_onBlock() && (cplyr->get_slowingDown() == false) )
-    {
-        if (this->get_time() % 20 < 20)
+        if (cplyr->get_y() >= this->get_maximum_y())
         {
-            if ((this->get_time()) % 20 <= 5)
-            {
-                cplyr->set_animFrame(1);
-            }
-            else if ((this->get_time() % 20) > 5 && (this->get_time() % 20) <= 10)
-            {
-                cplyr->set_animFrame(2);
-            }
-            else if ((this->get_time() % 20) > 10 && (this->get_time() % 20) <= 15)
-            {
-                cplyr->set_animFrame(3);
-            }
-            else if ((this->get_time() % 20) > 15 && (this->get_time() % 20) <= 20)
-            {
-                cplyr->set_animFrame(4);
-            }
-            else
-            {
-                cplyr->set_animFrame(0);
-            }
+            cplyr->set_x(plyr->get_x() - 20);
+            cplyr->set_y(plyr->get_y() - 20);       
         }
-    }
 
 
-    // Jumping animations
-    if (!plyr->get_onBlock())
-    {
-        plyr->set_animFrame(4);
-    }
-    if (!cplyr->get_onBlock())
-    {
-        cplyr->set_animFrame(4);
-    }
-
-
-    // Player Gravity    
-    plyr->apply_gravity();
-    cplyr->apply_gravity();
-
-    // Scrolling
-
-    // Make sure only the two pointers ptr and plyr
-    // are the only ones that point the player.
-    if (plyr.use_count() == 2)
-    {
-        this->set_scrollX(-plyr->get_x() + WINDOW_WIDTH/2);
-        this->set_scrollY(-plyr->get_y() + WINDOW_HEIGHT/2);
-
-        if (this->get_scrollX() > 0)
+        // If the tacos eaten modulus 100 is equal
+        // to zero set the life to 100.
+        if ((this->tacos_eaten % 100) == 0)
         {
-            this->set_scrollX(0);
+            this->set_life(100);
         }
-    }
-    // if (this->get_scrollX() < -38000+320)
-    // {
-    //     this->set_scrollX(-38000+320);
-    // }
 
-    // Player falls off screen
-    if (plyr->get_y() >= this->get_maximum_y())
-    {
-        exit(0);        
-    }
-    if (cplyr->get_y() >= this->get_maximum_y())
-    {
-        cplyr->set_x(plyr->get_x() - 20);
-        cplyr->set_y(plyr->get_y() - 20);       
-    }
-
-
-    // If the tacos eaten modulus 100 is equal
-    // to zero set the life to 100.
-    if ((this->tacos_eaten % 100) == 0)
-    {
-        this->set_life(100);
+        // Completing the level
+        if (this->tacos_eaten == 200)
+        {
+            this->set_generation(1);
+            std::cout << "TODO: Level Completed!\n";
+            exit(0);
+        }
     }
 }
 
