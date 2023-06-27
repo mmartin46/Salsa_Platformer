@@ -64,7 +64,7 @@ void GameState::level_transition()
     using namespace std::chrono_literals;
 
     char str[128] = "";
-    if ((this->get_level_choice() + 1) < 4)
+    if ((this->get_level_choice() + 1) < MAX_LEVELS)
     {
         sprintf(str, "Stage %u", (int) (this->get_level_choice() + 1));
     }

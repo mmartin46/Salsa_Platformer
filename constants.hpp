@@ -10,6 +10,9 @@
 #define STRETCH_WIDTH 1280
 #define STRETCH_HEIGHT 720
 
+
+#define MAX_LEVELS 4
+
 #define WINDOW_WIDTH 420
 #define WINDOW_HEIGHT 236
 
