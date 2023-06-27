@@ -78,7 +78,7 @@ void GameState::level_transition()
     this->set_stage_label_texture(SDL_CreateTextureFromSurface(this->get_renderer(), tmp));
     SDL_FreeSurface(tmp);
 
-    SDL_Rect stageRect = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, (tmp->w/3), tmp->h };
+    SDL_Rect stageRect = { (WINDOW_WIDTH / 2) - 100, (WINDOW_HEIGHT / 2), this->stage_label.get_w(), this->stage_label.get_h() };
     SDL_RenderCopy(this->get_renderer(), this->get_stage_label_texture(), NULL, &stageRect );
 
     SDL_RenderPresent(this->get_renderer());

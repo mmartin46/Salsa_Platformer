@@ -55,12 +55,14 @@ int main(int argc, char *argv[] )
     int done = 0;
     SDL_Event event;
 
+    gameState.level_transition();
+
+
     // Event loop
     while (!done)
     {
         // Displays the x and y position of the player
         //std::cout << gameState.plyr.get_x() << " " << gameState.plyr.get_y() << std::endl;
-
 
         // Check for events
         done = gameState.event_handler(window);
