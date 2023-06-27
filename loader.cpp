@@ -72,14 +72,17 @@ void GameState::level_transition()
 
     SDL_Color white = { 255, 255, 255, 255 };
 
-    SDL_Surface *tmp = TTF_RenderText_Blended(this->get_life_font(), str, white);
-    this->set_life_label_texture(SDL_CreateTextureFromSurface(this->get_renderer(), tmp));
+    SDL_Surface *tmp = TTF_RenderText_Blended(this->get_stage_font(), str, white);
+    this->stage_label.set_w(tmp->w);
+    this->stage_label.set_h(tmp->h);
+    this->set_stage_label_texture(SDL_CreateTextureFromSurface(this->get_renderer(), tmp));
     SDL_FreeSurface(tmp);
 
     SDL_Rect stageRect = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, (tmp->w/3), tmp->h };
-    SDL_RenderCopy(this->get_renderer(), this->get_life_label_texture(), NULL, &stageRect );
+    SDL_RenderCopy(this->get_renderer(), this->get_stage_label_texture(), NULL, &stageRect );
 
-    sleep_for(3s);
+    SDL_RenderPresent(this->get_renderer());
+    sleep_for(1s);
 }
 
 
@@ -95,17 +98,26 @@ void GameState::loadImages()
     set_life_font(TTF_OpenFont("img\\ka1.ttf", 48));
     if (!this->get_life_font())
     {
-        cout << "Cannot find font file!\n\n";
+        cout << "life_font: Cannot find font file!\n\n";
         SDL_Quit();
         exit(1);
     }
     set_taco_font(TTF_OpenFont("img\\ka1.ttf", 48));
     if (!this->get_taco_font())
     {
-        cout << "Cannot find font file!\n\n";
+        cout << "taco_font: Cannot find font file!\n\n";
         SDL_Quit();
         exit(1);
     }
+
+    set_stage_font(TTF_OpenFont("img\\ka1.ttf", 48));
+    if (!this->get_stage_font())
+    {
+        cout << "stage_font: Cannot find font file!\n\n";
+        SDL_Quit();
+        exit(1);
+    }
+
 
     // Load Sounds
     this->set_jump_music(Mix_LoadWAV("sounds\\jump.wav"));
@@ -326,6 +338,10 @@ void GameState::init_blocks(int generated)
                 }
             }
         }
+    }
+    else
+    {
+        SDL_RenderClear(this->get_renderer());
     }
 }
 

@@ -33,6 +33,7 @@ GameState::GameState()
 
 void GameState::init(int level_choice)
 {
+    this->level_transition();        
     this->set_generation(0);
     this->set_level_choice(level_choice);
 
@@ -56,9 +57,6 @@ void GameState::init(int level_choice)
     this->set_life(100);
     this->set_time(0);
     this->set_game_time(high_resolution_clock::now());
-
-    this->level_transition();        
-
 }
 
 void GameState::render(SDL_Renderer *renderer)
@@ -159,10 +157,6 @@ void GameState::render(SDL_Renderer *renderer)
     SDL_Rect textRect = { 0, 0, static_cast<int> (this->life_label.get_w() / 4), static_cast<int> (this->life_label.get_h() / 3.75) };
     SDL_RenderCopy(this->get_renderer(), this->get_life_label_texture(), NULL, &textRect);
 
-    // draw taco text rectangle
-    SDL_Rect tERect = { static_cast<int> (WINDOW_WIDTH-(WINDOW_WIDTH / 4.8)), 0, static_cast<int> (this->taco_label.get_w() / 4), static_cast<int> (this->taco_label.get_h() / 3.75) };
-    SDL_RenderCopy(this->get_renderer(), this->get_taco_label_texture(), NULL, &tERect);
-
 
 
 
@@ -208,9 +202,5 @@ GameState::~GameState()
     if (this->get_life_label_texture() != NULL)
     {
         SDL_DestroyTexture(this->get_life_label_texture());
-    }
-    if (this->get_taco_label_texture() != NULL)
-    {
-        SDL_DestroyTexture(this->get_taco_label_texture());
     }
 }

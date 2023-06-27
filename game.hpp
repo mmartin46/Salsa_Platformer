@@ -84,13 +84,14 @@ class GameState
       SDL_Texture *soil;
       SDL_Texture *spike;
       SDL_Texture *lblTexture;
-      SDL_Texture *tcoTexture;
+      SDL_Texture *stgTexture;
       SDL_Texture *transition_texture;
 
       
       // Fonts
       TTF_Font *life_font;
       TTF_Font *taco_font;
+      TTF_Font *stage_font;
 
       // Sounds
       int music_channel;
@@ -109,6 +110,7 @@ class GameState
 
       Label life_label;
       Label taco_label;
+      Label stage_label;
 
       // Backgrounds
       shared_ptr<Backdrop> backdrop;
@@ -189,16 +191,14 @@ class GameState
 
 
 
-      inline void set_taco_texture(SDL_Texture *t) { tcoTexture = t; }
-      inline SDL_Texture* get_taco_texture(SDL_Texture *t) { return tcoTexture; }
       void create_block_textures(SDL_Surface *);
 
 
       inline void set_life_label_texture(SDL_Texture *t) { lblTexture = t; }
       inline SDL_Texture* get_life_label_texture() { return lblTexture; } 
-      inline void set_taco_label_texture(SDL_Texture *t) { lblTexture = t; }
-      inline SDL_Texture* get_taco_label_texture() { return lblTexture; } 
- 
+
+      inline void set_stage_label_texture(SDL_Texture *t) { stgTexture = t; }
+      inline SDL_Texture* get_stage_label_texture() { return stgTexture; }  
 
       // Level Transition
       void level_transition();
@@ -229,6 +229,8 @@ class GameState
       inline void set_life_font(TTF_Font *f) { life_font = f; }
       inline TTF_Font* get_taco_font() { return taco_font; } const
       inline void set_taco_font(TTF_Font *f) { taco_font = f; }
+      inline TTF_Font* get_stage_font() { return stage_font; } const
+      inline void set_stage_font(TTF_Font *f) { stage_font = f; }
 
       // Sounds
       inline Mix_Chunk* get_bg_music() { return bg_music; }
