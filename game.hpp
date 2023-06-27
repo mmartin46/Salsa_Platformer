@@ -201,7 +201,7 @@ class GameState
       inline SDL_Texture* get_stage_label_texture() { return stgTexture; }  
 
       // Level Transition
-      void level_transition();
+      void level_transition(const char *lvl = "Stage %u");
       inline SDL_Texture* get_transition_texture() { return transition_texture; }
       inline void set_transition_texture(SDL_Texture *t) { transition_texture; }
 

@@ -58,7 +58,7 @@ void GameState::init_health_texture()
     SDL_FreeSurface(tmp);
 }
 
-void GameState::level_transition()
+void GameState::level_transition(const char *lvl)
 {
     using namespace std::this_thread;
     using namespace std::chrono_literals;
@@ -66,7 +66,7 @@ void GameState::level_transition()
     char str[128] = "";
     if ((this->get_level_choice() + 1) < MAX_LEVELS)
     {
-        sprintf(str, "Stage %u", (int) (this->get_level_choice() + 1));
+        sprintf(str, lvl, (int) (this->get_level_choice() + 1));
     }
     else
     {

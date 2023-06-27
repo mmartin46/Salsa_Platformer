@@ -230,7 +230,6 @@ void GameState::animate()
         {
             this->set_generation(1);
             ++level_choice;
-
             this->level_transition();
             this->init(level_choice);
         }
