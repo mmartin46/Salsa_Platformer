@@ -64,7 +64,14 @@ void GameState::level_transition()
     using namespace std::chrono_literals;
 
     char str[128] = "";
-    sprintf(str, "Stage %u", (int) (this->get_level_choice() + 1));
+    if ((this->get_level_choice() + 1) < 4)
+    {
+        sprintf(str, "Stage %u", (int) (this->get_level_choice() + 1));
+    }
+    else
+    {
+        sprintf(str, "You Win!");
+    }
 
     // Set the screen to black and clear the renderer.
     SDL_SetRenderDrawColor(this->get_renderer(), 0, 0, 0, 255);
