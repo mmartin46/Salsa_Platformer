@@ -113,6 +113,7 @@ class GameState
       // Backgrounds
       shared_ptr<Backdrop> backdrop;
       shared_ptr<Backdrop> dim_area;
+      shared_ptr<Backdrop> black_screen;
 
       // Handles a majority of the textures
       vector<void (GameState::*)(SDL_Texture *)> spriteVec;
@@ -144,8 +145,9 @@ class GameState
       vector<SDL_Texture*> enemyFrames = vector<SDL_Texture*>(2);
    public:
       // Backdrop
-      shared_ptr<Backdrop> get_backdrop() { return backdrop; }
-      shared_ptr<Backdrop> get_dim_area() { return dim_area; }
+      inline shared_ptr<Backdrop> get_backdrop() { return backdrop; }
+      inline shared_ptr<Backdrop> get_dim_area() { return dim_area; }
+      inline shared_ptr<Backdrop> get_black_background() { return black_screen; }
 
       // Players
       shared_ptr<Player> get_player() { return ptr; };
@@ -182,6 +184,8 @@ class GameState
       inline void set_spike(SDL_Texture* s) { spike = s; }
       inline SDL_Texture* get_taco_soil() { return taco_soil; }
       inline void set_taco_soil(SDL_Texture *s) { taco_soil = s; }
+
+
 
 
 

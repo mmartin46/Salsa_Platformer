@@ -64,7 +64,20 @@ void GameState::level_transition()
     using namespace std::chrono_literals;
 
     char str[128] = "";
-    sprintf(str, "Stage %u", (int) this->get_level_choice());
+    sprintf(str, "Stage %u", (int) (this->get_level_choice() + 1));
+
+    // Set the screen to black and clear the renderer.
+    SDL_SetRenderDrawColor(this->get_renderer(), 0, 0, 0, 255);
+    SDL_RenderClear(this->get_renderer());
+
+    SDL_Color white = { 255, 255, 255, 255 };
+
+    SDL_Surface *tmp = TTF_RenderText_Blended(this->get_life_font(), str, white);
+    this->set_life_label_texture(SDL_CreateTextureFromSurface(this->get_renderer(), tmp));
+    SDL_FreeSurface(tmp);
+
+    SDL_Rect stageRect = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, (tmp->w/3), tmp->h };
+    SDL_RenderCopy(this->get_renderer(), this->get_life_label_texture(), NULL, &stageRect );
 
     sleep_for(3s);
 }
@@ -192,7 +205,6 @@ void GameState::loadImages()
             exit(0);
             break;
     }
-
 }
 
 void GameState::loadGame()

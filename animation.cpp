@@ -219,7 +219,8 @@ void GameState::animate()
 
         // If the tacos eaten modulus 100 is equal
         // to zero set the life to 100.
-        if ((this->get_tacos_eaten() % 100) == 0)
+        if ((this->get_tacos_eaten() % 100) == 0 &&
+            (this->get_tacos_eaten() != 0))
         {
             this->set_life(100);
         }
@@ -231,6 +232,8 @@ void GameState::animate()
             std::cout << "TODO: Level Completed!\n";
             ++level_choice;
             std::cout << level_choice << std::endl;
+
+            this->level_transition();
             this->init(level_choice);
         }
     }
