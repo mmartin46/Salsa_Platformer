@@ -26,6 +26,7 @@ using std::shared_ptr;
 using std::string;
 using std::vector;
 using namespace std::chrono;
+using namespace std::_V2;
 template <typename T>
 using Matrix = vector<vector<T> >;
 

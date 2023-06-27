@@ -33,6 +33,8 @@ GameState::GameState()
 
 void GameState::init(int level_choice)
 {
+
+    
     this->set_generation(0);
     this->set_level_choice(level_choice);
 
@@ -55,7 +57,7 @@ void GameState::init(int level_choice)
     this->render(this->get_renderer());
     this->set_life(100);
     this->set_time(0);
-
+    this->set_game_time(high_resolution_clock::now());
 }
 
 void GameState::render(SDL_Renderer *renderer)

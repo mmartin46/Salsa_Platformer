@@ -125,7 +125,7 @@ class GameState
       int maximum_x;
       int random_int;
       int generate;
-      _V2::system_clock::time_point start_time = high_resolution_clock::now();
+      system_clock::time_point start_time = high_resolution_clock::now();
 
 
       // Players
@@ -216,6 +216,9 @@ class GameState
       // Time
       inline int get_time() { return time; } const
       inline void set_time(int t) { time = t; }
+
+      inline system_clock::time_point get_game_time() { return start_time; }
+      inline void set_game_time(system_clock::time_point t) { start_time = t; }
       
       // Font
       inline TTF_Font* get_life_font() { return life_font; } const
