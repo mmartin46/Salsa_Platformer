@@ -125,6 +125,8 @@ class GameState
       int maximum_x;
       int random_int;
       int generate;
+      _V2::system_clock::time_point start_time = high_resolution_clock::now();
+
 
       // Players
       shared_ptr<Player> ptr;

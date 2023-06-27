@@ -42,8 +42,12 @@ void GameState::create_block_textures(SDL_Surface *surface)
 
 void GameState::init_health_texture()
 {
+    using namespace std::chrono;
+    auto current_time = high_resolution_clock::now();
+    
+    auto time = std::chrono::duration_cast<std::chrono::seconds>(current_time - start_time);
     char str[128] = "";
-    sprintf(str, "Health: %u                      Tacos Eaten: %u                Time: %u", (int) this->get_life(), (int) this->get_tacos_eaten(), (int) (this->get_time()));
+    sprintf(str, "Health: %u                      Tacos Eaten: %u                Time: %u", (int) this->get_life(), (int) this->get_tacos_eaten(), (time));
 
     SDL_Color white = { 255, 255, 255, 255 };
 
