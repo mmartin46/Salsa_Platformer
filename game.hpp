@@ -102,7 +102,7 @@ class GameState
       int tacos_eaten;
 
       // Background
-      Matrix<int> tilemap;
+      Matrix<int> layer1;
       Matrix<Block> tile;
       Matrix<Soil> soiltile;
       Matrix<Enemy> enemies;

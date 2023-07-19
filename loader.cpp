@@ -246,15 +246,15 @@ void GameState::init_blocks(int generated)
             {
                 if (choice == 0)
                 {
-                    tilemap.at(x).at(y) = world_map::map[x][y];
+                    layer1.at(x).at(y) = world_map::map[x][y];
                 }
                 else if (choice == 1)
                 {
-                    tilemap.at(x).at(y) = world_map::map_2[x][y];
+                    layer1.at(x).at(y) = world_map::map_2[x][y];
                 }
                 else if (choice == 2)
                 {
-                    tilemap.at(x).at(y) = world_map::map_3[x][y];
+                    layer1.at(x).at(y) = world_map::map_3[x][y];
                 }
             }
         }
@@ -304,7 +304,7 @@ void GameState::init_blocks(int generated)
             for (y = 0; y < MAP_COLUMNS; ++y)
             {
                 // DEBUG
-                switch (tilemap.at(x).at(y)) 
+                switch (layer1.at(x).at(y)) 
                 {
                     case world_map::BLOCK_COLLISION : {
                         tile.at(x).at(y).set_y((x*BLOCK_WIDTH) / 1);

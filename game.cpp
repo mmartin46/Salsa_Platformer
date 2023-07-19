@@ -18,7 +18,7 @@ GameState::GameState()
 
     this->dim_area = shared_ptr<Backdrop>(new Backdrop);
     this->backdrop = shared_ptr<Backdrop>(new Backdrop);
-    this->tilemap = Matrix<int> (MAP_ROWS, vector<int>(MAP_COLUMNS));
+    this->layer1 = Matrix<int> (MAP_ROWS, vector<int>(MAP_COLUMNS));
     this->tile = Matrix<Block> (MAP_ROWS, vector<Block>(MAP_COLUMNS));
     this->soiltile = Matrix<Soil> (MAP_ROWS, vector<Soil>(MAP_COLUMNS));
     this->enemies = Matrix<Enemy> (MAP_ROWS, vector<Enemy>(MAP_COLUMNS));
@@ -97,7 +97,7 @@ void GameState::render(SDL_Renderer *renderer)
     {
         for (y = 0; y < MAP_COLUMNS; ++y)
         {
-            switch (tilemap.at(x).at(y))
+            switch (layer1.at(x).at(y))
             {
                 // Block
                 case world_map::BLOCK_COLLISION : {

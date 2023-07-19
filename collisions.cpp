@@ -100,7 +100,7 @@ void GameState::collision_handler()
         for (int j = 0; j < MAP_COLUMNS; j++)
         {
             // If the player and taco collide.
-            if ((this->tilemap.at(i).at(j) == world_map::TACO_COLLISION) && collide2d(
+            if ((this->layer1.at(i).at(j) == world_map::TACO_COLLISION) && collide2d(
                 this->get_player()->get_x(),
                 this->get_player()->get_y(),
                 this->tile.at(i).at(j).get_x(),
@@ -116,10 +116,10 @@ void GameState::collision_handler()
                 SDL_Rect tacoRect = { static_cast<int>(this->get_scrollX() + tile.at(i).at(j).get_x()), static_cast<int>(this->get_scrollY() + tile.at(i).at(j).get_y()), tile.at(i).at(j).get_w(), tile.at(i).at(j).get_h() };
                 SDL_RenderCopy(this->get_renderer(), NULL, NULL , &tacoRect);
                 // Makes sure the collision will not be repeated.
-                tilemap.at(i).at(j) = -1;
+                layer1.at(i).at(j) = -1;
             }
             // If the computer player and taco collide.
-            else if ((this->tilemap.at(i).at(j) == world_map::TACO_COLLISION) && collide2d(
+            else if ((this->layer1.at(i).at(j) == world_map::TACO_COLLISION) && collide2d(
                 this->get_comp_player()->get_x(),
                 this->get_comp_player()->get_y(),
                 this->tile.at(i).at(j).get_x(),
@@ -135,10 +135,10 @@ void GameState::collision_handler()
                 SDL_Rect tacoRect = { static_cast<int>(this->get_scrollX() + tile.at(i).at(j).get_x()), static_cast<int>(this->get_scrollY() + tile.at(i).at(j).get_y()), tile.at(i).at(j).get_w(), tile.at(i).at(j).get_h() };
                 SDL_RenderCopy(this->get_renderer(), NULL, NULL , &tacoRect);
                 // Makes sure the collision will not be repeated.
-                tilemap.at(i).at(j) = -1;
+                layer1.at(i).at(j) = -1;
             }
             // If the player and enemy collide.
-            else if ((this->tilemap.at(i).at(j) == world_map::EMEMY_COLLISION) && collide2d(
+            else if ((this->layer1.at(i).at(j) == world_map::EMEMY_COLLISION) && collide2d(
                 this->get_player()->get_x(),
                 this->get_player()->get_y(),
                 this->enemies.at(i).at(j).get_x(),
@@ -152,7 +152,7 @@ void GameState::collision_handler()
                 this->set_life(this->get_life() - 1);
                 //cout << this->life << endl;
             }
-            else if ((this->tilemap.at(i).at(j) == world_map::SPIKE_COLLISION) && collide2d(
+            else if ((this->layer1.at(i).at(j) == world_map::SPIKE_COLLISION) && collide2d(
                 this->get_player()->get_x(),
                 this->get_player()->get_y(),
                 this->spikes.at(i).at(j).get_x(),
@@ -180,7 +180,7 @@ void GameState::collision_handler()
                 //cout << "EOSH" << endl; 
                 this->enemies.at(i).at(j).set_y(this->enemies.at(i).at(j).get_y() - (this->enemies.at(i).at(j).get_enemySpeed()));
             }
-            else if ((this->tilemap.at(i).at(j) == world_map::TACO_SOIL_COLLISION) && collide2d(
+            else if ((this->layer1.at(i).at(j) == world_map::TACO_SOIL_COLLISION) && collide2d(
                 this->get_player()->get_x(),
                 this->get_player()->get_y(),
                 this->tile.at(i).at(j).get_x(),
@@ -198,9 +198,9 @@ void GameState::collision_handler()
                 soiltile.at(i).at(j).set_w(BLOCK_WIDTH);
                 soiltile.at(i).at(j).set_h(BLOCK_HEIGHT);   
                 // Makes sure the collision will not be repeated.
-                tilemap.at(i).at(j) = static_cast<int>(world_map::SOIL_COLLISION);                
+                layer1.at(i).at(j) = static_cast<int>(world_map::SOIL_COLLISION);                
             }
-            else if ((this->tilemap.at(i).at(j) == world_map::TACO_SOIL_COLLISION) && collide2d(
+            else if ((this->layer1.at(i).at(j) == world_map::TACO_SOIL_COLLISION) && collide2d(
                 this->get_comp_player()->get_x(),
                 this->get_comp_player()->get_y(),
                 this->tile.at(i).at(j).get_x(),
@@ -217,7 +217,7 @@ void GameState::collision_handler()
                 soiltile.at(i).at(j).set_w(BLOCK_WIDTH);
                 soiltile.at(i).at(j).set_h(BLOCK_HEIGHT);      
                 // Makes sure the collision will not be repeated.
-                tilemap.at(i).at(j) = static_cast<int>(world_map::SOIL_COLLISION);                
+                layer1.at(i).at(j) = static_cast<int>(world_map::SOIL_COLLISION);                
             }
 
         }
@@ -229,7 +229,7 @@ void GameState::collision_handler()
     {
         for (int j = 0; j < MAP_COLUMNS; j++)
         {
-            if (this->tilemap.at(i).at(j) == world_map::BLOCK_COLLISION)
+            if (this->layer1.at(i).at(j) == world_map::BLOCK_COLLISION)
             {
 
                 for (auto &p : players)

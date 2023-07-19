@@ -78,7 +78,7 @@ int main(int argc, char *argv[] )
         gameState.render(renderer);
 
         // don't burn up the CPU
-        // SDL_Delay(100);
+        SDL_Delay(8);
     }
 
 
