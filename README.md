@@ -10,6 +10,7 @@ An SDL2 Gaming Platformer Project Written in C++ and C. The player's only object
   needs to collect as many tacos as possible.
   Moreover, you must avoid being touched by
   any enemies.
+- The first two background levels were free royalty free images.
 - The game experiments with a computer-player that is
   supposed to follow and help the player collect coins.
   
