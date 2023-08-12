@@ -1,8 +1,13 @@
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
+#include <SDL2\SDL.h>
+#include <SDL2\SDL_image.h>
+#include <SDL2\SDL_mixer.h>
+#include <SDL2\SDL_ttf.h>
 #include <utility>
 #include <ctime>
+#include "cmath"
 #include <time.h>
 #include <iostream>
 #include <vector>
@@ -11,11 +16,10 @@
 #include <memory>
 #include <algorithm>
 #include <functional>
-#include "constants.hpp"
+#include "entity.hpp"
 #include "player.hpp"
 #include "comp.hpp"
 #include "enemy.hpp"
-#include "entity.hpp"
 #include <thread>
 #include <chrono>
 

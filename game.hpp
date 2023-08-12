@@ -1,14 +1,10 @@
 // John 3:5
 #ifndef GAME_H
 #define GAME_H
+#pragma once
 
-
-#include <SDL2\SDL.h>
-#include <SDL2\SDL_image.h>
-#include <SDL2\SDL_mixer.h>
-#include <SDL2\SDL_ttf.h>
-#include "cmath"
-#include "utilities.cpp"
+#include "utilities.hpp"
+#include "map.hpp"
 
 
 /* Keeps track of two player coordinates.*/

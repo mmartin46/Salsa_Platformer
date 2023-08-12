@@ -1,6 +1,27 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#include "utilities.hpp"
+#pragma once
+
+#include <SDL2\SDL.h>
+#include <SDL2\SDL_image.h>
+#include <SDL2\SDL_mixer.h>
+#include <SDL2\SDL_ttf.h>
+#include <utility>
+#include <ctime>
+#include "cmath"
+#include <time.h>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstdlib>
+#include <memory>
+#include <algorithm>
+#include <functional>
+#include "constants.hpp"
+
+
+
+
 class Player
 {
    private:

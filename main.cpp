@@ -1,8 +1,5 @@
 #include "game.hpp"
-#include "game.cpp"
-#include "player.hpp"
-#include "player.cpp"
-#include "enemy.hpp"
+
 
 // Generates a random number
 // to generate our level.
