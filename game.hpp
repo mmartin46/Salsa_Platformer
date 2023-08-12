@@ -4,7 +4,7 @@
 #pragma once
 
 #include "utilities.hpp"
-#include "map.hpp"
+#include "utils/map/map.hpp"
 
 
 /* Keeps track of two player coordinates.*/
