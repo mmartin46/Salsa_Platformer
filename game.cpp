@@ -1,9 +1,9 @@
 #include "game.hpp"
 
-#include "loader.cpp"
-#include "comp_movement.cpp"
-#include "collisions.cpp"
-#include "animation.cpp"
+#include "utils/loader.cpp"
+#include "utils/comp_movement.cpp"
+#include "utils/collisions.cpp"
+#include "utils/animation.cpp"
 
 
 /* Constructs the gamestate. */
