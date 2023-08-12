@@ -1,5 +1,4 @@
 #include "player.hpp"
-#include "game.hpp"
 
 // Defaults the character's position
 // x = 210
