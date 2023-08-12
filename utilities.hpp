@@ -16,10 +16,10 @@
 #include <memory>
 #include <algorithm>
 #include <functional>
-#include "entity.hpp"
-#include "player.hpp"
-#include "comp.hpp"
-#include "enemy.hpp"
+#include "entities/entity.hpp"
+#include "entities/player.hpp"
+#include "entities/comp.hpp"
+#include "entities/enemy.hpp"
 #include <thread>
 #include <chrono>
 
