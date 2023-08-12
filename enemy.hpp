@@ -1,7 +1,6 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 #include "player.hpp"
-#include "game.hpp"
 
 // Represents an enemy
 class Enemy : public Player

@@ -18,7 +18,7 @@
 #include "entity.hpp"
 #include <thread>
 #include <chrono>
-#include "game.hpp"
+
 
 using std::vector;
 using std::pair;
@@ -52,7 +52,7 @@ double get_distances(double x_1, double x_2, double y_1, double y_2);
 // Modify the block texture textures depending on the level.
 // \param surface_args - the file and error arguments for get_surface()
 // \param idx - the index you want to add to select the level.
-void modify_block_textures(vector<pair<string,string> > &surface_args, string idx);
+void modify_block_textures(vector<pair<string,string> > &surface_args, string idx, vector<string> &dont_include);
 
 // Modify the player textures depending on the level and player.
 // \param plyr - shared pointer to the player
