@@ -35,7 +35,7 @@ An SDL2 Gaming Platformer Project Written in C++ and C. The player's only object
 
 Learn Video Game Programming in C www.youtube.com/playlist?list=PLT6WFYYZE6uLMcPGS3qfpYm7T_gViYMMt.
 
-Scribbr. “Scribbr - Your Path to Academic Success.” Scribbr, 25 Jan. 2023, www.scribbr.com.
+Firebase. “Firebase.” Firebase, firebase.google.com. www.youtube.com/playlist?list=PLam6bY5NszYOhXkY7jOS4EQAKcQwkXrp4.
 
 ## API References
 
